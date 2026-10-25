@@ -6,14 +6,29 @@ namespace morph {
 // One parameter a scene sets: an instrument track, its live parameter index
 // and the value.
 struct Lock { opxy::u8 track, index; opxy::u16 reserved; opxy::i32 value; };
-struct Scene { opxy::u32 count; const Lock* locks; };
+// Scenes 1..16 (slot 0 unused: scene 0 is "off"). Two full scenes fill the
+// SDK's 64-entry overlay.
+const unsigned kSceneLocks = 32;
+struct Scene { opxy::u32 count; Lock locks[kSceneLocks]; };
 
-// Fixed test scenes until edits can be captured: scene 1 turns track 1's four
-// engine controls fully down, scene 2 fully up. Scenes 3..16 are empty.
-const Lock kDown[] = {{0, 0, 0, 0}, {0, 1, 0, 0}, {0, 2, 0, 0}, {0, 3, 0, 0}};
-const Lock kUp[] = {{0, 0, 0, 0x7fffffff}, {0, 1, 0, 0x7fffffff}, {0, 2, 0, 0x7fffffff}, {0, 3, 0, 0x7fffffff}};
-inline Scene scene(unsigned number) {
-    const Scene none = {0, nullptr}, down = {4, kDown}, up = {4, kUp};
-    return number == 1 ? down : number == 2 ? up : none;
+inline const Lock* find(const Scene& scene, opxy::u32 track, opxy::u32 index) {
+    for (opxy::u32 i = 0; i < scene.count; ++i)
+        if (scene.locks[i].track == track && scene.locks[i].index == index) return &scene.locks[i];
+    return nullptr;
+}
+
+// Records a value; a full scene keeps the parameters it already has.
+inline void record(Scene& scene, opxy::u32 track, opxy::u32 index, opxy::i32 value) {
+    Lock* lock = nullptr;
+    for (opxy::u32 i = 0; i < scene.count && !lock; ++i)
+        if (scene.locks[i].track == track && scene.locks[i].index == index) lock = &scene.locks[i];
+    if (!lock) {
+        if (scene.count >= kSceneLocks) return;
+        lock = &scene.locks[scene.count++];
+        lock->track = static_cast<opxy::u8>(track);
+        lock->index = static_cast<opxy::u8>(index);
+        lock->reserved = 0;
+    }
+    lock->value = value;
 }
 }  // namespace morph

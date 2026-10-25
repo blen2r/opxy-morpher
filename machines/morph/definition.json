@@ -110,7 +110,7 @@
       "palette": 7
     },
     "trackControl": {
-      "stateBytes": 4,
+      "stateBytes": 4420,
       "stateAlignment": 4
     }
   }

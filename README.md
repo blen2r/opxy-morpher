@@ -19,18 +19,29 @@ controls can be sequenced and p-locked like any other track parameter.
 The page shows the crossfader, the two scene markers (dim when off) and, in a
 write mode, the marker being written filled red and a red dot at the top right.
 
-## Status
+## Writing scenes
+
+Choose a scene number for A (or B), set the mode to write A (or write B), and
+turn any encoder on another instrument track: each edit is recorded into that
+scene, and you hear it while writing. Leaving write mode puts every edited
+parameter back where it was. A scene holds up to 32 parameters.
+
+## Playing
 
 In play mode the morpher blends every parameter scene A or B sets on the other
-instrument tracks, through the SDK's track control (SDK 1.2, not yet in a
-released SDK). A side that is off, or a scene that leaves a parameter alone,
-contributes the parameter's own value, so edits and parameter locks still show
-through. The blend is never saved: the project keeps its own values.
+instrument tracks. A side that is off, or a scene that leaves a parameter
+alone, contributes the parameter's own value, so edits and parameter locks
+still show through. The blend is never saved: the project keeps its own
+values.
 
-Scene contents are fixed for now: scene 1 turns track 1's four engine controls
-fully down, scene 2 fully up, and scenes 3–16 are empty. Put the morpher on
-any track except track 1. Capturing edits into scenes in write mode, an
-indicator on every screen and saving scenes with the project come next.
+## Status
+
+The morpher needs the SDK's track control (SDK 1.2), which is not in a
+released SDK yet. Scenes live in memory only: they are lost when the OP-XY
+turns off and are shared by every project. Edits made while holding a step
+(parameter locks) are not recorded, and there is no way to clear a scene yet
+except turning the OP-XY off. An indicator on every screen and saving scenes
+with the project come next.
 
 ## Checks
 
