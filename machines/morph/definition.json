@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "id": "morph",
+  "name": "Morph",
+  "parameters": [
+    {
+      "id": "mode",
+      "label": "Mode",
+      "default": 0,
+      "mapping": {
+        "kind": "enum",
+        "labels": [
+          "play",
+          "wr a",
+          "wr b"
+        ]
+      },
+      "display": "enum"
+    },
+    {
+      "id": "morph",
+      "label": "Morph",
+      "default": 0,
+      "mapping": {
+        "kind": "linear",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "display": "percent"
+    },
+    {
+      "id": "scene_a",
+      "label": "Scene A",
+      "default": 0,
+      "mapping": {
+        "kind": "enum",
+        "labels": [
+          "off",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16"
+        ]
+      },
+      "display": "enum"
+    },
+    {
+      "id": "scene_b",
+      "label": "Scene B",
+      "default": 0,
+      "mapping": {
+        "kind": "enum",
+        "labels": [
+          "off",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16"
+        ]
+      },
+      "display": "enum"
+    }
+  ],
+  "presets": {
+    "Init": {
+      "mode": 0,
+      "morph": 0,
+      "scene_a": 0,
+      "scene_b": 0
+    }
+  },
+  "resources": {
+    "voiceBytes": 4,
+    "voiceAlignment": 4,
+    "voiceCapacity": 1,
+    "sharedBytes": 0,
+    "outputPeakQ31": 1,
+    "display": {
+      "stateBytes": 4,
+      "stateAlignment": 4,
+      "paths": 0,
+      "points": 0,
+      "nodes": 21,
+      "texts": 0,
+      "palette": 5
+    }
+  }
+}
