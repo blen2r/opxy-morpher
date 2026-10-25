@@ -28,4 +28,6 @@
   <circle id="morph_palette_2" cx="640" cy="0" r="1" fill="#888888" stroke="#888888" stroke-width="1"/>
   <circle id="morph_palette_3" cx="640" cy="0" r="1" fill="#ffffff" stroke="#ffffff" stroke-width="1"/>
   <circle id="morph_palette_4" cx="640" cy="0" r="1" fill="#ff3b30" stroke="#ff3b30" stroke-width="1"/>
+  <circle id="morph_palette_5" cx="640" cy="0" r="1" fill="#000000" stroke="#ffffff" stroke-width="1"/>
+  <circle id="morph_palette_6" cx="640" cy="0" r="1" fill="#000000" stroke="#333333" stroke-width="1"/>
 </g>

@@ -18,6 +18,16 @@ inline void number(char* out, unsigned capacity, unsigned value) {
     opxy::draw::copy(out, capacity, text);
 }
 
+// The mode and scene names, as the controls' labels give them. Stock shows an
+// enum's raw 0..99 value; the header replaces it with the name.
+const char* const kModeNames[kModes] = {"play", "wr a", "wr b"};
+inline void scene_name(char* out, unsigned capacity, unsigned scene) {
+    if (scene)
+        number(out, capacity, scene);
+    else
+        opxy::draw::copy(out, capacity, "off");
+}
+
 inline void display_reset(DisplayState& state) { state.unused = 0; }
 
 inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame) {
@@ -26,7 +36,10 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     const unsigned step = position(input.slots[kMorphSlot]);
     const unsigned a = choice(input.slots[kSceneASlot], kScenes);
     const unsigned b = choice(input.slots[kSceneBSlot], kScenes);
+    opxy::draw::copy(frame.header[kModeSlot], sizeof(frame.header[kModeSlot]), kModeNames[mode]);
     number(frame.header[kMorphSlot], sizeof(frame.header[kMorphSlot]), step);
+    scene_name(frame.header[kSceneASlot], sizeof(frame.header[kSceneASlot]), a);
+    scene_name(frame.header[kSceneBSlot], sizeof(frame.header[kSceneBSlot]), b);
 
     const opxy::i32 thumb = kLeft + static_cast<opxy::i32>(step) * (kRight - kLeft) / 127;
     for (unsigned i = 0; i < kTicks; ++i) {
@@ -42,7 +55,7 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     for (unsigned side = 0; side < 2; ++side) {
         const bool writing = mode == writes[side];
         place(frame, kMarkerA + side, xs[side] * unit, kRow * unit, unit,
-              writing ? kRed : scenes[side] ? kWhite : kDim, writing ? fill_and_stroke : stroke);
+              writing ? kRed : scenes[side] ? kRingWhite : kRingDim, fill_and_stroke);
     }
     if (mode == kPlay)
         hide(frame, kWriteDot);

@@ -7,6 +7,10 @@ static int failures = 0;
 static void expect(bool ok, const char* what) {
     if (!ok) { std::printf("FAIL %s\n", what); ++failures; }
 }
+static bool same(const char* a, const char* b) {
+    while (*a && *a == *b) ++a, ++b;
+    return *a == *b;
+}
 // The Q31 word for enum choice `index` of `count`, as the stock menu stores it.
 static opxy::i32 word(unsigned index, unsigned count) {
     const unsigned q15 = (index * 32767u + (count - 1) / 2) / (count - 1);
@@ -37,6 +41,14 @@ int main() {
             expect((frame.nodes[kWriteDot].x == opxy::draw::hidden_x * opxy::draw::unit) == !writing, "write dot");
             expect((frame.nodes[kMarkerA].shade == kRed) == (mode == kWriteA), "marker A");
             expect((frame.nodes[kMarkerB].shade == kRed) == (mode == kWriteB), "marker B");
+            // Both paint the fill, so a marker leaving red is repainted black.
+            expect(frame.nodes[kMarkerA].paint == opxy::draw::fill_and_stroke &&
+                   frame.nodes[kMarkerB].paint == opxy::draw::fill_and_stroke, "marker fill");
+            static const char* const modes[kModes] = {"play", "wr a", "wr b"};
+            static const char* const scenes[3][2] = {{"off", "16"}, {"5", "15"}, {"10", "14"}};
+            expect(same(frame.header[kModeSlot], modes[mode]), "mode header");
+            expect(same(frame.header[kSceneASlot], scenes[s][0]), "scene A header");
+            expect(same(frame.header[kSceneBSlot], scenes[s][1]), "scene B header");
         }
     expect(frame.header[1][0] == '1' && frame.header[1][1] == '2' && frame.header[1][2] == '7' && !frame.header[1][3],
            "morph header");
