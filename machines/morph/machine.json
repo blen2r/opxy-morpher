@@ -2,7 +2,7 @@
   "schema": 1,
   "sdk": "1.2",
   "kind": "synth",
-  "description": "Scene morpher page: mode, morph, scene A and scene B. Silent; the morph itself needs SDK hooks.",
+  "description": "Scene morpher: mode, morph, scene A and scene B. Silent; morphs other tracks' parameters between two scenes.",
   "identity": {
     "engine": 48,
     "page": 100

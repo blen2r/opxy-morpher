@@ -21,10 +21,16 @@ write mode, the marker being written filled red and a red dot at the top right.
 
 ## Status
 
-This is the page only. Applying the morph to other tracks' parameters,
-capturing edits into scenes in write mode, an indicator on every screen and
-saving scenes with the project need new SDK firmware hooks, which do not exist
-yet.
+In play mode the morpher blends every parameter scene A or B sets on the other
+instrument tracks, through the SDK's track control (SDK 1.2, not yet in a
+released SDK). A side that is off, or a scene that leaves a parameter alone,
+contributes the parameter's own value, so edits and parameter locks still show
+through. The blend is never saved: the project keeps its own values.
+
+Scene contents are fixed for now: scene 1 turns track 1's four engine controls
+fully down, scene 2 fully up, and scenes 3–16 are empty. Put the morpher on
+any track except track 1. Capturing edits into scenes in write mode, an
+indicator on every screen and saving scenes with the project come next.
 
 ## Checks
 

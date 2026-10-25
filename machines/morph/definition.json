@@ -108,6 +108,10 @@
       "nodes": 25,
       "texts": 0,
       "palette": 7
+    },
+    "trackControl": {
+      "stateBytes": 4,
+      "stateAlignment": 4
     }
   }
 }
