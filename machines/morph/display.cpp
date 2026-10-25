@@ -18,10 +18,8 @@ inline void number(char* out, unsigned capacity, unsigned value) {
     opxy::draw::copy(out, capacity, text);
 }
 
-// The morph as a rounded percentage of the way from A to B: 50% is the exact
-// midpoint, where each side contributes half.
-inline void percent(char* out, unsigned capacity, opxy::i32 value) {
-    const unsigned p = value < 0 ? 0 : ((static_cast<unsigned>(value) >> 7) * 100u + (1u << 23)) >> 24;
+// The morph's percentage as the header shows it, with a % suffix.
+inline void percent_text(char* out, unsigned capacity, unsigned p) {
     char text[5];
     number(text, sizeof(text) - 1, p);
     unsigned n = 0;
@@ -45,15 +43,16 @@ inline void display_reset(DisplayState& state) { state.unused = 0; }
 inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame) {
     using namespace opxy::draw;
     const unsigned mode = choice(input.slots[kModeSlot], kModes);
-    const unsigned step = position(input.slots[kMorphSlot]);
+    const unsigned p = percent(input.slots[kMorphSlot]);
     const unsigned a = choice(input.slots[kSceneASlot], kScenes);
     const unsigned b = choice(input.slots[kSceneBSlot], kScenes);
     opxy::draw::copy(frame.header[kModeSlot], sizeof(frame.header[kModeSlot]), kModeNames[mode]);
-    percent(frame.header[kMorphSlot], sizeof(frame.header[kMorphSlot]), input.slots[kMorphSlot]);
+    percent_text(frame.header[kMorphSlot], sizeof(frame.header[kMorphSlot]), p);
     scene_name(frame.header[kSceneASlot], sizeof(frame.header[kSceneASlot]), a);
     scene_name(frame.header[kSceneBSlot], sizeof(frame.header[kSceneBSlot]), b);
 
-    const opxy::i32 thumb = kLeft + static_cast<opxy::i32>(step) * (kRight - kLeft) / 127;
+    // The thumb sits where the shown percentage does, so at every 5% it is on a tick.
+    const opxy::i32 thumb = kLeft + static_cast<opxy::i32>(p) * (kRight - kLeft) / 100;
     for (unsigned i = 0; i < kTicks; ++i) {
         const opxy::i32 x = kLeft + static_cast<opxy::i32>(i) * (kRight - kLeft) / (kTicks - 1);
         place(frame, i, x * unit, kRow * unit, unit, x <= thumb ? kWhite : kDim, fill_and_stroke);

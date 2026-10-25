@@ -17,10 +17,14 @@
   <circle id="morph_node_14" cx="0" cy="0" r="3" fill="#333333" stroke="#333333" stroke-width="1"/>
   <circle id="morph_node_15" cx="0" cy="0" r="3" fill="#333333" stroke="#333333" stroke-width="1"/>
   <circle id="morph_node_16" cx="0" cy="0" r="3" fill="#333333" stroke="#333333" stroke-width="1"/>
-  <circle id="morph_node_17" cx="0" cy="0" r="9" fill="none" stroke="#ffffff" stroke-width="2"/>
-  <circle id="morph_node_18" cx="0" cy="0" r="16" fill="#000000" stroke="#333333" stroke-width="2"/>
-  <circle id="morph_node_19" cx="0" cy="0" r="16" fill="#000000" stroke="#333333" stroke-width="2"/>
-  <circle id="morph_node_20" cx="0" cy="0" r="6" fill="#ff3b30" stroke="#ff3b30" stroke-width="1"/>
+  <circle id="morph_node_17" cx="0" cy="0" r="3" fill="#333333" stroke="#333333" stroke-width="1"/>
+  <circle id="morph_node_18" cx="0" cy="0" r="3" fill="#333333" stroke="#333333" stroke-width="1"/>
+  <circle id="morph_node_19" cx="0" cy="0" r="3" fill="#333333" stroke="#333333" stroke-width="1"/>
+  <circle id="morph_node_20" cx="0" cy="0" r="3" fill="#333333" stroke="#333333" stroke-width="1"/>
+  <circle id="morph_node_21" cx="0" cy="0" r="9" fill="none" stroke="#ffffff" stroke-width="2"/>
+  <circle id="morph_node_22" cx="0" cy="0" r="16" fill="#000000" stroke="#333333" stroke-width="2"/>
+  <circle id="morph_node_23" cx="0" cy="0" r="16" fill="#000000" stroke="#333333" stroke-width="2"/>
+  <circle id="morph_node_24" cx="0" cy="0" r="6" fill="#ff3b30" stroke="#ff3b30" stroke-width="1"/>
   <path d="M34 128 L40 111 L46 128 M36.5 122 L43.5 122" fill="none" stroke="#ffffff" stroke-width="2"/>
   <path d="M435 111 L435 129 L443 129 L447 125 L447 124 L443 120 L435 120 M443 120 L446 117 L446 114 L443 111 L435 111" fill="none" stroke="#ffffff" stroke-width="2"/>
   <circle id="morph_palette_0" cx="640" cy="0" r="1" fill="#000000" stroke="#000000" stroke-width="1"/>

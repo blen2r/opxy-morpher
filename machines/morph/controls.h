@@ -14,7 +14,9 @@ inline unsigned choice(opxy::i32 value, unsigned count) {
     const unsigned index = value < 0 ? 0 : ((static_cast<unsigned>(value) >> 16) * count) >> 15;
     return index < count ? index : count - 1;
 }
-// The morph position in 128 steps, for the crossfader: 0 is all A, 64 the
-// midpoint, 127 all B.
-inline unsigned position(opxy::i32 value) { return value < 0 ? 0 : static_cast<unsigned>(value) >> 24; }
+// The morph as a rounded percentage of the way from A to B, 0..100: 50 is the
+// exact midpoint, where each side contributes half.
+inline unsigned percent(opxy::i32 value) {
+    return value < 0 ? 0 : ((static_cast<unsigned>(value) >> 7) * 100u + (1u << 23)) >> 24;
+}
 }  // namespace morph

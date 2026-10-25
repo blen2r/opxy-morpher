@@ -22,7 +22,7 @@ int main() {
     for (unsigned i = 0; i < kModes; ++i) expect(choice(word(i, kModes), kModes) == i, "mode round trip");
     for (unsigned i = 0; i < kScenes; ++i) expect(choice(word(i, kScenes), kScenes) == i, "scene round trip");
     expect(choice(0x7fffffff, kScenes) == 16 && choice(-1, kScenes) == 0, "scene ends");
-    expect(position(0) == 0 && position(0x40000000) == 64 && position(0x7fffffff) == 127, "morph scale");
+    expect(percent(0) == 0 && percent(0x40000000) == 50 && percent(0x7fffffff) == 100 && percent(-1) == 0, "morph scale");
 
     static Frame frame;
     static DisplayState state;
@@ -55,8 +55,15 @@ int main() {
         {0, "0%"}, {0x40000000, "50%"}, {0x3fffffff, "50%"}, {0x147ae148, "16%"}, {0x7fffffff, "100%"}, {-1, "0%"}};
     char text[opxy::draw::header_capacity];
     for (const auto& s : shown) {
-        percent(text, sizeof(text), s.value);
+        percent_text(text, sizeof(text), percent(s.value));
         expect(same(text, s.text), "morph percent");
+    }
+    // At every 5% the thumb sits exactly on a tick, the ticks below it lit.
+    for (unsigned i = 0; i < kTicks; ++i) {
+        input.slots[kMorphSlot] = static_cast<opxy::i32>((static_cast<unsigned long long>(i) * 0x7fffffff + 10) / 20);
+        display(state, input, frame);
+        expect(frame.nodes[kThumb].x == frame.nodes[i].x, "thumb on its tick");
+        for (unsigned j = 0; j < kTicks; ++j) expect((frame.nodes[j].shade == kWhite) == (j <= i), "lit ticks");
     }
     return failures ? 1 : 0;
 }
