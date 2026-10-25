@@ -50,7 +50,13 @@ int main() {
             expect(same(frame.header[kSceneASlot], scenes[s][0]), "scene A header");
             expect(same(frame.header[kSceneBSlot], scenes[s][1]), "scene B header");
         }
-    expect(frame.header[1][0] == '1' && frame.header[1][1] == '2' && frame.header[1][2] == '7' && !frame.header[1][3],
-           "morph header");
+    expect(same(frame.header[kMorphSlot], "100%"), "morph header at B");
+    static const struct { opxy::i32 value; const char* text; } shown[] = {
+        {0, "0%"}, {0x40000000, "50%"}, {0x3fffffff, "50%"}, {0x147ae148, "16%"}, {0x7fffffff, "100%"}, {-1, "0%"}};
+    char text[opxy::draw::header_capacity];
+    for (const auto& s : shown) {
+        percent(text, sizeof(text), s.value);
+        expect(same(text, s.text), "morph percent");
+    }
     return failures ? 1 : 0;
 }

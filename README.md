@@ -9,7 +9,7 @@ has four controls.
 | Control | Values |
 | --- | --- |
 | Mode | play, write A, write B |
-| Morph | 0 (all scene A) to 127 (all scene B); 64 is the midpoint |
+| Morph | 0% (all scene A) to 100% (all scene B); 50% is the exact midpoint |
 | Scene A | off, 1–16 |
 | Scene B | off, 1–16 |
 

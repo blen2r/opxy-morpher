@@ -18,6 +18,18 @@ inline void number(char* out, unsigned capacity, unsigned value) {
     opxy::draw::copy(out, capacity, text);
 }
 
+// The morph as a rounded percentage of the way from A to B: 50% is the exact
+// midpoint, where each side contributes half.
+inline void percent(char* out, unsigned capacity, opxy::i32 value) {
+    const unsigned p = value < 0 ? 0 : ((static_cast<unsigned>(value) >> 7) * 100u + (1u << 23)) >> 24;
+    char text[5];
+    number(text, sizeof(text) - 1, p);
+    unsigned n = 0;
+    while (text[n]) ++n;
+    text[n++] = '%';
+    text[n] = 0;
+    opxy::draw::copy(out, capacity, text);
+}
 // The mode and scene names, as the controls' labels give them. Stock shows an
 // enum's raw 0..99 value; the header replaces it with the name.
 const char* const kModeNames[kModes] = {"play", "wr a", "wr b"};
@@ -37,7 +49,7 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     const unsigned a = choice(input.slots[kSceneASlot], kScenes);
     const unsigned b = choice(input.slots[kSceneBSlot], kScenes);
     opxy::draw::copy(frame.header[kModeSlot], sizeof(frame.header[kModeSlot]), kModeNames[mode]);
-    number(frame.header[kMorphSlot], sizeof(frame.header[kMorphSlot]), step);
+    percent(frame.header[kMorphSlot], sizeof(frame.header[kMorphSlot]), input.slots[kMorphSlot]);
     scene_name(frame.header[kSceneASlot], sizeof(frame.header[kSceneASlot]), a);
     scene_name(frame.header[kSceneBSlot], sizeof(frame.header[kSceneBSlot]), b);
 

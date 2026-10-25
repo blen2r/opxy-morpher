@@ -14,7 +14,7 @@ inline unsigned choice(opxy::i32 value, unsigned count) {
     const unsigned index = value < 0 ? 0 : ((static_cast<unsigned>(value) >> 16) * count) >> 15;
     return index < count ? index : count - 1;
 }
-// The morph position on the Octatrack's 0..127 scale: 0 is all A, 64 the
+// The morph position in 128 steps, for the crossfader: 0 is all A, 64 the
 // midpoint, 127 all B.
 inline unsigned position(opxy::i32 value) { return value < 0 ? 0 : static_cast<unsigned>(value) >> 24; }
 }  // namespace morph
