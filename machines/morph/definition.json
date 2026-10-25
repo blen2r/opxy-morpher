@@ -7,6 +7,7 @@
       "id": "mode",
       "label": "Mode",
       "default": 0,
+      "press": "next",
       "mapping": {
         "kind": "enum",
         "labels": [

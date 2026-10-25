@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "sdk": "1.1",
+  "sdk": "1.2",
   "kind": "synth",
   "description": "Scene morpher page: mode, morph, scene A and scene B. Silent; the morph itself needs SDK hooks.",
   "identity": {
-    "engine": 36,
-    "page": 84
+    "engine": 48,
+    "page": 100
   }
 }

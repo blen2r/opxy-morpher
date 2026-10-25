@@ -8,7 +8,7 @@ has four controls.
 
 | Control | Values |
 | --- | --- |
-| Mode | play, write A, write B |
+| Mode | play, write A, write B: each detent of the knob moves one mode, and a press of the knob selects the next |
 | Morph | 0% (all scene A) to 100% (all scene B); 50% is the exact midpoint |
 | Scene A | off, 1–16 |
 | Scene B | off, 1–16 |
