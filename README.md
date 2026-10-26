@@ -34,13 +34,40 @@ alone, contributes the parameter's own value, so edits and parameter locks
 still show through. The blend is never saved: the project keeps its own
 values.
 
+### What wins: scenes, knobs and parameter locks
+
+For each parameter on another track:
+
+- **Neither scene sets it:** the morpher leaves it alone. Knobs, parameter
+  locks and LFOs work as usual.
+- **A scene sets it:** that side of the crossfader uses the scene's value.
+  The other side uses the other scene's value, or, if that scene doesn't set
+  it (or is off), the track's own value at that moment, which includes any
+  parameter lock playing on the current step.
+
+So a parameter lock is heard only as far as the crossfader leans toward a
+side that leaves the parameter alone. For example, scene A sets noise to 99
+and scene B doesn't set noise; track 1 has noise locked to 0 on one step:
+
+| Morph | Noise on the locked step | Noise on other steps |
+| --- | --- | --- |
+| 0% (all A) | 99 | 99 |
+| 50% | halfway between 99 and 0 | halfway between 99 and the track's noise |
+| 100% (all B) | 0 | the track's noise |
+
+The same goes for turning that track's knob while morphing: the turn changes
+the track's own value, which is saved with the project and comes back when
+the morpher stops overriding it, but at 0% here you won't hear it.
+
+Parameter locks are never written into a scene, even in a write mode: they
+stay locks on their step.
+
 ## Status
 
 The morpher needs the SDK's track control (SDK 1.2), which is not in a
 released SDK yet. Scenes live in memory only: they are lost when the OP-XY
-turns off and are shared by every project. Edits made while holding a step
-(parameter locks) are not recorded, and there is no way to clear a scene yet
-except turning the OP-XY off. An indicator on every screen and saving scenes
+turns off and are shared by every project. There is no way to clear a scene
+yet except turning the OP-XY off. An indicator on every screen and saving scenes
 with the project come next.
 
 ## Checks
