@@ -7,7 +7,6 @@
       "id": "mode",
       "label": "Mode",
       "default": 0,
-      "press": "next",
       "mapping": {
         "kind": "enum",
         "labels": [
@@ -105,7 +104,7 @@
       "stateAlignment": 4,
       "paths": 0,
       "points": 0,
-      "nodes": 25,
+      "nodes": 27,
       "texts": 0,
       "palette": 7
     },

@@ -1,9 +1,11 @@
 // The morph itself, on the GUI side once per tick. In write A or write B,
-// edits of other tracks' parameters are recorded into that side's scene; they
-// play while writing and are undone when the mode leaves write. In play,
-// every parameter scene A or B sets is overlaid with a blend of the two; a
-// side that is off, or a scene that leaves a parameter alone, contributes the
-// parameter's own value. Scenes live in RAM only, for every project.
+// edits of other tracks' parameters are recorded into that side's scene, which
+// plays alone, as at morph 0% or 100%, whatever the morph control says; the
+// edits are undone when the mode leaves write. Writing a side that is off
+// records nothing and plays as in play mode. In play, every parameter scene A
+// or B sets is overlaid with a blend of the two; a side that is off, or a scene
+// that leaves a parameter alone, contributes the parameter's own value. Scenes
+// live in RAM only, for every project.
 #include <opxy/q31.hpp>
 #include <opxy/track_control.hpp>
 #include "controls.h"
@@ -32,13 +34,15 @@ inline void control(ControlState& state, const opxy::control::Input& input, opxy
     const opxy::i32* own = input.values[input.track];
     const unsigned mode = choice(own[kModeSlot], kModes);
     const unsigned a = choice(own[kSceneASlot], kScenes), b = choice(own[kSceneBSlot], kScenes);
-    if (mode != kPlay) {
-        const unsigned target = mode == kWriteA ? a : b;
-        if (!target) return;
+    const unsigned target = mode == kWriteA ? a : mode == kWriteB ? b : 0;
+    if (target) {
+        Scene& scene = state.scenes[target];
         for (opxy::u32 i = 0; i < input.edit_count; ++i) {
             const opxy::control::Entry& e = input.edits[i];
-            record(state.scenes[target], e.track, e.index, e.value);
+            record(scene, e.track, e.index, e.value);
         }
+        for (opxy::u32 i = 0; i < scene.count; ++i)
+            opxy::control::add(overlay, scene.locks[i].track, scene.locks[i].index, scene.locks[i].value);
         overlay.capture = 1;
         return;
     }

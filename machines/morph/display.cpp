@@ -7,6 +7,10 @@ namespace morph {
 // Crossfader geometry, in pixels: ticks from x = 80 to 400 on y = 120, scene
 // markers beyond each end, the write dot at the top right.
 const opxy::i32 kLeft = 80, kRight = 400, kRow = 120, kMarkerLeft = 40, kMarkerRight = 440;
+// The centre of control position i's value in the header: its 60-pixel cell
+// from x = 60 + 120 i, 20 pixels tall.
+inline opxy::i32 header_x(unsigned i) { return 90 + 120 * static_cast<opxy::i32>(i); }
+const opxy::i32 kHeaderY = 10;
 
 inline void number(char* out, unsigned capacity, unsigned value) {
     char text[4];
@@ -51,26 +55,40 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     scene_name(frame.header[kSceneASlot], sizeof(frame.header[kSceneASlot]), a);
     scene_name(frame.header[kSceneBSlot], sizeof(frame.header[kSceneBSlot]), b);
 
+    // Writing plays the written scene alone, so the morph is not in effect:
+    // its thumb is hidden and its value boxed in red. Writing a side that is
+    // off records nothing; that side's scene is boxed in red instead.
+    const unsigned scenes[2] = {a, b}, writes[2] = {kWriteA, kWriteB};
+    const unsigned side = mode == kWriteB ? 1 : 0;
+    const bool writing = mode != kPlay && scenes[side];
+
     // The thumb sits where the shown percentage does, so at every 5% it is on a tick.
     const opxy::i32 thumb = kLeft + static_cast<opxy::i32>(p) * (kRight - kLeft) / 100;
     for (unsigned i = 0; i < kTicks; ++i) {
         const opxy::i32 x = kLeft + static_cast<opxy::i32>(i) * (kRight - kLeft) / (kTicks - 1);
         place(frame, i, x * unit, kRow * unit, unit, x <= thumb ? kWhite : kDim, fill_and_stroke);
     }
-    place(frame, kThumb, thumb * unit, kRow * unit, unit, kWhite, stroke);
+    if (writing)
+        hide(frame, kThumb);
+    else
+        place(frame, kThumb, thumb * unit, kRow * unit, unit, kWhite, stroke);
 
     // A marker is filled red while its scene is being written, outlined white
     // when a scene is chosen, and dim when that side is off.
-    const unsigned scenes[2] = {a, b}, writes[2] = {kWriteA, kWriteB};
     const opxy::i32 xs[2] = {kMarkerLeft, kMarkerRight};
-    for (unsigned side = 0; side < 2; ++side) {
-        const bool writing = mode == writes[side];
-        place(frame, kMarkerA + side, xs[side] * unit, kRow * unit, unit,
-              writing ? kRed : scenes[side] ? kRingWhite : kRingDim, fill_and_stroke);
-    }
-    if (mode == kPlay)
-        hide(frame, kWriteDot);
-    else
+    for (unsigned s = 0; s < 2; ++s)
+        place(frame, kMarkerA + s, xs[s] * unit, kRow * unit, unit,
+              writing && mode == writes[s] ? kRed : scenes[s] ? kRingWhite : kRingDim, fill_and_stroke);
+    if (writing) {
         place(frame, kWriteDot, 456 * unit, 44 * unit, unit, kRed, fill_and_stroke);
+        place(frame, kMorphBox, header_x(kMorphSlot) * unit, kHeaderY * unit, unit, kRed, stroke);
+    } else {
+        hide(frame, kWriteDot);
+        hide(frame, kMorphBox);
+    }
+    if (mode != kPlay && !scenes[side])
+        place(frame, kSceneBox, header_x(side ? kSceneBSlot : kSceneASlot) * unit, kHeaderY * unit, unit, kRed, stroke);
+    else
+        hide(frame, kSceneBox);
 }
 }

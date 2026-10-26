@@ -8,7 +8,7 @@ has four controls.
 
 | Control | Values |
 | --- | --- |
-| Mode | play, write A, write B: each detent of the knob moves one mode, and a press of the knob selects the next |
+| Mode | play, write A, write B: each detent of the knob moves one mode |
 | Morph | 0% (all scene A) to 100% (all scene B); 50% is the exact midpoint |
 | Scene A | off, 1–16 |
 | Scene B | off, 1–16 |
@@ -16,15 +16,22 @@ has four controls.
 "Off" leaves every parameter as it is on that side of the crossfader. All four
 controls can be sequenced and p-locked like any other track parameter.
 
-The page shows the crossfader, the two scene markers (dim when off) and, in a
-write mode, the marker being written filled red and a red dot at the top right.
+The page shows the crossfader, the two scene markers (dim when off) and, while
+writing, the marker being written filled red, a red dot at the top right and
+the morph's percentage boxed in red, with the crossfader's ring hidden.
 
 ## Writing scenes
 
 Choose a scene number for A (or B), set the mode to write A (or write B), and
 turn any encoder on another instrument track: each edit is recorded into that
-scene, and you hear it while writing. Leaving write mode puts every edited
-parameter back where it was. A scene holds up to 32 parameters.
+scene. While writing you hear that scene alone, as at morph 0% (or 100%), with
+your edits, whatever the morph control says: its ring is hidden and its
+percentage boxed in red until you return to play, where it carries on from
+where it was. Leaving write mode puts every edited parameter back where it
+was. A scene holds up to 32 parameters.
+
+Writing a side whose scene is off records nothing: that scene's "off" is boxed
+in red, and the morph plays as in play mode.
 
 ## Playing
 
@@ -57,7 +64,9 @@ and scene B doesn't set noise; track 1 has noise locked to 0 on one step:
 
 The same goes for turning that track's knob while morphing: the turn changes
 the track's own value, which is saved with the project and comes back when
-the morpher stops overriding it, but at 0% here you won't hear it.
+the morpher stops overriding it, but at 0% here you won't hear it. The
+track's page shows the morphed value, and the track's own value while you
+turn the knob.
 
 Parameter locks are never written into a scene, even in a write mode: they
 stay locks on their step.

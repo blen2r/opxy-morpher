@@ -37,9 +37,15 @@ int main() {
             input.slots[kSceneBSlot] = input.parameters[3] = word(16 - s, kScenes);
             display(state, input, frame);
             expect(opxy::draw::valid(frame), "valid frame");
-            const bool writing = mode != kPlay;
-            expect((frame.nodes[kWriteDot].x == opxy::draw::hidden_x * opxy::draw::unit) == !writing, "write dot");
-            expect((frame.nodes[kMarkerA].shade == kRed) == (mode == kWriteA), "marker A");
+            // Scene A is off when s is 0; scene B never is.
+            const bool writing = mode == kWriteB || (mode == kWriteA && s);
+            const auto hidden = [&](unsigned node) { return frame.nodes[node].x == opxy::draw::hidden_x * opxy::draw::unit; };
+            expect(hidden(kWriteDot) == !writing, "write dot");
+            expect(hidden(kThumb) == writing, "thumb hidden while writing");
+            expect(hidden(kMorphBox) == !writing, "morph boxed while writing");
+            expect(hidden(kSceneBox) == (mode == kPlay || writing), "off scene boxed while written");
+            expect(hidden(kSceneBox) || frame.nodes[kSceneBox].x == 330 * opxy::draw::unit, "scene A's box");
+            expect((frame.nodes[kMarkerA].shade == kRed) == (writing && mode == kWriteA), "marker A");
             expect((frame.nodes[kMarkerB].shade == kRed) == (mode == kWriteB), "marker B");
             // Both paint the fill, so a marker leaving red is repainted black.
             expect(frame.nodes[kMarkerA].paint == opxy::draw::fill_and_stroke &&
@@ -59,6 +65,7 @@ int main() {
         expect(same(text, s.text), "morph percent");
     }
     // At every 5% the thumb sits exactly on a tick, the ticks below it lit.
+    input.slots[kModeSlot] = word(kPlay, kModes);
     for (unsigned i = 0; i < kTicks; ++i) {
         input.slots[kMorphSlot] = static_cast<opxy::i32>((static_cast<unsigned long long>(i) * 0x7fffffff + 10) / 20);
         display(state, input, frame);
