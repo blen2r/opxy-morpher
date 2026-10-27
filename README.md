@@ -3,6 +3,8 @@
 An Octatrack-style parameter morpher for the OP-XY, built on the
 [Open-XY SDK](https://github.com/etcetc000/open-xy).
 
+New to Morph? Start with the [guide](GUIDE.md).
+
 The morpher is a silent synth: put it on an instrument track. Its page has
 two pages of four controls; pressing any knob switches between them.
 
