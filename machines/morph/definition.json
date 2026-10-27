@@ -3,6 +3,10 @@
   "id": "morph",
   "name": "Morph",
   "press": "page",
+  "hidePages": [
+    "envelope",
+    "filter"
+  ],
   "parameters": [
     {
       "id": "mode",

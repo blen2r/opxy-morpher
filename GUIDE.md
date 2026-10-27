@@ -19,7 +19,8 @@ engine and the other carries on, with its states intact.
 
 ## 2. the page
 
-morph has two pages of four knobs. press any knob to switch pages.
+morph has two pages of four knobs. press any knob to switch pages. morph has no envelope or
+filter, so M2 and M3 do nothing on its track; M4 opens its lfo as usual.
 
 ### 2.1 page 1
 
