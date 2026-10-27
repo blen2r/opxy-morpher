@@ -3,11 +3,11 @@
 
 namespace morph {
 // Parameter slots (definition.json).
-const unsigned kModeSlot = 0, kMorphSlot = 1, kSceneASlot = 2, kSceneBSlot = 3;
+const unsigned kModeSlot = 0, kMorphSlot = 1, kStateASlot = 2, kStateBSlot = 3;
 // Modes, in the order of the mode control's labels.
 const unsigned kPlay = 0, kWriteA = 1, kWriteB = 2, kModes = 3;
-// Scene 0 is "off": that side leaves every parameter as it is. Then 1..16.
-const unsigned kScenes = 17;
+// State 0 is "off": that side leaves every parameter as it is. Then 1..16.
+const unsigned kStates = 17;
 
 // An enum control's index, quantized like the stock Q31-to-Q15 path.
 inline unsigned choice(opxy::i32 value, unsigned count) {

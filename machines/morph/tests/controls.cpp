@@ -20,8 +20,8 @@ static opxy::i32 word(unsigned index, unsigned count) {
 int main() {
     using namespace morph;
     for (unsigned i = 0; i < kModes; ++i) expect(choice(word(i, kModes), kModes) == i, "mode round trip");
-    for (unsigned i = 0; i < kScenes; ++i) expect(choice(word(i, kScenes), kScenes) == i, "scene round trip");
-    expect(choice(0x7fffffff, kScenes) == 16 && choice(-1, kScenes) == 0, "scene ends");
+    for (unsigned i = 0; i < kStates; ++i) expect(choice(word(i, kStates), kStates) == i, "state round trip");
+    expect(choice(0x7fffffff, kStates) == 16 && choice(-1, kStates) == 0, "state ends");
     expect(percent(0) == 0 && percent(0x40000000) == 50 && percent(0x7fffffff) == 100 && percent(-1) == 0, "morph scale");
 
     static Frame frame;
@@ -33,28 +33,28 @@ int main() {
             const opxy::i32 morph = s == 0 ? 0 : s == 1 ? 0x40000000 : 0x7fffffff;
             input.slots[kModeSlot] = input.parameters[0] = word(mode, kModes);
             input.slots[kMorphSlot] = input.parameters[1] = morph;
-            input.slots[kSceneASlot] = input.parameters[2] = word(s * 5, kScenes);
-            input.slots[kSceneBSlot] = input.parameters[3] = word(16 - s, kScenes);
+            input.slots[kStateASlot] = input.parameters[2] = word(s * 5, kStates);
+            input.slots[kStateBSlot] = input.parameters[3] = word(16 - s, kStates);
             display(state, input, frame);
             expect(opxy::draw::valid(frame), "valid frame");
-            // Scene A is off when s is 0; scene B never is.
+            // State A is off when s is 0; state B never is.
             const bool writing = mode == kWriteB || (mode == kWriteA && s);
             const auto hidden = [&](unsigned node) { return frame.nodes[node].x == opxy::draw::hidden_x * opxy::draw::unit; };
             expect(hidden(kWriteDot) == !writing, "write dot");
             expect(hidden(kThumb) == writing, "thumb hidden while writing");
             expect(hidden(kMorphBox) == !writing, "morph boxed while writing");
-            expect(hidden(kSceneBox) == (mode == kPlay || writing), "off scene boxed while written");
-            expect(hidden(kSceneBox) || frame.nodes[kSceneBox].x == 330 * opxy::draw::unit, "scene A's box");
+            expect(hidden(kStateBox) == (mode == kPlay || writing), "off state boxed while written");
+            expect(hidden(kStateBox) || frame.nodes[kStateBox].x == 330 * opxy::draw::unit, "state A's box");
             expect((frame.nodes[kMarkerA].shade == kRed) == (writing && mode == kWriteA), "marker A");
             expect((frame.nodes[kMarkerB].shade == kRed) == (mode == kWriteB), "marker B");
             // Both paint the fill, so a marker leaving red is repainted black.
             expect(frame.nodes[kMarkerA].paint == opxy::draw::fill_and_stroke &&
                    frame.nodes[kMarkerB].paint == opxy::draw::fill_and_stroke, "marker fill");
             static const char* const modes[kModes] = {"play", "wr a", "wr b"};
-            static const char* const scenes[3][2] = {{"off", "16"}, {"5", "15"}, {"10", "14"}};
+            static const char* const states[3][2] = {{"off", "16"}, {"5", "15"}, {"10", "14"}};
             expect(same(frame.header[kModeSlot], modes[mode]), "mode header");
-            expect(same(frame.header[kSceneASlot], scenes[s][0]), "scene A header");
-            expect(same(frame.header[kSceneBSlot], scenes[s][1]), "scene B header");
+            expect(same(frame.header[kStateASlot], states[s][0]), "state A header");
+            expect(same(frame.header[kStateBSlot], states[s][1]), "state B header");
         }
     expect(same(frame.header[kMorphSlot], "100%"), "morph header at B");
     static const struct { opxy::i32 value; const char* text; } shown[] = {

@@ -29,8 +29,8 @@
       "display": "percent"
     },
     {
-      "id": "scene_a",
-      "label": "Scene A",
+      "id": "state_a",
+      "label": "State A",
       "default": 0,
       "mapping": {
         "kind": "enum",
@@ -57,8 +57,8 @@
       "display": "enum"
     },
     {
-      "id": "scene_b",
-      "label": "Scene B",
+      "id": "state_b",
+      "label": "State B",
       "default": 0,
       "mapping": {
         "kind": "enum",
@@ -89,8 +89,8 @@
     "Init": {
       "mode": 0,
       "morph": 0,
-      "scene_a": 0,
-      "scene_b": 0
+      "state_a": 0,
+      "state_b": 0
     }
   },
   "resources": {

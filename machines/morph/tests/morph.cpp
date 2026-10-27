@@ -1,4 +1,4 @@
-// Writing scenes from captured edits, and the morph between scenes A and B,
+// Writing states from captured edits, and the morph between states A and B,
 // as the SDK's track control runs them.
 #include "../control.cpp"
 #include <cstdio>
@@ -20,19 +20,19 @@ int main() {
     using namespace morph;
     static opxy::control::Input input;
     static opxy::control::Overlay overlay;
-    static ControlState state;
-    control_reset(state);
+    static ControlState saved;
+    control_reset(saved);
     input.track = 3;
     for (unsigned i = 0; i < 4; ++i) input.values[0][i] = 0x30000000;
     opxy::i32* own = input.values[3];
     const auto run = [&](unsigned mode, unsigned a, unsigned b, opxy::i32 position) {
         own[kModeSlot] = word(mode, kModes);
-        own[kSceneASlot] = word(a, kScenes);
-        own[kSceneBSlot] = word(b, kScenes);
+        own[kStateASlot] = word(a, kStates);
+        own[kStateBSlot] = word(b, kStates);
         own[kMorphSlot] = position;
         overlay.count = 0;
         overlay.capture = 0;
-        control(state, input, overlay);
+        control(saved, input, overlay);
         input.edit_count = 0;
     };
     const auto edit = [&](unsigned track, unsigned index, opxy::i32 value) {
@@ -44,28 +44,28 @@ int main() {
     };
 
     run(kPlay, 1, 2, 0x40000000);
-    expect(overlay.count == 0 && !overlay.capture, "empty scenes");
-    // Writing a side with scene off captures nothing.
+    expect(overlay.count == 0 && !overlay.capture, "empty states");
+    // Writing a side with state off captures nothing.
     run(kWriteA, 0, 2, 0);
     expect(!overlay.capture, "write to off");
-    // Write A into scene 1: edits are captured and recorded, and scene 1 plays
+    // Write A into state 1: edits are captured and recorded, and state 1 plays
     // alone whatever the morph, its new edits included.
     edit(0, 1, 0x10000000);
     edit(0, 2, 0x20000000);
     edit(0, 1, 0);
     run(kWriteA, 1, 2, 0x7fffffff);
-    expect(overlay.capture && state.scenes[1].count == 2 && overlay.count == 2, "write A");
+    expect(overlay.capture && saved.states[1].count == 2 && overlay.count == 2, "write A");
     expect(overlay.entries[0].index == 1 && overlay.entries[0].value == 0 &&
-           overlay.entries[1].index == 2 && overlay.entries[1].value == 0x20000000, "write A plays scene A");
+           overlay.entries[1].index == 2 && overlay.entries[1].value == 0x20000000, "write A plays state A");
     edit(0, 2, 0x7fffffff);
     run(kWriteB, 1, 2, 0);
-    expect(overlay.capture && state.scenes[2].count == 1, "write B");
-    expect(overlay.count == 1 && overlay.entries[0].value == 0x7fffffff, "write B plays scene B alone");
+    expect(overlay.capture && saved.states[2].count == 1, "write B");
+    expect(overlay.count == 1 && overlay.entries[0].value == 0x7fffffff, "write B plays state B alone");
     // Writing an off side records nothing and plays as in play mode.
     edit(0, 3, 5);
     run(kWriteA, 0, 2, 0x7fffffff);
     expect(!overlay.capture && overlay.count == 1 && distance(overlay.entries[0].value, 0x7fffffff) <= 2, "write to off plays");
-    expect(!find(state.scenes[2], 0, 3), "write to off records nothing");
+    expect(!find(saved.states[2], 0, 3), "write to off records nothing");
 
     run(kPlay, 1, 2, 0);
     expect(!overlay.capture && overlay.count == 2, "play overlays the union");
@@ -80,13 +80,13 @@ int main() {
     run(kPlay, 0, 2, 0);
     expect(overlay.count == 1 && overlay.entries[0].value == 0x30000000, "A off");
     run(kPlay, 2, 2, 0x20000000);
-    expect(overlay.count == 1 && overlay.entries[0].value == 0x7fffffff, "same scene");
-    // Scenes outlast a reset; a full scene keeps what it has.
-    control_reset(state);
+    expect(overlay.count == 1 && overlay.entries[0].value == 0x7fffffff, "same state");
+    // States outlast a reset; a full state keeps what it has.
+    control_reset(saved);
     for (unsigned i = 0; i < 20; ++i) edit(1, i, 5);
     run(kWriteA, 3, 0, 0);
     for (unsigned i = 20; i < 40; ++i) edit(1, i, 5);
     run(kWriteA, 3, 0, 0);
-    expect(state.scenes[1].count == 2 && state.scenes[3].count == kSceneLocks, "full scene");
+    expect(saved.states[1].count == 2 && saved.states[3].count == kStateLocks, "full state");
     return failures ? 1 : 0;
 }

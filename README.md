@@ -1,6 +1,6 @@
 # Morph
 
-An Octatrack-style scene morpher for the OP-XY, built on the
+An Octatrack-style parameter morpher for the OP-XY, built on the
 [Open-XY SDK](https://github.com/etcetc000/open-xy).
 
 The morpher is a silent synth: put it on an instrument track and its page
@@ -9,52 +9,55 @@ has four controls.
 | Control | Values |
 | --- | --- |
 | Mode | play, write A, write B: each detent of the knob moves one mode |
-| Morph | 0% (all scene A) to 100% (all scene B); 50% is the exact midpoint |
-| Scene A | off, 1–16 |
-| Scene B | off, 1–16 |
+| Morph | 0% (all state A) to 100% (all state B); 50% is the exact midpoint |
+| State A | off, 1–16 |
+| State B | off, 1–16 |
+
+A state is a set of parameter values on other tracks, what the Octatrack calls
+a scene (the OP-XY already uses "scene" for its sequencer).
 
 "Off" leaves every parameter as it is on that side of the crossfader. All four
 controls can be sequenced and p-locked like any other track parameter.
 
-The page shows the crossfader, the two scene markers (dim when off) and, while
+The page shows the crossfader, the two state markers (dim when off) and, while
 writing, the marker being written filled red, a red dot at the top right and
 the morph's percentage boxed in red, with the crossfader's ring hidden.
 
-## Writing scenes
+## Writing states
 
-Choose a scene number for A (or B), set the mode to write A (or write B), and
+Choose a state number for A (or B), set the mode to write A (or write B), and
 turn any encoder on another instrument track: each edit is recorded into that
-scene. While writing you hear that scene alone, as at morph 0% (or 100%), with
+state. While writing you hear that state alone, as at morph 0% (or 100%), with
 your edits, whatever the morph control says: its ring is hidden and its
 percentage boxed in red until you return to play, where it carries on from
 where it was. Leaving write mode puts every edited parameter back where it
-was. A scene holds up to 32 parameters.
+was. A state holds up to 32 parameters.
 
-Writing a side whose scene is off records nothing: that scene's "off" is boxed
+Writing a side whose state is off records nothing: that state's "off" is boxed
 in red, and the morph plays as in play mode.
 
 ## Playing
 
-In play mode the morpher blends every parameter scene A or B sets on the other
-instrument tracks. A side that is off, or a scene that leaves a parameter
+In play mode the morpher blends every parameter state A or B sets on the other
+instrument tracks. A side that is off, or a state that leaves a parameter
 alone, contributes the parameter's own value, so edits and parameter locks
 still show through. The blend is never saved: the project keeps its own
 values.
 
-### What wins: scenes, knobs and parameter locks
+### What wins: states, knobs and parameter locks
 
 For each parameter on another track:
 
-- **Neither scene sets it:** the morpher leaves it alone. Knobs, parameter
+- **Neither state sets it:** the morpher leaves it alone. Knobs, parameter
   locks and LFOs work as usual.
-- **A scene sets it:** that side of the crossfader uses the scene's value.
-  The other side uses the other scene's value, or, if that scene doesn't set
+- **A state sets it:** that side of the crossfader uses the state's value.
+  The other side uses the other state's value, or, if that state doesn't set
   it (or is off), the track's own value at that moment, which includes any
   parameter lock playing on the current step.
 
 So a parameter lock is heard only as far as the crossfader leans toward a
-side that leaves the parameter alone. For example, scene A sets noise to 99
-and scene B doesn't set noise; track 1 has noise locked to 0 on one step:
+side that leaves the parameter alone. For example, state A sets noise to 99
+and state B doesn't set noise; track 1 has noise locked to 0 on one step:
 
 | Morph | Noise on the locked step | Noise on other steps |
 | --- | --- | --- |
@@ -68,15 +71,15 @@ the morpher stops overriding it, but at 0% here you won't hear it. The
 track's page shows the morphed value, and the track's own value while you
 turn the knob.
 
-Parameter locks are never written into a scene, even in a write mode: they
+Parameter locks are never written into a state, even in a write mode: they
 stay locks on their step.
 
 ## Status
 
 The morpher needs the SDK's track control (SDK 1.4), which is not in a
-released SDK yet. Scenes live in memory only: they are lost when the OP-XY
-turns off and are shared by every project. There is no way to clear a scene
-yet except turning the OP-XY off. An indicator on every screen and saving scenes
+released SDK yet. States live in memory only: they are lost when the OP-XY
+turns off and are shared by every project. There is no way to clear a state
+yet except turning the OP-XY off. An indicator on every screen and saving states
 with the project come next.
 
 ## Checks

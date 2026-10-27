@@ -2,7 +2,7 @@
   "schema": 1,
   "sdk": "1.4",
   "kind": "synth",
-  "description": "Scene morpher: mode, morph, scene A and scene B. Silent; morphs other tracks' parameters between two scenes.",
+  "description": "Parameter morpher: mode, morph, state A and state B. Silent; morphs other tracks' parameters between two states.",
   "identity": {
     "engine": 48,
     "page": 100
