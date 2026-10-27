@@ -60,8 +60,8 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     // every copy's page says so instead of showing the crossfader.
     if (opxy::control::copies(input.track) > 1) {
         for (unsigned i = 0; i <= kStateBox; ++i) hide(frame, i);
-        text(frame, kCopiesTitle, 96 * unit, 112 * unit, unit, "ONLY ONE MORPH ALLOWED");
-        text(frame, kCopiesHint, 150 * unit, 148 * unit, unit, "remove the extra Morphs");
+        text(frame, kCopiesTitle, 72 * unit, 112 * unit, unit, "ONLY ONE MORPH ALLOWED");
+        text(frame, kCopiesHint, 128 * unit, 148 * unit, unit, "remove the extra Morphs");
         return;
     }
     text(frame, kCopiesTitle, hidden_x * unit, hidden_y * unit, unit, "");

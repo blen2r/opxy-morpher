@@ -23,6 +23,10 @@ The page shows the crossfader, the two state markers (dim when off) and, while
 writing, the marker being written filled red, a red dot at the top right and
 the morph's percentage boxed in red, with the crossfader's ring hidden.
 
+Other pages show what Morph is doing too: while you write a state, every page
+has a red frame at the screen's edge, and the page of a track Morph is
+changing has a thin dark red frame.
+
 ## Writing states
 
 Choose a state number for A (or B), set the mode to write A (or write B), and
@@ -31,7 +35,8 @@ state. While writing you hear that state alone, as at morph 0% (or 100%), with
 your edits, whatever the morph control says: its ring is hidden and its
 percentage boxed in red until you return to play, where it carries on from
 where it was. Leaving write mode puts every edited parameter back where it
-was. A state holds up to 32 parameters.
+was. A state holds up to 32 parameters. Only the instrument tracks (1–8) are
+recorded: knobs turned on the auxiliary tracks (9–16) are not.
 
 Writing a side whose state is off records nothing: that state's "off" is boxed
 in red, and the morph plays as in play mode.
