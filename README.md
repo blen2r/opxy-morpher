@@ -73,7 +73,7 @@ stay locks on their step.
 
 ## Status
 
-The morpher needs the SDK's track control (SDK 1.2), which is not in a
+The morpher needs the SDK's track control (SDK 1.4), which is not in a
 released SDK yet. Scenes live in memory only: they are lost when the OP-XY
 turns off and are shared by every project. There is no way to clear a scene
 yet except turning the OP-XY off. An indicator on every screen and saving scenes

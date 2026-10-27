@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "sdk": "1.2",
+  "sdk": "1.4",
   "kind": "synth",
   "description": "Scene morpher: mode, morph, scene A and scene B. Silent; morphs other tracks' parameters between two scenes.",
   "identity": {
