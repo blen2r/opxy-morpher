@@ -94,5 +94,32 @@ int main() {
     for (unsigned i = 20; i < 40; ++i) edit(1, i, 5);
     run(kWriteA, 3, 0, 0);
     expect(saved.states[1].count == 2 && saved.states[3].count == kStateLocks, "full state");
+
+    // States go with the project: saved, loaded back, and emptied by a project without them.
+    static opxy::u8 data[opxy::control::saved_capacity];
+    const opxy::u32 bytes = control_save(saved, data, kSavedBytes);
+    opxy::u32 locks = 0;
+    for (unsigned s = 1; s < kStates; ++s) locks += saved.states[s].count;
+    expect(bytes == 1 + 16 + locks * 6 && control_save(saved, data, kSavedBytes - 1) == 0, "save size");
+    static ControlState loaded;
+    control_load(loaded, data, bytes);
+    bool same = true;
+    for (unsigned s = 0; s < kStates; ++s) {
+        same = same && loaded.states[s].count == saved.states[s].count;
+        for (unsigned i = 0; i < saved.states[s].count; ++i) {
+            const Lock &x = loaded.states[s].locks[i], &y = saved.states[s].locks[i];
+            same = same && x.track == y.track && x.index == y.index && x.value == y.value;
+        }
+    }
+    expect(same, "states round trip");
+    data[0] = 2;
+    control_load(loaded, data, bytes);
+    expect(loaded.states[1].count == 0 && loaded.states[3].count == 0, "unknown format starts empty");
+    data[0] = kSavedFormat;
+    control_load(loaded, data, bytes - 1);
+    expect(loaded.states[1].count == 0, "truncated data starts empty");
+    control_load(loaded, data, bytes);
+    control_load(loaded, data, 0);
+    expect(loaded.states[1].count == 0 && loaded.states[3].count == 0, "project without states starts empty");
     return failures ? 1 : 0;
 }

@@ -92,10 +92,11 @@ left. States are kept, whichever track Morph is on.
 ## Status
 
 The morpher needs the SDK's track control (SDK 1.4), which is not in a
-released SDK yet. States live in memory only: they are lost when the OP-XY
-turns off and are shared by every project. There is no way to clear a state
-yet except turning the OP-XY off. An indicator on every screen and saving states
-with the project come next.
+released SDK yet. States are saved with the project, in the companion file
+beside it (`song.oxy` beside `song.xy`; copy both when you share a project),
+and come back when it loads. A project saved without them, or on stock
+firmware since, starts with every state empty. There is no way to clear a
+single state yet.
 
 A possible later upgrade: Morph on an auxiliary track (track 12, CV out, chosen
 with Shift + M1) instead of an instrument track, so it doesn't use up one of

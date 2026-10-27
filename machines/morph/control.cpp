@@ -5,7 +5,7 @@
 // records nothing and plays as in play mode. In play, every parameter state A
 // or B sets is overlaid with a blend of the two; a side that is off, or a state
 // that leaves a parameter alone, contributes the parameter's own value. States
-// live in RAM only, for every project.
+// are kept with each project (control_save, control_load).
 #include <opxy/q31.hpp>
 #include <opxy/track_control.hpp>
 #include "controls.h"
@@ -18,6 +18,51 @@ const State kEmpty = {0, {}};
 
 // States outlast a move to another track.
 inline void control_reset(ControlState&) {}
+
+// What a project keeps (definition.json's savedBytes): a format byte, then for
+// states 1..16 their count and each parameter as track, index and the value's
+// four bytes, low first.
+const opxy::u8 kSavedFormat = 1;
+const opxy::u32 kSavedBytes = 1 + (kStates - 1) * (1 + kStateLocks * 6);
+
+inline opxy::u32 control_save(const ControlState& saved, opxy::u8* data, opxy::u32 capacity) {
+    if (capacity < kSavedBytes) return 0;
+    opxy::u32 n = 0;
+    data[n++] = kSavedFormat;
+    for (unsigned s = 1; s < kStates; ++s) {
+        const State& state = saved.states[s];
+        data[n++] = static_cast<opxy::u8>(state.count);
+        for (opxy::u32 i = 0; i < state.count; ++i) {
+            const Lock& lock = state.locks[i];
+            const opxy::u32 value = static_cast<opxy::u32>(lock.value);
+            data[n++] = lock.track;
+            data[n++] = lock.index;
+            for (unsigned b = 0; b < 4; ++b) data[n++] = static_cast<opxy::u8>(value >> (8 * b));
+        }
+    }
+    return n;
+}
+
+// A project's states, or none: a project saved without them starts empty, and
+// so does one whose data this version cannot read.
+inline void control_load(ControlState& saved, const opxy::u8* data, opxy::u32 bytes) {
+    for (unsigned s = 0; s < kStates; ++s) saved.states[s].count = 0;
+    if (!bytes || data[0] != kSavedFormat) return;
+    opxy::u32 n = 1;
+    for (unsigned s = 1; s < kStates; ++s) {
+        const opxy::u32 count = n < bytes ? data[n++] : kStateLocks + 1;
+        if (count > kStateLocks || n + count * 6 > bytes || (s == kStates - 1 && n + count * 6 != bytes)) {
+            for (unsigned t = 0; t < kStates; ++t) saved.states[t].count = 0;
+            return;
+        }
+        for (opxy::u32 i = 0; i < count; ++i, n += 6) {
+            const opxy::u32 value = data[n + 2] | data[n + 3] << 8 | data[n + 4] << 16 |
+                                    static_cast<opxy::u32>(data[n + 5]) << 24;
+            if (data[n] < opxy::control::tracks && data[n + 1] < opxy::control::track_parameters)
+                record(saved.states[s], data[n], data[n + 1], static_cast<opxy::i32>(value));
+        }
+    }
+}
 
 // Overlays one parameter, unless the state on the other side already did.
 inline void blend(const opxy::control::Input& input, opxy::control::Overlay& overlay, const State& from,
