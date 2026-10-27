@@ -19,7 +19,7 @@ The other three page 2 controls are spare, for later features.
 A state is a set of parameter values on other tracks, what the Octatrack calls
 a scene (the OP-XY already uses "scene" for its sequencer).
 
-"Off" leaves every parameter as it is on that side of the crossfader. All four
+"Off" leaves every parameter as it is on that side of the crossfader. All the
 controls can be sequenced and p-locked like any other track parameter.
 
 The page shows the crossfader, the two state markers (dim when off) and, while
