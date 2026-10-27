@@ -74,6 +74,13 @@ turn the knob.
 Parameter locks are never written into a state, even in a write mode: they
 stay locks on their step.
 
+## One Morph at a time
+
+Only one Morph can run. If more than one instrument track holds Morph, none of
+them morphs: every track goes back to its own values, an unfinished write is
+undone, and each Morph page shows "ONLY ONE MORPH ALLOWED" until only one is
+left. States are kept, whichever track Morph is on.
+
 ## Status
 
 The morpher needs the SDK's track control (SDK 1.4), which is not in a
@@ -81,6 +88,11 @@ released SDK yet. States live in memory only: they are lost when the OP-XY
 turns off and are shared by every project. There is no way to clear a state
 yet except turning the OP-XY off. An indicator on every screen and saving states
 with the project come next.
+
+A possible later upgrade: Morph on an auxiliary track (track 12, CV out, chosen
+with Shift + M1) instead of an instrument track, so it doesn't use up one of
+the eight sound tracks. It needs more firmware hooks (silencing the CV output
+while Morph holds the track), so it waits until the rest is finished.
 
 ## Checks
 

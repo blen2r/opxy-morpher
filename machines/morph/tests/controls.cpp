@@ -3,6 +3,10 @@
 #include "../display.cpp"
 #include <cstdio>
 
+// The SDK's count of tracks holding this machine, as the test sets it.
+static opxy::u32 copies_now = 1;
+extern "C" opxy::u32 sdk_control_copies(opxy::u32) { return copies_now; }
+
 static int failures = 0;
 static void expect(bool ok, const char* what) {
     if (!ok) { std::printf("FAIL %s\n", what); ++failures; }
@@ -72,5 +76,19 @@ int main() {
         expect(frame.nodes[kThumb].x == frame.nodes[i].x, "thumb on its tick");
         for (unsigned j = 0; j < kTicks; ++j) expect((frame.nodes[j].shade == kWhite) == (j <= i), "lit ticks");
     }
+    expect(frame.texts[kCopiesTitle].chars[0] == 0 && frame.texts[kCopiesHint].chars[0] == 0, "no copies message");
+    // A second copy anywhere: the page asks to remove it and hides the crossfader.
+    copies_now = 2;
+    display(state, input, frame);
+    expect(same(frame.texts[kCopiesTitle].chars, "ONLY ONE MORPH ALLOWED") &&
+           same(frame.texts[kCopiesHint].chars, "remove the extra Morphs"), "copies message");
+    bool hidden = true;
+    for (unsigned i = 0; i <= kStateBox; ++i) hidden = hidden && frame.nodes[i].x == opxy::draw::hidden_x * opxy::draw::unit;
+    expect(hidden, "crossfader hidden with copies");
+    expect(opxy::draw::valid(frame), "copies frame valid");
+    copies_now = 1;
+    display(state, input, frame);
+    expect(frame.texts[kCopiesTitle].chars[0] == 0 && frame.nodes[kThumb].x != opxy::draw::hidden_x * opxy::draw::unit,
+           "crossfader back with one copy");
     return failures ? 1 : 0;
 }
