@@ -29,8 +29,8 @@ morph has two pages of four knobs. press any knob to switch pages.
 - knob 4, state b: off, or a state from 1 to 16.
 
 the shape in the middle is the morph: a circle at 0% (state a), a square at 100% (state b), and
-in between as you turn. the crossfader under it has a tick every 5%. the circle on the left and
-the square on the right stand for states a and b, and are dim when their state is off.
+in between as you turn. the circle on the left and the square on the right stand for states a
+and b, and are dim when their state is off.
 
 ### 2.2 page 2
 

@@ -6,10 +6,8 @@
 
 namespace morph {
 // Geometry, in pixels: the shape in the middle at 1.5x, the state markers
-// beside it, the crossfader's ticks from x = 80 to 400 along the bottom, the
-// write dot at the top right.
+// beside it, the write dot at the top right.
 const opxy::i32 kCentreX = 240, kCentreY = 112, kMarkerLeft = 40, kMarkerRight = 440;
-const opxy::i32 kLeft = 80, kRight = 400, kRow = 204;
 // The shape's circle radius and square half-side, chosen for about the same area.
 const opxy::i32 kRadius = 48, kHalfSide = 42;
 // cos(k * 2 pi / 64) for k = 0..16, Q10.
@@ -92,7 +90,7 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     }
 
     // Only one Morph runs: while another track holds one too, none does, and
-    // every copy's page says so instead of showing the shape and crossfader.
+    // every copy's page says so instead of showing the shape.
     if (opxy::control::copies(input.track) > 1) {
         for (unsigned i = 0; i <= kStateBox; ++i) hide(frame, i);
         text(frame, kCopiesTitle, 72 * unit, 112 * unit, unit, "ONLY ONE MORPH ALLOWED");
@@ -103,7 +101,7 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     text(frame, kCopiesHint, hidden_x * unit, hidden_y * unit, unit, "");
 
     // Writing plays the written state alone, so the morph is not in effect:
-    // its thumb is hidden and its value boxed in red. Writing a side that is
+    // its value is boxed in red. Writing a side that is
     // off records nothing; that side's state is boxed in red instead.
     const unsigned states[2] = {a, b}, writes[2] = {kWriteA, kWriteB};
     const unsigned side = mode == kWriteB ? 1 : 0;
@@ -113,17 +111,6 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     const opxy::i32 q15 = input.slots[kMorphSlot] < 0 ? 0 : input.slots[kMorphSlot] >> 16;
     shape(frame, writing ? (side ? 32768 : 0) : q15 >= 32767 ? 32768 : q15);
     place(frame, kShape, kCentreX * unit, kCentreY * unit, unit + unit / 2, writing ? kShapeRed : kShapeWhite, stroke);
-
-    // The thumb sits where the shown percentage does, so at every 5% it is on a tick.
-    const opxy::i32 thumb = kLeft + static_cast<opxy::i32>(p) * (kRight - kLeft) / 100;
-    for (unsigned i = 0; i < kTicks; ++i) {
-        const opxy::i32 x = kLeft + static_cast<opxy::i32>(i) * (kRight - kLeft) / (kTicks - 1);
-        place(frame, kTick0 + i, x * unit, kRow * unit, unit, x <= thumb ? kWhite : kDim, fill_and_stroke);
-    }
-    if (writing)
-        hide(frame, kThumb);
-    else
-        place(frame, kThumb, thumb * unit, kRow * unit, unit, kWhite, stroke);
 
     // A marker is outlined red while its state is being written, white when a
     // state is chosen, and dim when that side is off.

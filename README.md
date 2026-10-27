@@ -25,11 +25,10 @@ a scene (the OP-XY already uses "scene" for its sequencer).
 controls can be sequenced and p-locked like any other track parameter.
 
 The page shows a shape that morphs from a circle (state A, at 0%) to a square
-(state B, at 100%), a crossfader under it with a tick every 5%, and the two
-state markers beside it, a circle and a square (dim when off). While writing,
-the shape shows the state being written, in red, the marker being written is
-red, a red dot shows at the top right and the morph's percentage is boxed in
-red, with the crossfader's ring hidden.
+(state B, at 100%), and the two state markers beside it, a circle and a square
+(dim when off). While writing, the shape shows the state being written, in
+red, the marker being written is red, a red dot shows at the top right and the
+morph's percentage is boxed in red.
 
 Other pages show what Morph is doing too: while you write a state, every page
 has a red frame at the screen's edge, and the page of a track Morph is
@@ -40,8 +39,8 @@ changing has a thin dark red frame (unless Frame is off).
 Choose a state number for A (or B), set the mode to write A (or write B), and
 turn any encoder on another instrument track: each edit is recorded into that
 state. While writing you hear that state alone, as at morph 0% (or 100%), with
-your edits, whatever the morph control says: its ring is hidden and its
-percentage boxed in red until you return to play, where it carries on from
+your edits, whatever the morph control says: its percentage is boxed in red
+until you return to play, where it carries on from
 where it was. Leaving write mode puts every edited parameter back where it
 was. A state holds up to 32 parameters. Only the instrument tracks (1–8) are
 recorded: knobs turned on the auxiliary tracks (9–16) are not.

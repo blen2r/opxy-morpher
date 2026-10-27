@@ -45,7 +45,6 @@ int main() {
             const bool writing = mode == kWriteB || (mode == kWriteA && s);
             const auto hidden = [&](unsigned node) { return frame.nodes[node].x == opxy::draw::hidden_x * opxy::draw::unit; };
             expect(hidden(kWriteDot) == !writing, "write dot");
-            expect(hidden(kThumb) == writing, "thumb hidden while writing");
             expect(hidden(kMorphBox) == !writing, "morph boxed while writing");
             expect(hidden(kStateBox) == (mode == kPlay || writing), "off state boxed while written");
             expect(hidden(kStateBox) || frame.nodes[kStateBox].x == 330 * opxy::draw::unit, "state A's box");
@@ -68,14 +67,6 @@ int main() {
     for (const auto& s : shown) {
         percent_text(text, sizeof(text), percent(s.value));
         expect(same(text, s.text), "morph percent");
-    }
-    // At every 5% the thumb sits exactly on a tick, the ticks below it lit.
-    input.slots[kModeSlot] = word(kPlay, kModes);
-    for (unsigned i = 0; i < kTicks; ++i) {
-        input.slots[kMorphSlot] = static_cast<opxy::i32>((static_cast<unsigned long long>(i) * 0x7fffffff + 10) / 20);
-        display(state, input, frame);
-        expect(frame.nodes[kThumb].x == frame.nodes[kTick0 + i].x, "thumb on its tick");
-        for (unsigned j = 0; j < kTicks; ++j) expect((frame.nodes[kTick0 + j].shade == kWhite) == (j <= i), "lit ticks");
     }
     // The shape: a circle at 0%, a square with exact corners at 100%, inside the path bounds.
     const auto point = [&](unsigned i) { return frame.paths[0].points[i]; };
@@ -117,11 +108,11 @@ int main() {
            same(frame.texts[kCopiesHint].chars, "remove the extra Morphs"), "copies message");
     bool hidden = true;
     for (unsigned i = 0; i <= kStateBox; ++i) hidden = hidden && frame.nodes[i].x == opxy::draw::hidden_x * opxy::draw::unit;
-    expect(hidden, "crossfader hidden with copies");
+    expect(hidden, "shape hidden with copies");
     expect(opxy::draw::valid(frame), "copies frame valid");
     copies_now = 1;
     display(state, input, frame);
-    expect(frame.texts[kCopiesTitle].chars[0] == 0 && frame.nodes[kThumb].x != opxy::draw::hidden_x * opxy::draw::unit,
-           "crossfader back with one copy");
+    expect(frame.texts[kCopiesTitle].chars[0] == 0 && frame.nodes[kShape].x != opxy::draw::hidden_x * opxy::draw::unit,
+           "shape back with one copy");
     return failures ? 1 : 0;
 }

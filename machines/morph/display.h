@@ -3,13 +3,13 @@
 
 namespace morph {
 // A shape between a circle (state A) and a square (state B), whose 64 points
-// the morph moves (node 0, path 0); under it a crossfader of 21 ticks, one
-// every 5% (nodes 1..21), and its thumb (22); the state A and B markers, a
-// circle and a square (23, 24); the write dot (25); and two red boxes around
-// header values: the morph's (26) and an off state's (27). Two red text lines
-// (0, 1) ask to remove extra copies.
-const unsigned kShape = 0, kTick0 = 1, kTicks = 21, kThumb = 22, kMarkerA = 23, kMarkerB = 24, kWriteDot = 25;
-const unsigned kMorphBox = 26, kStateBox = 27, kNodes = 28, kShapePoints = 64;
+// the morph moves (node 0, path 0); the state A and B markers beside it, a
+// circle and a square (1, 2); the write dot (3); and two red boxes around
+// header values: the morph's (4) and an off state's (5). Two red text lines
+// (0, 1) ask to remove extra copies. (Until 30b3d6c a crossfader of 21 ticks
+// and a ring sat under the shape.)
+const unsigned kShape = 0, kMarkerA = 1, kMarkerB = 2, kWriteDot = 3;
+const unsigned kMorphBox = 4, kStateBox = 5, kNodes = 6, kShapePoints = 64;
 // Palette: black, dim, mid grey, white, red, then a black fill with a white,
 // dim or red outline, then the shape's white or red line. The device changes a
 // fill only on fill-and-stroke paint, so a marker always paints both and an
