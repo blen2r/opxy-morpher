@@ -101,3 +101,6 @@ From this repository, with the SDK checked out beside it:
 ```sh
 python ../open-xy/sdk.py test --machine machines/morph --firmware
 ```
+
+On an OP-XY, [QA.md](QA.md) lists the checks by area; running every section is
+the end-to-end test.
