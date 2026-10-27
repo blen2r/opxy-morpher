@@ -69,10 +69,18 @@ Report a failure with the section, the line and what you saw. A photo of the scr
 - [ ] Change track 4 away from Morph: track 2's page is back and the morph applies again, states intact
 - [ ] In wr a on track 2, add a second Morph: the edits made while writing are undone
 
+## Saving states
+
+- [ ] Write states 1 and 2, save the project, power off and on, load it: morph 0% → 100% still moves
+      between them
+- [ ] The project folder has `<name>.oxy` beside `<name>.xy` (over MTP)
+- [ ] Load a project saved before states existed: every state is empty
+- [ ] Load the first project again: its states are back
+- [ ] Write a state and power off without saving: after power on, the state is still there
+
 ## Known limits
 
 Not failures, but worth confirming they haven't changed:
 
 - An LFO on Morph's morph knob moves the morph only while Morph's page is shown.
-- States are lost when the OP-XY turns off.
 - A parameter lock holds until the pattern loops, not just for its step (stock behaviour).

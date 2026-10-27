@@ -97,7 +97,8 @@ lock state a or state b on different steps to switch states as the pattern plays
 ## 5. saving
 
 states are saved with the project. morph keeps them in a small file beside the project
-(song.oxy beside song.xy): copy both when you share a project.
+(song.oxy beside song.xy): copy both when you share a project. like everything else in the
+project you are working on, they survive switching the op-xy off, even without saving.
 
 load a project and its states come back. a project saved without them starts with all 16 empty.
 
