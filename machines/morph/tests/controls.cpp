@@ -49,11 +49,12 @@ int main() {
             expect(hidden(kMorphBox) == !writing, "morph boxed while writing");
             expect(hidden(kStateBox) == (mode == kPlay || writing), "off state boxed while written");
             expect(hidden(kStateBox) || frame.nodes[kStateBox].x == 330 * opxy::draw::unit, "state A's box");
-            expect((frame.nodes[kMarkerA].shade == kRed) == (writing && mode == kWriteA), "marker A");
-            expect((frame.nodes[kMarkerB].shade == kRed) == (mode == kWriteB), "marker B");
-            // Both paint the fill, so a marker leaving red is repainted black.
+            expect((frame.nodes[kMarkerA].shade == kRingRed) == (writing && mode == kWriteA), "marker A");
+            expect((frame.nodes[kMarkerB].shade == kRingRed) == (mode == kWriteB), "marker B");
+            // The circle paints its fill black; the square is an outline.
             expect(frame.nodes[kMarkerA].paint == opxy::draw::fill_and_stroke &&
-                   frame.nodes[kMarkerB].paint == opxy::draw::fill_and_stroke, "marker fill");
+                   frame.nodes[kMarkerB].paint == opxy::draw::stroke, "marker paint");
+            expect(frame.nodes[kShape].shade == (writing ? kShapeRed : kShapeWhite), "shape colour");
             static const char* const modes[kModes] = {"play", "wr a", "wr b"};
             static const char* const states[3][2] = {{"off", "16"}, {"5", "15"}, {"10", "14"}};
             expect(same(frame.header[kModeSlot], modes[mode]), "mode header");
@@ -73,9 +74,26 @@ int main() {
     for (unsigned i = 0; i < kTicks; ++i) {
         input.slots[kMorphSlot] = static_cast<opxy::i32>((static_cast<unsigned long long>(i) * 0x7fffffff + 10) / 20);
         display(state, input, frame);
-        expect(frame.nodes[kThumb].x == frame.nodes[i].x, "thumb on its tick");
-        for (unsigned j = 0; j < kTicks; ++j) expect((frame.nodes[j].shade == kWhite) == (j <= i), "lit ticks");
+        expect(frame.nodes[kThumb].x == frame.nodes[kTick0 + i].x, "thumb on its tick");
+        for (unsigned j = 0; j < kTicks; ++j) expect((frame.nodes[kTick0 + j].shade == kWhite) == (j <= i), "lit ticks");
     }
+    // The shape: a circle at 0%, a square with exact corners at 100%, inside the path bounds.
+    const auto point = [&](unsigned i) { return frame.paths[0].points[i]; };
+    input.slots[kModeSlot] = word(kPlay, kModes);
+    input.slots[kMorphSlot] = 0;
+    display(state, input, frame);
+    expect(point(0).x == 48 * 1024 && point(0).y == 0 && point(8).x == point(8).y && point(8).x == 724 * 48,
+           "circle at 0%");
+    input.slots[kMorphSlot] = 0x7fffffff;
+    display(state, input, frame);
+    expect(point(8).x == 42 * 1024 && point(8).y == 42 * 1024 && point(24).x == -42 * 1024 && point(0).x == 42 * 1024 &&
+           point(4).x == 42 * 1024, "square with exact corners at 100%");
+    const opxy::u32 square = frame.paths[0].key;
+    input.slots[kMorphSlot] = 0x40000000;
+    display(state, input, frame);
+    expect(frame.paths[0].key != square && point(8).x > 724 * 48 && point(8).x < 42 * 1024, "between at 50%");
+    expect(opxy::draw::valid(frame), "shape frame valid");
+
     // Page 2: the frame option and three spare slots, without page 1's red boxes.
     input.slots[kModeSlot] = word(kWriteA, kModes);
     input.slots[kStateASlot] = word(0, kStates);

@@ -157,11 +157,11 @@
     "display": {
       "stateBytes": 4,
       "stateAlignment": 4,
-      "paths": 0,
-      "points": 0,
-      "nodes": 27,
+      "paths": 1,
+      "points": 64,
+      "nodes": 28,
       "texts": 2,
-      "palette": 7
+      "palette": 10
     },
     "trackControl": {
       "stateBytes": 4420,

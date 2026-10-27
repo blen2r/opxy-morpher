@@ -24,9 +24,12 @@ a scene (the OP-XY already uses "scene" for its sequencer).
 "Off" leaves every parameter as it is on that side of the crossfader. All the
 controls can be sequenced and p-locked like any other track parameter.
 
-The page shows the crossfader, the two state markers (dim when off) and, while
-writing, the marker being written filled red, a red dot at the top right and
-the morph's percentage boxed in red, with the crossfader's ring hidden.
+The page shows a shape that morphs from a circle (state A, at 0%) to a square
+(state B, at 100%), a crossfader under it with a tick every 5%, and the two
+state markers beside it, a circle and a square (dim when off). While writing,
+the shape shows the state being written, in red, the marker being written is
+red, a red dot shows at the top right and the morph's percentage is boxed in
+red, with the crossfader's ring hidden.
 
 Other pages show what Morph is doing too: while you write a state, every page
 has a red frame at the screen's edge, and the page of a track Morph is

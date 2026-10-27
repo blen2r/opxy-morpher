@@ -28,8 +28,9 @@ morph has two pages of four knobs. press any knob to switch pages.
 - knob 3, state a: off, or a state from 1 to 16.
 - knob 4, state b: off, or a state from 1 to 16.
 
-the crossfader shows where the morph sits, with a dot every 5%. the circles at each end are
-states a and b. a circle is dim when its state is off.
+the shape in the middle is the morph: a circle at 0% (state a), a square at 100% (state b), and
+in between as you turn. the crossfader under it has a tick every 5%. the circle on the left and
+the square on the right stand for states a and b, and are dim when their state is off.
 
 ### 2.2 page 2
 
@@ -51,7 +52,8 @@ while you write:
 
 - you hear the state alone, as at morph 0%, whatever the morph knob says.
 - every page has a red frame, so you always know you are recording.
-- on morph's page the a circle is red, and the morph percentage is boxed in red.
+- on morph's page the shape shows the state you are writing, in red, its marker is red, and the
+  morph percentage is boxed in red.
 
 turn mode back to play when you are done. every knob you turned goes back to where it was, and the
 morph carries on from where it was.
