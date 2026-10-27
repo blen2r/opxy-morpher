@@ -46,6 +46,8 @@ inline void control(ControlState& saved, const opxy::control::Input& input, opxy
         overlay.capture = 1;
         return;
     }
+    // The tracks the morph changes show a thin frame, unless it is turned off.
+    overlay.mark = choice(own[kFrameSlot], 2);
     const State& from = a ? saved.states[a] : kEmpty;
     const State& to = b ? saved.states[b] : kEmpty;
     const opxy::i32 morph = own[kMorphSlot] < 0 ? 0 : own[kMorphSlot];

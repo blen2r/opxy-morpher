@@ -3,7 +3,9 @@
 
 namespace morph {
 // Parameter slots (definition.json).
-const unsigned kModeSlot = 0, kMorphSlot = 1, kStateASlot = 2, kStateBSlot = 3;
+// Page 1: mode, morph and the two states; page 2 (a press switches pages): the
+// frame on morphed tracks' pages, then three spare slots.
+const unsigned kModeSlot = 0, kMorphSlot = 1, kStateASlot = 2, kStateBSlot = 3, kFrameSlot = 4;
 // Modes, in the order of the mode control's labels.
 const unsigned kPlay = 0, kWriteA = 1, kWriteB = 2, kModes = 3;
 // State 0 is "off": that side leaves every parameter as it is. Then 1..16.

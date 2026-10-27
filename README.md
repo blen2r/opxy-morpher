@@ -3,8 +3,8 @@
 An Octatrack-style parameter morpher for the OP-XY, built on the
 [Open-XY SDK](https://github.com/etcetc000/open-xy).
 
-The morpher is a silent synth: put it on an instrument track and its page
-has four controls.
+The morpher is a silent synth: put it on an instrument track. Its page has
+two pages of four controls; pressing any knob switches between them.
 
 | Control | Values |
 | --- | --- |
@@ -12,6 +12,9 @@ has four controls.
 | Morph | 0% (all state A) to 100% (all state B); 50% is the exact midpoint |
 | State A | off, 1–16 |
 | State B | off, 1–16 |
+| Frame (page 2) | on, off: whether the pages of tracks Morph is changing show a thin dark red frame |
+
+The other three page 2 controls are spare, for later features.
 
 A state is a set of parameter values on other tracks, what the Octatrack calls
 a scene (the OP-XY already uses "scene" for its sequencer).
@@ -25,7 +28,7 @@ the morph's percentage boxed in red, with the crossfader's ring hidden.
 
 Other pages show what Morph is doing too: while you write a state, every page
 has a red frame at the screen's edge, and the page of a track Morph is
-changing has a thin dark red frame.
+changing has a thin dark red frame (unless Frame is off).
 
 ## Writing states
 

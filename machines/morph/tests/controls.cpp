@@ -76,6 +76,21 @@ int main() {
         expect(frame.nodes[kThumb].x == frame.nodes[i].x, "thumb on its tick");
         for (unsigned j = 0; j < kTicks; ++j) expect((frame.nodes[j].shade == kWhite) == (j <= i), "lit ticks");
     }
+    // Page 2: the frame option and three spare slots, without page 1's red boxes.
+    input.slots[kModeSlot] = word(kWriteA, kModes);
+    input.slots[kStateASlot] = word(0, kStates);
+    input.slots[kFrameSlot] = word(1, 2);
+    for (unsigned i = 0; i < 4; ++i) input.shown[i] = static_cast<opxy::u8>(kFrameSlot + i);
+    display(state, input, frame);
+    expect(same(frame.header[0], "on") && same(frame.header[1], "-") && same(frame.header[3], "-"), "page 2 header");
+    const opxy::i32 off_screen = opxy::draw::hidden_x * opxy::draw::unit;
+    expect(frame.nodes[kStateBox].x == off_screen && frame.nodes[kMorphBox].x == off_screen, "no header boxes on page 2");
+    input.slots[kFrameSlot] = 0;
+    display(state, input, frame);
+    expect(same(frame.header[0], "off"), "frame off");
+    for (unsigned i = 0; i < 4; ++i) input.shown[i] = static_cast<opxy::u8>(i);
+    input.slots[kModeSlot] = word(kPlay, kModes);
+    display(state, input, frame);
     expect(frame.texts[kCopiesTitle].chars[0] == 0 && frame.texts[kCopiesHint].chars[0] == 0, "no copies message");
     // A second copy anywhere: the page asks to remove it and hides the crossfader.
     copies_now = 2;

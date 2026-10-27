@@ -51,10 +51,17 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     const unsigned p = percent(input.slots[kMorphSlot]);
     const unsigned a = choice(input.slots[kStateASlot], kStates);
     const unsigned b = choice(input.slots[kStateBSlot], kStates);
-    opxy::draw::copy(frame.header[kModeSlot], sizeof(frame.header[kModeSlot]), kModeNames[mode]);
-    percent_text(frame.header[kMorphSlot], sizeof(frame.header[kMorphSlot]), p);
-    state_name(frame.header[kStateASlot], sizeof(frame.header[kStateASlot]), a);
-    state_name(frame.header[kStateBSlot], sizeof(frame.header[kStateBSlot]), b);
+    // Page 2 (a press switches pages): the frame option, then spare slots.
+    const bool second = input.shown[0] >= kFrameSlot;
+    if (second) {
+        opxy::draw::copy(frame.header[0], sizeof(frame.header[0]), choice(input.slots[kFrameSlot], 2) ? "on" : "off");
+        for (unsigned i = 1; i < 4; ++i) opxy::draw::copy(frame.header[i], sizeof(frame.header[i]), "-");
+    } else {
+        opxy::draw::copy(frame.header[kModeSlot], sizeof(frame.header[kModeSlot]), kModeNames[mode]);
+        percent_text(frame.header[kMorphSlot], sizeof(frame.header[kMorphSlot]), p);
+        state_name(frame.header[kStateASlot], sizeof(frame.header[kStateASlot]), a);
+        state_name(frame.header[kStateBSlot], sizeof(frame.header[kStateBSlot]), b);
+    }
 
     // Only one Morph runs: while another track holds one too, none does, and
     // every copy's page says so instead of showing the crossfader.
@@ -91,14 +98,16 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     for (unsigned s = 0; s < 2; ++s)
         place(frame, kMarkerA + s, xs[s] * unit, kRow * unit, unit,
               writing && mode == writes[s] ? kRed : states[s] ? kRingWhite : kRingDim, fill_and_stroke);
-    if (writing) {
+    // The red boxes mark page 1's header values.
+    if (writing)
         place(frame, kWriteDot, 456 * unit, 44 * unit, unit, kRed, fill_and_stroke);
-        place(frame, kMorphBox, header_x(kMorphSlot) * unit, kHeaderY * unit, unit, kRed, stroke);
-    } else {
+    else
         hide(frame, kWriteDot);
+    if (writing && !second)
+        place(frame, kMorphBox, header_x(kMorphSlot) * unit, kHeaderY * unit, unit, kRed, stroke);
+    else
         hide(frame, kMorphBox);
-    }
-    if (mode != kPlay && !states[side])
+    if (mode != kPlay && !states[side] && !second)
         place(frame, kStateBox, header_x(side ? kStateBSlot : kStateASlot) * unit, kHeaderY * unit, unit, kRed, stroke);
     else
         hide(frame, kStateBox);

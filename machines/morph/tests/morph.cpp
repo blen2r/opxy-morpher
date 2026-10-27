@@ -32,6 +32,7 @@ int main() {
         own[kMorphSlot] = position;
         overlay.count = 0;
         overlay.capture = 0;
+        overlay.mark = 0;
         control(saved, input, overlay);
         input.edit_count = 0;
     };
@@ -81,6 +82,11 @@ int main() {
     expect(overlay.count == 1 && overlay.entries[0].value == 0x30000000, "A off");
     run(kPlay, 2, 2, 0x20000000);
     expect(overlay.count == 1 && overlay.entries[0].value == 0x7fffffff, "same state");
+    // The frame control marks the morphed tracks' pages, on unless turned off.
+    expect(!overlay.mark, "frame off by its zero word");
+    own[kFrameSlot] = word(1, 2);
+    run(kPlay, 2, 2, 0x20000000);
+    expect(overlay.mark == 1, "frame on");
     // States outlast a reset; a full state keeps what it has.
     control_reset(saved);
     for (unsigned i = 0; i < 20; ++i) edit(1, i, 5);

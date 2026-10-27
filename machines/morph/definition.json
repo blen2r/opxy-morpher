@@ -2,6 +2,7 @@
   "schema": 1,
   "id": "morph",
   "name": "Morph",
+  "press": "page",
   "parameters": [
     {
       "id": "mode",
@@ -83,6 +84,56 @@
         ]
       },
       "display": "enum"
+    },
+    {
+      "id": "frame",
+      "label": "Frame",
+      "control": 0,
+      "default": 1,
+      "mapping": {
+        "kind": "enum",
+        "labels": [
+          "off",
+          "on"
+        ]
+      },
+      "display": "enum"
+    },
+    {
+      "id": "spare_1",
+      "label": "Spare 1",
+      "control": 1,
+      "default": 0,
+      "mapping": {
+        "kind": "linear",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "display": "percent"
+    },
+    {
+      "id": "spare_2",
+      "label": "Spare 2",
+      "control": 2,
+      "default": 0,
+      "mapping": {
+        "kind": "linear",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "display": "percent"
+    },
+    {
+      "id": "spare_3",
+      "label": "Spare 3",
+      "control": 3,
+      "default": 0,
+      "mapping": {
+        "kind": "linear",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "display": "percent"
     }
   ],
   "presets": {
@@ -90,7 +141,11 @@
       "mode": 0,
       "morph": 0,
       "state_a": 0,
-      "state_b": 0
+      "state_b": 0,
+      "frame": 1,
+      "spare_1": 0,
+      "spare_2": 0,
+      "spare_3": 0
     }
   },
   "resources": {
