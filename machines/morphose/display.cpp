@@ -8,7 +8,8 @@
 namespace morphose {
 // Geometry, in pixels: the shape in the middle at 1.5x, the state markers
 // beside it, the write dot at the top right.
-const opxy::i32 kCentreX = 240, kCentreY = 112, kMarkerLeft = 40, kMarkerRight = 440;
+// Below the two-row header, which takes the top 38 pixels.
+const opxy::i32 kCentreX = 240, kCentreY = 124, kMarkerLeft = 40, kMarkerRight = 440;
 // The shape's circle radius and square half-side, chosen for about the same area.
 const opxy::i32 kRadius = 48, kHalfSide = 42;
 // cos(k * 2 pi / 64) for k = 0..16, Q10.
@@ -109,7 +110,7 @@ inline void display(DisplayState& state, const opxy::draw::Input& input, Frame& 
     }
     // The covers sit over the message, the rest is drawn over them.
     for (unsigned i = 0; i < kCovers; ++i)
-        place(frame, kCover0 + i, (86 + 40 * static_cast<opxy::i32>(i)) * unit, 122 * unit, unit, kBlack, fill_and_stroke);
+        place(frame, kCover0 + i, (86 + 40 * static_cast<opxy::i32>(i)) * unit, 134 * unit, unit, kBlack, fill_and_stroke);
 
     // Writing plays the written state alone, so the morph is not in effect:
     // its value is boxed in red. Writing a side that is
@@ -136,7 +137,7 @@ inline void display(DisplayState& state, const opxy::draw::Input& input, Frame& 
               s ? stroke : fill_and_stroke);
     // The red boxes mark page 1's header values.
     if (writing)
-        place(frame, kWriteDot, 456 * unit, 44 * unit, unit, kRed, fill_and_stroke);
+        place(frame, kWriteDot, 456 * unit, 56 * unit, unit, kRed, fill_and_stroke);
     else
         hide(frame, kWriteDot);
     if (writing && !second)

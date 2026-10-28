@@ -127,7 +127,7 @@ int main() {
     bool covered = true;
     for (unsigned i = 0; i < kCovers; ++i)
         covered = covered && frame.nodes[kCover0 + i].x == (86 + 40 * static_cast<opxy::i32>(i)) * opxy::draw::unit &&
-                  frame.nodes[kCover0 + i].y == 122 * opxy::draw::unit;
+                  frame.nodes[kCover0 + i].y == 134 * opxy::draw::unit;
     expect(covered && frame.nodes[kEdCover].x == 457 * opxy::draw::unit &&
            frame.nodes[kEdCover + 1].x == 464 * opxy::draw::unit, "message and label's ed covered");
     // Bypassed, the shape and markers dim.

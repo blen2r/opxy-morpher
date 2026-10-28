@@ -25,8 +25,8 @@
   <text id="morphose_text_13" transform="matrix(1 0 0 1 185 33)" fill="#707070" font-family="UniversNextPro-Light" font-size="13px">-</text>
   <text id="morphose_text_14" transform="matrix(1 0 0 1 305 33)" fill="#707070" font-family="UniversNextPro-Light" font-size="13px">-</text>
   <text id="morphose_text_15" transform="matrix(1 0 0 1 425 33)" fill="#707070" font-family="UniversNextPro-Light" font-size="13px">-</text>
-  <text transform="matrix(1 0 0 1 112 112)" fill="#ff3b30" font-family="UniversNextPro-Light" font-size="24px">ONLY ONE MORPHOSE</text>
-  <text transform="matrix(1 0 0 1 161 148)" fill="#ff3b30" font-family="UniversNextPro-Light" font-size="16px">remove the extra copies</text>
+  <text transform="matrix(1 0 0 1 112 124)" fill="#ff3b30" font-family="UniversNextPro-Light" font-size="24px">ONLY ONE MORPHOSE</text>
+  <text transform="matrix(1 0 0 1 161 160)" fill="#ff3b30" font-family="UniversNextPro-Light" font-size="16px">remove the extra copies</text>
   <circle id="morphose_node_6" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
   <circle id="morphose_node_7" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
   <circle id="morphose_node_8" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
@@ -46,8 +46,8 @@
   <text transform="matrix(1 0 0 1 452 214)" fill="#888888" font-family="UniversNextPro-Light" font-size="12px">ed</text>
   <circle id="morphose_node_15" cx="0" cy="0" r="6" fill="#000000" stroke="#000000" stroke-width="1"/>
   <circle id="morphose_node_16" cx="0" cy="0" r="6" fill="#000000" stroke="#000000" stroke-width="1"/>
-  <path d="M34 120 L40 103 L46 120 M36.5 114 L43.5 114" fill="none" stroke="#ffffff" stroke-width="2"/>
-  <path d="M435 103 L435 121 L443 121 L447 117 L447 116 L443 112 L435 112 M443 112 L446 109 L446 106 L443 103 L435 103" fill="none" stroke="#ffffff" stroke-width="2"/>
+  <path d="M34 132 L40 115 L46 132 M36.5 126 L43.5 126" fill="none" stroke="#ffffff" stroke-width="2"/>
+  <path d="M435 115 L435 133 L443 133 L447 129 L447 128 L443 124 L435 124 M443 124 L446 121 L446 118 L443 115 L435 115" fill="none" stroke="#ffffff" stroke-width="2"/>
   <circle id="morphose_palette_0" cx="640" cy="0" r="1" fill="#000000" stroke="#000000" stroke-width="1"/>
   <circle id="morphose_palette_1" cx="640" cy="0" r="1" fill="#333333" stroke="#333333" stroke-width="1"/>
   <circle id="morphose_palette_2" cx="640" cy="0" r="1" fill="#888888" stroke="#888888" stroke-width="1"/>
