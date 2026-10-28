@@ -32,7 +32,11 @@ Report a failure with the section, the line and what you saw. A photo of the scr
 - [ ] p-lock the morph knob on a few steps and play: the shape follows; sweeping fast causes no flicker
       or slowdown
 - [ ] p-lock the mode on a step: the shown name follows the lock during playback
-- [ ] Pressing any knob switches to page 2 (frame, rate, depth, shape) and back
+- [ ] Both pages show in the header: page 1 (mode, morph, state a, state b) on top, page 2 (frame, rate,
+      depth, shape) below; the row the knobs edit is large and bright on the stepped bar, the other small
+      and grey
+- [ ] Pressing any knob switches the knobs to the other page: the rows swap size smoothly, page 1 stays on
+      top, and a second press mid-way reverses
 - [ ] A small grey "bypass" label sits at the bottom right, above M4
 
 ## Writing states

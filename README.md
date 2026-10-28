@@ -5,8 +5,9 @@ An Octatrack-style parameter morpher for the OP-XY, built on the
 
 New to Morphose? Start with the [guide](GUIDE.md).
 
-The morpher is a silent synth: put it on an instrument track. Its page has
-two pages of four controls; pressing any knob switches between them.
+The morpher is a silent synth: put it on an instrument track. It has two pages
+of four controls; pressing any knob switches between them. The header shows
+both, page 1 above page 2, the one the knobs edit large and bright.
 
 | Control | Values |
 | --- | --- |
