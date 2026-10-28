@@ -19,8 +19,8 @@ two pages of four controls; pressing any knob switches between them.
 | Depth (page 2) | -100 to +100: how far the LFO swings the morph either side of the Morph knob; 0 is off |
 | Shape (page 2) | sine, triangle, ramp up, ramp down, square, random |
 
-**Bypass:** M4 on Morph's track switches Morph off and on (the label above
-M4 says "bypass", or "bypassed" while off). Bypassed, Morph morphs, writes and
+**Bypass:** M4 on Morph's track switches Morph off and on (Morph's page
+labels it "bypass", just above M4). Bypassed, Morph morphs, writes and
 marks nothing, every track plays its own values, and its page is dimmed. The
 bypass is saved with the project.
 

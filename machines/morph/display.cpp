@@ -101,17 +101,13 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     // Only one Morph runs: while another track holds one too, none does, and
     // every copy's page says so instead of showing the shape.
     if (opxy::control::copies(input.track) > 1) {
-        for (unsigned i = 0; i <= kStateBox; ++i) hide(frame, i);
-        text(frame, kCopiesTitle, 72 * unit, 112 * unit, unit, "ONLY ONE MORPH ALLOWED");
-        text(frame, kCopiesHint, 128 * unit, 148 * unit, unit, "remove the extra Morphs");
-        text(frame, kBypassLabel, hidden_x * unit, hidden_y * unit, unit, "");
+        for (unsigned i = 0; i < kNodes; ++i) hide(frame, i);
         return;
     }
-    // M4's label: what the key does now.
+    // The covers sit over the message, the rest is drawn over them.
+    for (unsigned i = 0; i < kCovers; ++i)
+        place(frame, kCover0 + i, (86 + 40 * static_cast<opxy::i32>(i)) * unit, 122 * unit, unit, kBlack, fill_and_stroke);
     const bool off = bypassed() != 0;
-    text(frame, kBypassLabel, (off ? 416 : 422) * unit, 214 * unit, unit, off ? "bypassed" : "bypass");
-    text(frame, kCopiesTitle, hidden_x * unit, hidden_y * unit, unit, "");
-    text(frame, kCopiesHint, hidden_x * unit, hidden_y * unit, unit, "");
 
     // Writing plays the written state alone, so the morph is not in effect:
     // its value is boxed in red. Writing a side that is

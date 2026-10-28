@@ -13,9 +13,9 @@ select an empty track, hold shift and press M1 to open the engine list, then pic
 
 ### 1.2 bypass
 
-press M4 on morph's track to switch morph off: your tracks go back to their own values, nothing is
-morphed or written, and morph's page dims. the small label above M4 reads "bypassed". press M4
-again to switch it back on. the bypass is saved with the project.
+press M4 on morph's track (labelled "bypass" just above it) to switch morph off: your tracks go
+back to their own values, nothing is morphed or written, and morph's shape and markers dim. press
+M4 again to switch it back on. the bypass is saved with the project.
 
 ### 1.3 one morph at a time
 

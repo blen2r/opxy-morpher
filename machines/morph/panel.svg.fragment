@@ -1,15 +1,24 @@
 <g id="morph_panel">
+  <text transform="matrix(1 0 0 1 72 112)" fill="#ff3b30" font-family="UniversNextPro-Light" font-size="24px">ONLY ONE MORPH ALLOWED</text>
+  <text transform="matrix(1 0 0 1 128 148)" fill="#ff3b30" font-family="UniversNextPro-Light" font-size="16px">remove the extra Morphs</text>
+  <circle id="morph_node_6" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morph_node_7" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morph_node_8" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morph_node_9" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morph_node_10" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morph_node_11" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morph_node_12" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morph_node_13" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morph_node_14" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
   <path id="morph_node_0" d="M48 0 L47.7689 4.7048 L47.0777 9.3643 L45.9331 13.9337 L44.3462 18.3688 L42.3322 22.627 L39.9105 26.6674 L37.1045 30.4509 L33.9411 33.9411 L30.4509 37.1045 L26.6674 39.9105 L22.627 42.3322 L18.3688 44.3462 L13.9337 45.9331 L9.3643 47.0777 L4.7048 47.7689 L0 48 L-4.7048 47.7689 L-9.3643 47.0777 L-13.9337 45.9331 L-18.3688 44.3462 L-22.627 42.3322 L-26.6674 39.9105 L-30.4509 37.1045 L-33.9411 33.9411 L-37.1045 30.4509 L-39.9105 26.6674 L-42.3322 22.627 L-44.3462 18.3688 L-45.9331 13.9337 L-47.0777 9.3643 L-47.7689 4.7048 L-48 0 L-47.7689 -4.7048 L-47.0777 -9.3643 L-45.9331 -13.9337 L-44.3462 -18.3688 L-42.3322 -22.627 L-39.9105 -26.6674 L-37.1045 -30.4509 L-33.9411 -33.9411 L-30.4509 -37.1045 L-26.6674 -39.9105 L-22.627 -42.3322 L-18.3688 -44.3462 L-13.9337 -45.9331 L-9.3643 -47.0777 L-4.7048 -47.7689 L0 -48 L4.7048 -47.7689 L9.3643 -47.0777 L13.9337 -45.9331 L18.3688 -44.3462 L22.627 -42.3322 L26.6674 -39.9105 L30.4509 -37.1045 L33.9411 -33.9411 L37.1045 -30.4509 L39.9105 -26.6674 L42.3322 -22.627 L44.3462 -18.3688 L45.9331 -13.9337 L47.0777 -9.3643 L47.7689 -4.7048 Z" fill="none" stroke="#ffffff" stroke-width="3"/>
   <circle id="morph_node_1" cx="0" cy="0" r="16" fill="#000000" stroke="#333333" stroke-width="2"/>
   <path id="morph_node_2" d="M-14 -14 L14 -14 L14 14 L-14 14 Z" fill="none" stroke="#333333" stroke-width="2"/>
   <circle id="morph_node_3" cx="0" cy="0" r="6" fill="#ff3b30" stroke="#ff3b30" stroke-width="1"/>
   <path id="morph_node_4" d="M-28 -9 L28 -9 L28 9 L-28 9 Z" fill="none" stroke="#ff3b30" stroke-width="2"/>
   <path id="morph_node_5" d="M-28 -9 L28 -9 L28 9 L-28 9 Z" fill="none" stroke="#ff3b30" stroke-width="2"/>
+  <text transform="matrix(1 0 0 1 422 214)" fill="#888888" font-family="UniversNextPro-Light" font-size="12px">bypass</text>
   <path d="M34 120 L40 103 L46 120 M36.5 114 L43.5 114" fill="none" stroke="#ffffff" stroke-width="2"/>
   <path d="M435 103 L435 121 L443 121 L447 117 L447 116 L443 112 L435 112 M443 112 L446 109 L446 106 L443 103 L435 103" fill="none" stroke="#ffffff" stroke-width="2"/>
-  <text id="morph_text_0" transform="matrix(1 0 0 1 72 112)" fill="#ff3b30" font-family="UniversNextPro-Light" font-size="24px">ONLY ONE MORPH ALLOWED</text>
-  <text id="morph_text_1" transform="matrix(1 0 0 1 128 148)" fill="#ff3b30" font-family="UniversNextPro-Light" font-size="16px">remove the extra Morphs</text>
-  <text id="morph_text_2" transform="matrix(1 0 0 1 422 214)" fill="#888888" font-family="UniversNextPro-Light" font-size="12px">bypass</text>
   <circle id="morph_palette_0" cx="640" cy="0" r="1" fill="#000000" stroke="#000000" stroke-width="1"/>
   <circle id="morph_palette_1" cx="640" cy="0" r="1" fill="#333333" stroke="#333333" stroke-width="1"/>
   <circle id="morph_palette_2" cx="640" cy="0" r="1" fill="#888888" stroke="#888888" stroke-width="1"/>

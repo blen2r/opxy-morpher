@@ -111,27 +111,28 @@ int main() {
     for (unsigned i = 0; i < 4; ++i) input.shown[i] = static_cast<opxy::u8>(i);
     input.slots[kModeSlot] = word(kPlay, kModes);
     display(state, input, frame);
-    expect(frame.texts[kCopiesTitle].chars[0] == 0 && frame.texts[kCopiesHint].chars[0] == 0, "no copies message");
-    // M4's label says what the key does; bypassed, the shape and markers dim.
-    expect(same(frame.texts[kBypassLabel].chars, "bypass"), "M4 label");
+    // The covers hide the artwork's "only one Morph" message, side by side over it.
+    const opxy::i32 away = opxy::draw::hidden_x * opxy::draw::unit;
+    bool covered = true;
+    for (unsigned i = 0; i < kCovers; ++i)
+        covered = covered && frame.nodes[kCover0 + i].x == (86 + 40 * static_cast<opxy::i32>(i)) * opxy::draw::unit &&
+                  frame.nodes[kCover0 + i].y == 122 * opxy::draw::unit;
+    expect(covered, "message covered");
+    // Bypassed, the shape and markers dim.
     bypassed() = 1;
     display(state, input, frame);
-    expect(same(frame.texts[kBypassLabel].chars, "bypassed") && frame.nodes[kShape].shade == kShapeDim &&
-           frame.nodes[kMarkerA].shade == kRingDim, "bypassed look");
+    expect(frame.nodes[kShape].shade == kShapeDim && frame.nodes[kMarkerA].shade == kRingDim, "bypassed look");
     bypassed() = 0;
     display(state, input, frame);
-    // A second copy anywhere: the page asks to remove it and hides the crossfader.
+    // A second copy anywhere: every node moves away, uncovering the message.
     copies_now = 2;
     display(state, input, frame);
-    expect(same(frame.texts[kCopiesTitle].chars, "ONLY ONE MORPH ALLOWED") &&
-           same(frame.texts[kCopiesHint].chars, "remove the extra Morphs"), "copies message");
     bool hidden = true;
-    for (unsigned i = 0; i <= kStateBox; ++i) hidden = hidden && frame.nodes[i].x == opxy::draw::hidden_x * opxy::draw::unit;
-    expect(hidden, "shape hidden with copies");
+    for (unsigned i = 0; i < kNodes; ++i) hidden = hidden && frame.nodes[i].x == away;
+    expect(hidden, "message shown, shape hidden with copies");
     expect(opxy::draw::valid(frame), "copies frame valid");
     copies_now = 1;
     display(state, input, frame);
-    expect(frame.texts[kCopiesTitle].chars[0] == 0 && frame.nodes[kShape].x != opxy::draw::hidden_x * opxy::draw::unit,
-           "shape back with one copy");
+    expect(frame.nodes[kCover0].x != away && frame.nodes[kShape].x != away, "covered again with one copy");
     return failures ? 1 : 0;
 }
