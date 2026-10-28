@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "sdk": "1.4",
+  "sdk": "1.5",
   "kind": "synth",
   "description": "Parameter morpher: mode, morph, state A and state B. Silent; morphs other tracks' parameters between two states.",
   "identity": {

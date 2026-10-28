@@ -106,7 +106,7 @@ left. States are kept, whichever track Morph is on.
 
 ## Status
 
-The morpher needs the SDK's track control (SDK 1.4), which is not in a
+The morpher needs the SDK's track control (SDK 1.5), which is not in a
 released SDK yet. States are saved with the project, in the companion file
 beside it (`song.oxy` beside `song.xy`; copy both when you share a project),
 and come back when it loads. A project saved without them, or on stock
