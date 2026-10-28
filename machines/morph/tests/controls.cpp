@@ -63,9 +63,9 @@ int main() {
             expect(same(frame.header[kStateASlot], states[s][0]), "state A header");
             expect(same(frame.header[kStateBSlot], states[s][1]), "state B header");
         }
-    expect(same(frame.header[kMorphSlot], "100%"), "morph header at B");
+    expect(same(frame.header[kMorphSlot], "100"), "morph header at B");
     static const struct { opxy::i32 value; const char* text; } shown[] = {
-        {0, "0%"}, {0x40000000, "50%"}, {0x3fffffff, "50%"}, {0x147ae148, "16%"}, {0x7fffffff, "100%"}, {-1, "0%"}};
+        {0, "0"}, {0x40000000, "50"}, {0x3fffffff, "50"}, {0x147ae148, "16"}, {0x7fffffff, "100"}, {-1, "0"}};
     char text[opxy::draw::header_capacity];
     for (const auto& s : shown) {
         percent_text(text, sizeof(text), percent(s.value));
@@ -120,8 +120,8 @@ int main() {
     for (unsigned i = 0; i < kCovers; ++i)
         covered = covered && frame.nodes[kCover0 + i].x == (86 + 40 * static_cast<opxy::i32>(i)) * opxy::draw::unit &&
                   frame.nodes[kCover0 + i].y == 122 * opxy::draw::unit;
-    expect(covered && frame.nodes[kEdCover].x == 461 * opxy::draw::unit &&
-           frame.nodes[kEdCover + 1].x == 469 * opxy::draw::unit, "message and label's ed covered");
+    expect(covered && frame.nodes[kEdCover].x == 457 * opxy::draw::unit &&
+           frame.nodes[kEdCover + 1].x == 464 * opxy::draw::unit, "message and label's ed covered");
     // Bypassed, the shape and markers dim.
     from_control_now[kShownBypassed] = 1;
     display(state, input, frame);

@@ -31,7 +31,7 @@ filter or lfo page: M2 and M3 do nothing on its track, and M4 bypasses morph (be
 ### 2.1 page 1
 
 - knob 1, mode: play, wr a (write state a) or wr b (write state b).
-- knob 2, morph: 0% is all state a, 100% is all state b, 50% is halfway.
+- knob 2, morph: 0 is all state a, 100 is all state b, 50 is halfway.
 - knob 3, state a: off, or a state from 1 to 16.
 - knob 4, state b: off, or a state from 1 to 16.
 

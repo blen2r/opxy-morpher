@@ -11,7 +11,7 @@ two pages of four controls; pressing any knob switches between them.
 | Control | Values |
 | --- | --- |
 | Mode | play, write A, write B: each detent of the knob moves one mode |
-| Morph | 0% (all state A) to 100% (all state B); 50% is the exact midpoint |
+| Morph | 0 (all state A) to 100 (all state B); 50 is the exact midpoint |
 | State A | off, 1–16 |
 | State B | off, 1–16 |
 | Frame (page 2) | on, off: whether the pages of tracks Morph is changing show a thin dark red frame |

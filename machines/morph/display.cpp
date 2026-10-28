@@ -50,16 +50,9 @@ inline void number(char* out, unsigned capacity, unsigned value) {
     opxy::draw::copy(out, capacity, text);
 }
 
-// The morph's percentage as the header shows it, with a % suffix.
-inline void percent_text(char* out, unsigned capacity, unsigned p) {
-    char text[5];
-    number(text, sizeof(text) - 1, p);
-    unsigned n = 0;
-    while (text[n]) ++n;
-    text[n++] = '%';
-    text[n] = 0;
-    opxy::draw::copy(out, capacity, text);
-}
+// The morph as the header shows it: 0 to 100, without a percent sign, as the
+// OP-XY shows amounts.
+inline void percent_text(char* out, unsigned capacity, unsigned p) { number(out, capacity, p); }
 // The mode and state names, as the controls' labels give them. Stock shows an
 // enum's raw 0..99 value; the header replaces it with the name.
 const char* const kModeNames[kModes] = {"play", "wr a", "wr b"};
@@ -106,7 +99,7 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
         if (off)
             hide(frame, kEdCover + i);
         else
-            place(frame, kEdCover + i, (461 + 8 * static_cast<opxy::i32>(i)) * unit, 209 * unit, unit, kBlack,
+            place(frame, kEdCover + i, (457 + 7 * static_cast<opxy::i32>(i)) * unit, 209 * unit, unit, kBlack,
                   fill_and_stroke);
     if (opxy::control::copies(input.track) > 1) {
         for (unsigned i = 0; i < kEdCover; ++i) hide(frame, i);
