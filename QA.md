@@ -10,10 +10,11 @@ Report a failure with the section, the line and what you saw. A photo of the scr
 ## Setup
 
 - Use a scratch project: Morphose changes other tracks' values while it runs.
-- Track 1: a stock synth (e.g. prism or simple) playing a sequence or a held note.
-- Track 2: Morphose, mode play.
-- Unless a check says otherwise, "state 1" means track 1's four engine knobs all the way down, and
-  "state 2" all the way up. Write them as in [Writing states](#writing-states).
+- Track 1: the stock synth **simple**, its four engine knobs at 50, and one note on step 1 lasting a
+  whole bar, so it sounds all the time while the sequencer plays.
+- Track 2: Morphose, mode play, morph 0.
+- Press play. "State 1" is track 1's engine knobs all the way down, "state 2" all the way up: write
+  them as in [Writing states](#writing-states) before the sections that use them.
 
 ## Firmware basics
 
@@ -36,21 +37,26 @@ Report a failure with the section, the line and what you saw. A photo of the scr
 
 ## Writing states
 
-- [ ] Set state A to 1 and mode to wr a, then turn track 1's knobs on its engine, filter and envelope
-      pages, and a knob on track 3: you hear each turn
+Start from the [setup](#setup): track 1's knobs at 50, the sequencer playing.
+
+- [ ] **State 1:** on Morphose's page, set state A to 1, then mode to wr a. On track 1's engine page, turn
+      its four knobs all the way down: you hear each turn
 - [ ] While writing, you hear state A alone, as at morph 0, whatever the morph knob says; Morphose's page
       shows a red circle, a red A marker, a red dot at the top right and the morph value boxed in red
-- [ ] Back to play: every knob you turned returns to where it was, and the morph moves between the two
-      states on every track and page you edited
-- [ ] Same with state B and wr b (heard as at morph 100, shown as a red square)
+- [ ] Back on Morphose's page, mode to play: track 1's knobs return to 50
+- [ ] **State 2:** set state B to 2, then mode to wr b. Turn track 1's four engine knobs all the way up,
+      and also one knob on its filter page, one on its envelope page and one on track 3: you hear each
+      turn, and Morphose's page shows a red square
+- [ ] Mode to play: every knob you turned returns to where it was, and turning morph from 0 to 100 moves
+      between the two states on every track and page you edited
 - [ ] Writing a side whose state is off: "off" is boxed in red and nothing is recorded
 - [ ] A parameter lock made while writing (hold a step, turn a knob) is not recorded and stays a lock
 - [ ] Turning Morphose's own knobs is never recorded, nor are knob turns in play mode
 
 ## Applying states
 
-- [ ] State A = 1, state B = 2: turning morph from 0 to 100 sweeps track 1's sound, and track 1's page
-      shows the morphed values, stopped and playing
+- [ ] With state A = 1 and state B = 2 written, turning morph from 0 to 100 sweeps track 1's sound, and
+      track 1's page shows the morphed values, stopped and playing
 - [ ] State A = off: at morph 0 track 1 sounds as you set it
 - [ ] Turning one of track 1's morphed knobs: its page shows your value while you turn, then the morphed
       value again
