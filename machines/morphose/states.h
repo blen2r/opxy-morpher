@@ -2,7 +2,7 @@
 #include <opxy/track_control.hpp>
 #include "controls.h"
 
-namespace morph {
+namespace morphose {
 // One parameter a state sets: an instrument track, its live parameter index
 // and the value.
 struct Lock { opxy::u8 track, index; opxy::u16 reserved; opxy::i32 value; };
@@ -31,4 +31,4 @@ inline void record(State& state, opxy::u32 track, opxy::u32 index, opxy::i32 val
     }
     lock->value = value;
 }
-}  // namespace morph
+}  // namespace morphose

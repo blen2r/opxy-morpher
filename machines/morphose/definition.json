@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "id": "morph",
-  "name": "Morph",
+  "id": "morphose",
+  "name": "Morphose",
   "press": "page",
   "hidePages": [
     "envelope",

@@ -5,7 +5,7 @@
 // records nothing and plays as in play mode. In play, every parameter state A
 // or B sets is overlaid with a blend of the two; a side that is off, or a state
 // that leaves a parameter alone, contributes the parameter's own value. States
-// are kept with each project (control_save, control_load). Morph's own LFO
+// are kept with each project (control_save, control_load). Morphose's own LFO
 // (lfo.h) moves the morph in play.
 #include <opxy/q31.hpp>
 #include <opxy/track_control.hpp>
@@ -13,7 +13,7 @@
 #include "lfo.h"
 #include "states.h"
 
-namespace morph {
+namespace morphose {
 struct ControlState { State states[kStates]; Lfo lfo; opxy::u32 bypassed; };
 
 const State kEmpty = {0, {}};
@@ -23,7 +23,7 @@ inline void control_reset(ControlState&) {}
 
 // What a project keeps (definition.json's savedBytes): a format byte, then for
 // states 1..16 their count and each parameter as track, index and the value's
-// four bytes, low first, then (format 2) whether Morph is bypassed. Format 1,
+// four bytes, low first, then (format 2) whether Morphose is bypassed. Format 1,
 // without the last byte, still loads.
 const opxy::u8 kSavedFormat = 2;
 const opxy::u32 kSavedBytes = 1 + (kStates - 1) * (1 + kStateLocks * 6) + 1;
@@ -90,7 +90,7 @@ inline void control(ControlState& saved, const opxy::control::Input& input, opxy
     const unsigned target = mode == kWriteA ? a : mode == kWriteB ? b : 0;
     // The LFO keeps time whatever the mode, and moves the morph only in play.
     advance(saved.lfo, choice(own[kRateSlot], kRates), input.elapsed_us, input.transport);
-    // M4 on Morph's track bypasses it: nothing is morphed, written or marked,
+    // M4 on Morphose's track bypasses it: nothing is morphed, written or marked,
     // and every track plays its own values.
     if (input.page_key == 4) saved.bypassed = !saved.bypassed;
     overlay.display[kShownBypassed] = static_cast<opxy::i32>(saved.bypassed);
@@ -120,4 +120,4 @@ inline void control(ControlState& saved, const opxy::control::Input& input, opxy
     for (opxy::u32 i = 0; i < from.count; ++i) blend(input, overlay, from, to, from.locks[i], true, morph);
     for (opxy::u32 i = 0; i < to.count; ++i) blend(input, overlay, from, to, to.locks[i], false, morph);
 }
-}  // namespace morph
+}  // namespace morphose

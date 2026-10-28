@@ -1,32 +1,32 @@
-# morph guide
+# morphose guide
 
-morph blends the sound of your other tracks between two snapshots of their knobs. set up two
+morphose blends the sound of your other tracks between two snapshots of their knobs. set up two
 states, then sweep the morph knob from one to the other, by hand, with parameter locks, or live.
 
 ## 1. getting started
 
-### 1.1 put morph on a track
+### 1.1 put morphose on a track
 
-morph lives on an instrument track (1–8), like a synth. it makes no sound of its own.
+morphose lives on an instrument track (1–8), like a synth. it makes no sound of its own.
 
-select an empty track, hold shift and press M1 to open the engine list, then pick morph.
+select an empty track, hold shift and press M1 to open the engine list, then pick morphose.
 
 ### 1.2 bypass
 
-press M4 on morph's track (labelled "bypass" just above it) to switch morph off: your tracks go
-back to their own values, nothing is morphed or written, and morph's shape and markers dim. press
+press M4 on morphose's track (labelled "bypass" just above it) to switch morphose off: your tracks go
+back to their own values, nothing is morphed or written, and morphose's shape and markers dim. press
 M4 again to switch it back on. the bypass is saved with the project.
 
-### 1.3 one morph at a time
+### 1.3 one morphose at a time
 
-only one morph can run. if two tracks hold morph, neither does anything: your tracks go back to
-their own sound and both morph pages show "ONLY ONE MORPH ALLOWED". change one of them to another
+only one morphose can run. if two tracks hold morphose, neither does anything: your tracks go back to
+their own sound and both morphose pages show "ONLY ONE MORPHOSE". change one of them to another
 engine and the other carries on, with its states intact.
 
 ## 2. the page
 
-morph has two pages of four knobs. press any knob to switch pages. morph has no envelope,
-filter or lfo page: M2 and M3 do nothing on its track, and M4 bypasses morph (below).
+morphose has two pages of four knobs. press any knob to switch pages. morphose has no envelope,
+filter or lfo page: M2 and M3 do nothing on its track, and M4 bypasses morphose (below).
 
 ### 2.1 page 1
 
@@ -41,9 +41,9 @@ and b, and are dim when their state is off.
 
 ### 2.2 page 2
 
-- knob 1, frame: on or off. with frame on, the pages of tracks morph is changing have a thin dark
+- knob 1, frame: on or off. with frame on, the pages of tracks morphose is changing have a thin dark
   red frame.
-- knob 2, rate: how fast morph's lfo moves, from 0.05 to 20 (hertz), then synced to the tempo,
+- knob 2, rate: how fast morphose's lfo moves, from 0.05 to 20 (hertz), then synced to the tempo,
   from 16bar to 1/16.
 - knob 3, depth: -100 to +100. how far the lfo swings the morph either side of the morph knob.
   0 turns it off.
@@ -63,8 +63,8 @@ while you write:
 
 - you hear the state alone, as at morph 0%, whatever the morph knob says.
 - every page has a red frame, so you always know you are recording.
-- on morph's page the shape shows the state you are writing, in red, its marker is red, and the
-  morph percentage is boxed in red.
+- on morphose's page the shape shows the state you are writing, in red, its marker is red, and the
+  morph value is boxed in red.
 
 turn mode back to play when you are done. every knob you turned goes back to where it was, and the
 morph carries on from where it was.
@@ -93,27 +93,27 @@ so with state b off, morph 100% is your tracks as you set them.
 ### 4.2 your own knobs while morphing
 
 a knob a state controls follows the morph, not your hand. turn it and its page shows your value
-for a moment, then the morphed value again. your value is kept and comes back when morph stops
+for a moment, then the morphed value again. your value is kept and comes back when morphose stops
 controlling that knob.
 
 a parameter lock on a morphed knob is heard only as far as the morph leans toward a side that
 doesn't hold that knob.
 
-### 4.3 morph's lfo
+### 4.3 morphose's lfo
 
 turn depth up on page 2 and the morph swings around the morph knob, on every page, in play mode.
-the shape on morph's page follows it; the header still shows the knob. synced rates follow the
+the shape on morphose's page follows it; the header still shows the knob. synced rates follow the
 song position while the sequencer plays, so each pass sounds the same. while you write a state the
 lfo pauses, so you hear the state as written.
 
 ### 4.4 sequence the morph
 
-morph's knobs work like any other track's: hold a step and turn morph to lock it on that step.
+morphose's knobs work like any other track's: hold a step and turn morph to lock it on that step.
 lock state a or state b on different steps to switch states as the pattern plays.
 
 ## 5. saving
 
-states are saved with the project. morph keeps them in a small file beside the project
+states are saved with the project. morphose keeps them in a small file beside the project
 (song.oxy beside song.xy): copy both when you share a project. like everything else in the
 project you are working on, they survive switching the op-xy off, even without saving.
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <opxy/audio.hpp>
 
-namespace morph {
+namespace morphose {
 // Parameter slots (definition.json).
 // Page 1: mode, morph and the two states; page 2 (a press switches pages): the
 // frame on morphed tracks' pages, then the LFO's rate, depth and shape.
@@ -23,7 +23,7 @@ inline unsigned percent(opxy::i32 value) {
     return value < 0 ? 0 : ((static_cast<unsigned>(value) >> 7) * 100u + (1u << 23)) >> 24;
 }
 // What the control passes to the page each tick (opxy::control::from_control):
-// whether the LFO moves the morph, the morph it moved to, and whether Morph is
+// whether the LFO moves the morph, the morph it moved to, and whether Morphose is
 // bypassed (M4).
 const unsigned kShownLfo = 0, kShownMorph = 1, kShownBypassed = 2;
 // An LFO depth control's word as -32767..32767.
@@ -31,4 +31,4 @@ inline opxy::i32 depth(opxy::i32 value) {
     const opxy::i32 d = (value < 0 ? 0 : value >> 15) - 32768;
     return d < -32767 ? -32767 : d;
 }
-}  // namespace morph
+}  // namespace morphose

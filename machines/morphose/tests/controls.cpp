@@ -25,7 +25,7 @@ static opxy::i32 word(unsigned index, unsigned count) {
 }
 
 int main() {
-    using namespace morph;
+    using namespace morphose;
     for (unsigned i = 0; i < kModes; ++i) expect(choice(word(i, kModes), kModes) == i, "mode round trip");
     for (unsigned i = 0; i < kStates; ++i) expect(choice(word(i, kStates), kStates) == i, "state round trip");
     expect(choice(0x7fffffff, kStates) == 16 && choice(-1, kStates) == 0, "state ends");
@@ -114,7 +114,7 @@ int main() {
     for (unsigned i = 0; i < 4; ++i) input.shown[i] = static_cast<opxy::u8>(i);
     input.slots[kModeSlot] = word(kPlay, kModes);
     display(state, input, frame);
-    // The covers hide the artwork's "only one Morph" message, side by side over it.
+    // The covers hide the artwork's "only one Morphose" message, side by side over it.
     const opxy::i32 away = opxy::draw::hidden_x * opxy::draw::unit;
     bool covered = true;
     for (unsigned i = 0; i < kCovers; ++i)

@@ -2,10 +2,10 @@
 #include <opxy/transport.hpp>
 #include <opxy/types.hpp>
 
-namespace morph {
-// Morph's own LFO on the morph position (page 2: rate, depth, shape). Stock's
-// LFO cannot move Morph off its page (see the README), so Morph runs this one
-// on the GUI side every tick.
+namespace morphose {
+// Morphose's own LFO on the morph position (page 2: rate, depth, shape). Stock's
+// LFO cannot move Morphose off its page (see the README), so Morphose runs this
+// one on the GUI side every tick.
 
 // Rates, slow to fast: free rates in hundredths of a hertz, then rates synced
 // to the tempo, as 96ths of a quarter note per cycle (16 bars to 1/16).
@@ -81,4 +81,4 @@ inline opxy::i32 modulate(opxy::i32 morph, opxy::i32 depth, opxy::i32 y) {
     const opxy::i32 out = morph + delta;
     return out < 0 ? 0 : out;
 }
-}  // namespace morph
+}  // namespace morphose

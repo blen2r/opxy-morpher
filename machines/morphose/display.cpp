@@ -5,7 +5,7 @@
 #include "controls.h"
 #include "lfo.h"
 
-namespace morph {
+namespace morphose {
 // Geometry, in pixels: the shape in the middle at 1.5x, the state markers
 // beside it, the write dot at the top right.
 const opxy::i32 kCentreX = 240, kCentreY = 112, kMarkerLeft = 40, kMarkerRight = 440;
@@ -91,7 +91,7 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
         state_name(frame.header[kStateBSlot], sizeof(frame.header[kStateBSlot]), b);
     }
 
-    // Only one Morph runs: while another track holds one too, none does, and
+    // Only one Morphose runs: while another track holds one too, none does, and
     // every copy's page says so instead of showing the shape.
     // M4's label reads "bypassed" only while bypassed: a circle covers the "ed".
     const bool off = opxy::control::from_control(kShownBypassed) != 0;

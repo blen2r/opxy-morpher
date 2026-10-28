@@ -1,9 +1,9 @@
-# Morph
+# Morphose
 
 An Octatrack-style parameter morpher for the OP-XY, built on the
 [Open-XY SDK](https://github.com/etcetc000/open-xy).
 
-New to Morph? Start with the [guide](GUIDE.md).
+New to Morphose? Start with the [guide](GUIDE.md).
 
 The morpher is a silent synth: put it on an instrument track. Its page has
 two pages of four controls; pressing any knob switches between them.
@@ -14,17 +14,17 @@ two pages of four controls; pressing any knob switches between them.
 | Morph | 0 (all state A) to 100 (all state B); 50 is the exact midpoint |
 | State A | off, 1–16 |
 | State B | off, 1–16 |
-| Frame (page 2) | on, off: whether the pages of tracks Morph is changing show a thin dark red frame |
+| Frame (page 2) | on, off: whether the pages of tracks Morphose is changing show a thin dark red frame |
 | Rate (page 2) | the LFO's rate: free, 0.05 to 20 Hz, then synced to the tempo, 16 bars to 1/16 |
 | Depth (page 2) | -100 to +100: how far the LFO swings the morph either side of the Morph knob; 0 is off |
 | Shape (page 2) | sine, triangle, ramp up, ramp down, square, random |
 
-**Bypass:** M4 on Morph's track switches Morph off and on (Morph's page
-labels it "bypass", just above M4). Bypassed, Morph morphs, writes and
+**Bypass:** M4 on Morphose's track switches Morphose off and on (Morphose's page
+labels it "bypass", just above M4). Bypassed, Morphose morphs, writes and
 marks nothing, every track plays its own values, and its page is dimmed. The
 bypass is saved with the project.
 
-Morph's LFO moves the morph in play mode, on every page; while writing it
+Morphose's LFO moves the morph in play mode, on every page; while writing it
 pauses. Synced rates follow the song position while the sequencer plays, so
 the LFO repeats the same way each pass, and the tempo while stopped. The page's
 shape follows the LFO; the header shows the knob.
@@ -41,8 +41,8 @@ The page shows a shape that morphs from a circle (state A, at 0%) to a square
 red, the marker being written is red, a red dot shows at the top right and the
 morph's percentage is boxed in red.
 
-Other pages show what Morph is doing too: while you write a state, every page
-has a red frame at the screen's edge, and the page of a track Morph is
+Other pages show what Morphose is doing too: while you write a state, every page
+has a red frame at the screen's edge, and the page of a track Morphose is
 changing has a thin dark red frame (unless Frame is off).
 
 ## Writing states
@@ -97,12 +97,12 @@ turn the knob.
 Parameter locks are never written into a state, even in a write mode: they
 stay locks on their step.
 
-## One Morph at a time
+## One Morphose at a time
 
-Only one Morph can run. If more than one instrument track holds Morph, none of
+Only one Morphose can run. If more than one instrument track holds Morphose, none of
 them morphs: every track goes back to its own values, an unfinished write is
-undone, and each Morph page shows "ONLY ONE MORPH ALLOWED" until only one is
-left. States are kept, whichever track Morph is on.
+undone, and each Morphose page shows "ONLY ONE MORPHOSE" until only one is
+left. States are kept, whichever track Morphose is on.
 
 ## Status
 
@@ -113,20 +113,20 @@ and come back when it loads. A project saved without them, or on stock
 firmware since, starts with every state empty. There is no way to clear a
 single state yet.
 
-A possible later upgrade: Morph on an auxiliary track (track 12, CV out, chosen
+A possible later upgrade: Morphose on an auxiliary track (track 12, CV out, chosen
 with Shift + M1) instead of an instrument track, so it doesn't use up one of
 the eight sound tracks. It needs more firmware hooks (silencing the CV output
-while Morph holds the track), so it waits until the rest is finished.
+while Morphose holds the track), so it waits until the rest is finished.
 
-## Why Morph doesn't use the OP-XY's LFO
+## Why Morphose doesn't use the OP-XY's LFO
 
 For reviewers. On the OP-XY, an LFO on a synth's control is evaluated by the
 audio side for voices that are sounding, and, for a track with none, only
-while that track is selected. Morph makes no sound, so stock's LFO moved the
-morph only while Morph's page was shown. We traced this in the firmware
+while that track is selected. Morphose makes no sound, so stock's LFO moved the
+morph only while Morphose's page was shown. We traced this in the firmware
 (OS 1.2.0 and 1.2.1), forced the selected-track check, and held notes on
-Morph's track: stock never evaluated the LFO for Morph's track while another
-track was shown. So Morph hides the stock LFO page and runs its own LFO
+Morphose's track: stock never evaluated the LFO for Morphose's track while another
+track was shown. So Morphose hides the stock LFO page and runs its own LFO
 on the morph, on its second page, computed on the GUI side every tick, where
 it works whichever page is shown.
 
@@ -135,7 +135,7 @@ it works whichever page is shown.
 From this repository, with the SDK checked out beside it:
 
 ```sh
-python ../open-xy/sdk.py test --machine machines/morph --firmware
+python ../open-xy/sdk.py test --machine machines/morphose --firmware
 ```
 
 On an OP-XY, [QA.md](QA.md) lists the checks by area; running every section is

@@ -1,12 +1,12 @@
 #pragma once
 #include <opxy/draw.hpp>
 
-namespace morph {
+namespace morphose {
 // A shape between a circle (state A) and a square (state B), whose 64 points
 // the morph moves (node 0, path 0); the state A and B markers beside it, a
 // circle and a square (1, 2); the write dot (3); two red boxes around header
 // values: the morph's (4) and an off state's (5); nine black circles (6..14)
-// that cover the artwork's "only one Morph" message until two Morphs are
+// that cover the artwork's "only one Morphose" message until two copies are
 // placed; and two (15, 16) that cover the "ed" of M4's "bypassed" label
 // except while bypassed. No text slot is used: a two-page header can have all 16. (Until 30b3d6c a crossfader of 21 ticks
 // and a ring sat under the shape.)

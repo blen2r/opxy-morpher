@@ -17,7 +17,7 @@ static opxy::i32 distance(opxy::i32 value, opxy::i32 expected) {
 }
 
 int main() {
-    using namespace morph;
+    using namespace morphose;
     static opxy::control::Input input;
     static opxy::control::Overlay overlay;
     static ControlState saved;
