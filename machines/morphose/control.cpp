@@ -113,7 +113,8 @@ inline void control(ControlState& saved, const opxy::control::Input& input, opxy
     opxy::i32 morph = own[kMorphSlot] < 0 ? 0 : own[kMorphSlot];
     const opxy::i32 d = depth(own[kDepthSlot]);
     if (d) {
-        morph = modulate(morph, d, wave(saved.lfo, choice(own[kShapeSlot], kShapes)));
+        const unsigned shape = choice(own[kShapeSlot], kShapes);
+        morph = shape == kRandom ? modulate_random(morph, d, saved.lfo.held) : modulate(morph, d, wave(saved.lfo, shape));
         overlay.display[kShownLfo] = 1;
         overlay.display[kShownMorph] = morph;
     }

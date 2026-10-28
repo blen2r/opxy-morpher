@@ -112,7 +112,8 @@ Start from the [setup](#setup): track 1's knobs at 50, the sequencer playing.
 - [ ] Free rates: at 0.5 a full swing takes 2 seconds, at 2 half a second
 - [ ] A synced rate (e.g. 1bar) with the sequencer playing: the swing lines up with the bar, the same each
       pass; stopped, it keeps the tempo
-- [ ] Each shape: sine, tri, up, down, sqr and rand (a new random value each cycle)
+- [ ] Each shape: sine, tri, up, down, sqr and rand (a new random value each cycle, spread evenly over
+      the range the swing can reach: with the knob near 0 and a large depth, it doesn't keep landing on 0)
 - [ ] Depth -50 reverses the swing; with the morph knob near an end, the swing stops at 0 or 100
 - [ ] In wr a or wr b the LFO pauses, so you hear the state as written, and it resumes in play
 - [ ] Rate, depth and shape can be p-locked

@@ -81,4 +81,16 @@ inline opxy::i32 modulate(opxy::i32 morph, opxy::i32 depth, opxy::i32 y) {
     const opxy::i32 out = morph + delta;
     return out < 0 ? 0 : out;
 }
+
+// The random shape's morph: its held value picks evenly within the part of the
+// swing the morph can reach. Cut at 0 and 100% like the other shapes, a value
+// held for a whole cycle would pile up at the ends.
+inline opxy::i32 modulate_random(opxy::i32 morph, opxy::i32 depth, opxy::i32 held) {
+    const opxy::u32 swing = static_cast<opxy::u32>(depth < 0 ? -depth : depth) * 65534u;  // depth of the range
+    const opxy::u32 at = static_cast<opxy::u32>(morph < 0 ? 0 : morph);
+    const opxy::u32 low = at > swing ? at - swing : 0;
+    const opxy::u32 high = at + swing > 0x7fffffffu ? 0x7fffffffu : at + swing;
+    const opxy::u32 t = static_cast<opxy::u32>(held + 32768);  // 0..65534
+    return static_cast<opxy::i32>(low + ((high - low) >> 16) * t);
+}
 }  // namespace morphose

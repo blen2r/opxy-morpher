@@ -139,6 +139,23 @@ int main() {
     expect(modulate(0x40000000, 8192, 32767) > 0x5ff00000 && modulate(0x40000000, 8192, 32767) < 0x60000000 &&
            modulate(0x70000000, 32767, 32767) == 0x7fffffff && modulate(0x10000000, 32767, -32767) == 0,
            "depth around the knob, clamped");
+    // Random picks evenly within the reachable swing: at morph 30% with full depth, every
+    // fifth of 0..100% is about as likely, and almost nothing sits on 0.
+    {
+        unsigned fifths[5] = {}, zeros = 0;
+        for (opxy::i32 held = -32768; held <= 32766; ++held) {
+            const opxy::i32 m = modulate_random(0x26666666, 32767, held);
+            expect(m >= 0, "random within range");
+            zeros += m == 0;
+            ++fifths[static_cast<unsigned>(m) / 0x1999999a];
+        }
+        expect(zeros <= 1, "random does not pile up at 0");
+        for (unsigned f = 0; f < 5; ++f) expect(fifths[f] > 12000 && fifths[f] < 14300, "random spread evenly");
+        // Within reach, the swing is the depth either side of the knob, whichever its sign.
+        expect(modulate_random(0x40000000, 8192, -32768) > 0x1ff00000 && modulate_random(0x40000000, 8192, -32768) < 0x20100000 &&
+               modulate_random(0x40000000, -8192, 32766) > 0x5fe00000 && modulate_random(0x40000000, -8192, 32766) <= 0x60000000,
+               "random swing around the knob");
+    }
     const opxy::Transport stopped = {1200, 0, false};
     lfo = {};
     for (unsigned i = 0; i < 100; ++i) advance(lfo, 7, 5000, stopped);  // 1 Hz for 0.5 s

@@ -47,7 +47,8 @@ and b, and are dim when their state is off.
   from 16bar to 1/16.
 - knob 3, depth: -100 to +100. how far the lfo swings the morph either side of the morph knob.
   0 turns it off.
-- knob 4, shape: sine, tri, up, down, sqr or rand (a new random value each cycle).
+- knob 4, shape: sine, tri, up, down, sqr or rand (a new random value each cycle, anywhere the swing
+  can reach).
 
 ## 3. writing states
 
