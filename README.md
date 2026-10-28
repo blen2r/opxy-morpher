@@ -113,10 +113,22 @@ and come back when it loads. A project saved without them, or on stock
 firmware since, starts with every state empty. There is no way to clear a
 single state yet.
 
-A possible later upgrade: Morphose on an auxiliary track (track 12, CV out, chosen
-with Shift + M1) instead of an instrument track, so it doesn't use up one of
-the eight sound tracks. It needs more firmware hooks (silencing the CV output
-while Morphose holds the track), so it waits until the rest is finished.
+## Why Morphose sits on a sound track
+
+As a sound modifier, Morphose could also live on an auxiliary track, so it
+wouldn't use up one of the eight sound tracks. We studied that on OS 1.2.1 and
+kept it on tracks 1–8 for now:
+
+- Tracks 11 and 12 are hard-wired to MIDI and CV out, so Morphose would have to
+  replace a stock function there. For track 12 (CV), the most promising, that
+  is about 8–10 more firmware hooks: silencing the CV output while Morphose
+  holds the track, an engine choice with Shift + M1, and its page.
+- On tracks 1–8, Morphose is an ordinary synth, which the catalog and the
+  builder already handle, with less firmware to review and keep up with each
+  OS update.
+
+The SDK's track control doesn't depend on where the machine sits, so an
+auxiliary track remains a possible later upgrade.
 
 ## Why Morphose doesn't use the OP-XY's LFO
 
