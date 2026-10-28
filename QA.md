@@ -94,6 +94,8 @@ Start from the [setup](#setup): track 1's knobs at 50, the sequencer playing.
 - [ ] Load a project saved before it had states: every state is empty; load the first project again:
       its states are back
 - [ ] Write a state and power off without saving: after power on, the state is still there
+- [ ] With states written, create a new project, put Morphose on a track and choose states 1 and 2: both
+      are empty (nothing from the previous project)
 
 ## M2, M3 and M4
 
