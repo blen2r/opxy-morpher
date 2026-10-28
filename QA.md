@@ -39,16 +39,17 @@ Report a failure with the section, the line and what you saw. A photo of the scr
 
 Start from the [setup](#setup): track 1's knobs at 50, the sequencer playing.
 
-- [ ] **State 1:** on Morphose's page, set state A to 1, then mode to wr a. On track 1's engine page, turn
-      its four knobs all the way down: you hear each turn
+- [ ] **State 1:** on Morphose's page, set morph to 100 (state B stays off), state A to 1, then mode to
+      wr a. On track 1's engine page, turn its four knobs all the way down: you hear each turn
 - [ ] While writing, you hear state A alone, as at morph 0, whatever the morph knob says; Morphose's page
       shows a red circle, a red A marker, a red dot at the top right and the morph value boxed in red
-- [ ] Back on Morphose's page, mode to play: track 1's knobs return to 50
-- [ ] **State 2:** set state B to 2, then mode to wr b. Turn track 1's four engine knobs all the way up,
-      and also one knob on its filter page, one on its envelope page and one on track 3: you hear each
-      turn, and Morphose's page shows a red square
-- [ ] Mode to play: every knob you turned returns to where it was, and turning morph from 0 to 100 moves
-      between the two states on every track and page you edited
+- [ ] Mode to play: at morph 100 with state B off, track 1 plays its own values again, its knobs back at 50
+- [ ] **State 2:** set morph to 0, state B to 2, then mode to wr b. Turn track 1's four engine knobs all
+      the way up, and also one knob on its filter page, one on its envelope page and one on track 3: you
+      hear each turn, and Morphose's page shows a red square
+- [ ] Mode to play, at morph 0: track 1's engine knobs show state 1 (all the way down), and the filter,
+      envelope and track 3 knobs are back where they were. Turning morph to 100 moves to state 2 on every
+      track and page you edited
 - [ ] Writing a side whose state is off: "off" is boxed in red and nothing is recorded
 - [ ] A parameter lock made while writing (hold a step, turn a knob) is not recorded and stays a lock
 - [ ] Turning Morphose's own knobs is never recorded, nor are knob turns in play mode
