@@ -34,6 +34,19 @@ Report a failure with the section, the line and what you saw. A photo of the scr
 - [ ] Pressing any knob switches to page 2 (frame, rate, depth, shape) and back
 - [ ] A small grey "bypass" label sits at the bottom right, above M4
 
+## Writing states
+
+- [ ] Set state A to 1 and mode to wr a, then turn track 1's knobs on its engine, filter and envelope
+      pages, and a knob on track 3: you hear each turn
+- [ ] While writing, you hear state A alone, as at morph 0, whatever the morph knob says; Morphose's page
+      shows a red circle, a red A marker, a red dot at the top right and the morph value boxed in red
+- [ ] Back to play: every knob you turned returns to where it was, and the morph moves between the two
+      states on every track and page you edited
+- [ ] Same with state B and wr b (heard as at morph 100, shown as a red square)
+- [ ] Writing a side whose state is off: "off" is boxed in red and nothing is recorded
+- [ ] A parameter lock made while writing (hold a step, turn a knob) is not recorded and stays a lock
+- [ ] Turning Morphose's own knobs is never recorded, nor are knob turns in play mode
+
 ## Applying states
 
 - [ ] State A = 1, state B = 2: turning morph from 0 to 100 sweeps track 1's sound, and track 1's page
@@ -48,19 +61,6 @@ Report a failure with the section, the line and what you saw. A photo of the scr
 - [ ] Sweep the morph fast for a while: no clicks, stutter, freezes or stuck values
 - [ ] Change track 2's engine away from Morphose: track 1 returns to its own sound
 - [ ] Save the project at morph 100, reload it with Morphose removed: track 1 has its own values
-
-## Writing states
-
-- [ ] Set state A to 1 and mode to wr a, then turn track 1's knobs on its engine, filter and envelope
-      pages, and a knob on track 3: you hear each turn
-- [ ] While writing, you hear state A alone, as at morph 0, whatever the morph knob says; Morphose's page
-      shows a red circle, a red A marker, a red dot at the top right and the morph value boxed in red
-- [ ] Back to play: every knob you turned returns to where it was, and the morph moves between the two
-      states on every track and page you edited
-- [ ] Same with state B and wr b (heard as at morph 100, shown as a red square)
-- [ ] Writing a side whose state is off: "off" is boxed in red and nothing is recorded
-- [ ] A parameter lock made while writing (hold a step, turn a knob) is not recorded and stays a lock
-- [ ] Turning Morphose's own knobs is never recorded, nor are knob turns in play mode
 
 ## Marks on every page
 
