@@ -100,14 +100,21 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
 
     // Only one Morph runs: while another track holds one too, none does, and
     // every copy's page says so instead of showing the shape.
+    // M4's label reads "bypassed" only while bypassed: a circle covers the "ed".
+    const bool off = opxy::control::from_control(kShownBypassed) != 0;
+    for (unsigned i = 0; i < kEdCovers; ++i)
+        if (off)
+            hide(frame, kEdCover + i);
+        else
+            place(frame, kEdCover + i, (461 + 8 * static_cast<opxy::i32>(i)) * unit, 209 * unit, unit, kBlack,
+                  fill_and_stroke);
     if (opxy::control::copies(input.track) > 1) {
-        for (unsigned i = 0; i < kNodes; ++i) hide(frame, i);
+        for (unsigned i = 0; i < kEdCover; ++i) hide(frame, i);
         return;
     }
     // The covers sit over the message, the rest is drawn over them.
     for (unsigned i = 0; i < kCovers; ++i)
         place(frame, kCover0 + i, (86 + 40 * static_cast<opxy::i32>(i)) * unit, 122 * unit, unit, kBlack, fill_and_stroke);
-    const bool off = opxy::control::from_control(kShownBypassed) != 0;
 
     // Writing plays the written state alone, so the morph is not in effect:
     // its value is boxed in red. Writing a side that is

@@ -16,7 +16,10 @@
   <circle id="morph_node_3" cx="0" cy="0" r="6" fill="#ff3b30" stroke="#ff3b30" stroke-width="1"/>
   <path id="morph_node_4" d="M-28 -9 L28 -9 L28 9 L-28 9 Z" fill="none" stroke="#ff3b30" stroke-width="2"/>
   <path id="morph_node_5" d="M-28 -9 L28 -9 L28 9 L-28 9 Z" fill="none" stroke="#ff3b30" stroke-width="2"/>
-  <text transform="matrix(1 0 0 1 422 214)" fill="#888888" font-family="UniversNextPro-Light" font-size="12px">bypass</text>
+  <text transform="matrix(1 0 0 1 410 214)" fill="#888888" font-family="UniversNextPro-Light" font-size="12px">bypass</text>
+  <text transform="matrix(1 0 0 1 457 214)" fill="#888888" font-family="UniversNextPro-Light" font-size="12px">ed</text>
+  <circle id="morph_node_15" cx="0" cy="0" r="7" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morph_node_16" cx="0" cy="0" r="7" fill="#000000" stroke="#000000" stroke-width="1"/>
   <path d="M34 120 L40 103 L46 120 M36.5 114 L43.5 114" fill="none" stroke="#ffffff" stroke-width="2"/>
   <path d="M435 103 L435 121 L443 121 L447 117 L447 116 L443 112 L435 112 M443 112 L446 109 L446 106 L443 103 L435 103" fill="none" stroke="#ffffff" stroke-width="2"/>
   <circle id="morph_palette_0" cx="640" cy="0" r="1" fill="#000000" stroke="#000000" stroke-width="1"/>

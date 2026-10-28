@@ -120,19 +120,21 @@ int main() {
     for (unsigned i = 0; i < kCovers; ++i)
         covered = covered && frame.nodes[kCover0 + i].x == (86 + 40 * static_cast<opxy::i32>(i)) * opxy::draw::unit &&
                   frame.nodes[kCover0 + i].y == 122 * opxy::draw::unit;
-    expect(covered, "message covered");
+    expect(covered && frame.nodes[kEdCover].x == 461 * opxy::draw::unit &&
+           frame.nodes[kEdCover + 1].x == 469 * opxy::draw::unit, "message and label's ed covered");
     // Bypassed, the shape and markers dim.
     from_control_now[kShownBypassed] = 1;
     display(state, input, frame);
-    expect(frame.nodes[kShape].shade == kShapeDim && frame.nodes[kMarkerA].shade == kRingDim, "bypassed look");
+    expect(frame.nodes[kShape].shade == kShapeDim && frame.nodes[kMarkerA].shade == kRingDim &&
+           frame.nodes[kEdCover].x == away && frame.nodes[kEdCover + 1].x == away, "bypassed look and label");
     from_control_now[kShownBypassed] = 0;
     display(state, input, frame);
     // A second copy anywhere: every node moves away, uncovering the message.
     copies_now = 2;
     display(state, input, frame);
     bool hidden = true;
-    for (unsigned i = 0; i < kNodes; ++i) hidden = hidden && frame.nodes[i].x == away;
-    expect(hidden, "message shown, shape hidden with copies");
+    for (unsigned i = 0; i < kEdCover; ++i) hidden = hidden && frame.nodes[i].x == away;
+    expect(hidden && frame.nodes[kEdCover].x != away, "message shown, shape hidden with copies; label stays bypass");
     expect(opxy::draw::valid(frame), "copies frame valid");
     copies_now = 1;
     display(state, input, frame);
