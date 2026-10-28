@@ -102,6 +102,9 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
             place(frame, kEdCover + i, (457 + 7 * static_cast<opxy::i32>(i)) * unit, 209 * unit, unit, kBlack,
                   fill_and_stroke);
     if (opxy::control::copies(input.track) > 1) {
+        // A frame is drawn only once its path has points (a nonzero key),
+        // and the SDK clears them whenever the track or page changes.
+        shape(frame, 0);
         for (unsigned i = 0; i < kEdCover; ++i) hide(frame, i);
         return;
     }

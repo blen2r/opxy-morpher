@@ -136,6 +136,12 @@ int main() {
     for (unsigned i = 0; i < kEdCover; ++i) hidden = hidden && frame.nodes[i].x == away;
     expect(hidden && frame.nodes[kEdCover].x != away, "message shown, shape hidden with copies; label stays bypass");
     expect(opxy::draw::valid(frame), "copies frame valid");
+    // Selecting the other copy resets the display (and the frame): the
+    // message must still be drawn, so the frame must be valid from scratch.
+    static Frame fresh;
+    display_reset(state);
+    display(state, input, fresh);
+    expect(opxy::draw::valid(fresh) && fresh.nodes[kCover0].x == away, "copies frame valid after a reset");
     copies_now = 1;
     display(state, input, frame);
     expect(frame.nodes[kCover0].x != away && frame.nodes[kShape].x != away, "covered again with one copy");
