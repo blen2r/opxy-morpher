@@ -111,6 +111,14 @@ int main() {
     input.slots[kFrameSlot] = 0;
     display(state, input, frame);
     expect(same(frame.header[0], "off"), "frame off");
+    // The two-row header: with page 2 edited, its values are the bright row (text
+    // slots 4..7) and page 1's the grey row under them (12..15). A press animates
+    // for 0.15 s; a reset (or a track change) snaps to the page shown.
+    input.slots[kModeSlot] = word(kPlay, kModes);
+    display_reset(state);
+    display(state, input, frame);
+    expect(same(frame.texts[4].chars, "off") && same(frame.texts[12].chars, "play") && same(frame.texts[0].chars, "frame") &&
+           same(frame.texts[8].chars, "mode"), "two rows on page 2");
     for (unsigned i = 0; i < 4; ++i) input.shown[i] = static_cast<opxy::u8>(i);
     input.slots[kModeSlot] = word(kPlay, kModes);
     display(state, input, frame);

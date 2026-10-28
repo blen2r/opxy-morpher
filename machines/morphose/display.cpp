@@ -63,33 +63,32 @@ inline void state_name(char* out, unsigned capacity, unsigned state) {
         opxy::draw::copy(out, capacity, "off");
 }
 
-inline void display_reset(DisplayState& state) { state.unused = 0; }
+inline void display_reset(DisplayState& state) { state.header.reset(); }
 
-inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame) {
+inline void display(DisplayState& state, const opxy::draw::Input& input, Frame& frame) {
     using namespace opxy::draw;
     const unsigned mode = choice(input.slots[kModeSlot], kModes);
     const unsigned p = percent(input.slots[kMorphSlot]);
     const unsigned a = choice(input.slots[kStateASlot], kStates);
     const unsigned b = choice(input.slots[kStateBSlot], kStates);
-    // Page 2 (a press switches pages): the frame option, then spare slots.
+    // The SDK's two-row header: page 1 (mode, morph, the states) on top, page 2
+    // (frame and the LFO) under it; the row the encoders edit is the large one.
     const bool second = input.shown[0] >= kFrameSlot;
-    if (second) {
-        opxy::draw::copy(frame.header[0], sizeof(frame.header[0]), choice(input.slots[kFrameSlot], 2) ? "on" : "off");
-        opxy::draw::copy(frame.header[1], sizeof(frame.header[1]), kRateNames[choice(input.slots[kRateSlot], kRates)]);
-        // Depth as -100..100.
-        const opxy::i32 d = depth(input.slots[kDepthSlot]);
-        const unsigned amount = static_cast<unsigned>((d < 0 ? -d : d) * 100 + 16383) / 32767;
-        char text[6] = {};
-        text[0] = amount ? (d < 0 ? '-' : '+') : 0;
-        number(text + (amount ? 1 : 0), sizeof(text) - 1, amount);
-        opxy::draw::copy(frame.header[2], sizeof(frame.header[2]), text);
-        opxy::draw::copy(frame.header[3], sizeof(frame.header[3]), kShapeNames[choice(input.slots[kShapeSlot], kShapes)]);
-    } else {
-        opxy::draw::copy(frame.header[kModeSlot], sizeof(frame.header[kModeSlot]), kModeNames[mode]);
-        percent_text(frame.header[kMorphSlot], sizeof(frame.header[kMorphSlot]), p);
-        state_name(frame.header[kStateASlot], sizeof(frame.header[kStateASlot]), a);
-        state_name(frame.header[kStateBSlot], sizeof(frame.header[kStateBSlot]), b);
-    }
+    const char* const titles[8] = {"mode", "morph", "state a", "state b", "frame", "rate", "depth", "shape"};
+    char values[8][header_capacity] = {};
+    opxy::draw::copy(values[kModeSlot], header_capacity, kModeNames[mode]);
+    percent_text(values[kMorphSlot], header_capacity, p);
+    state_name(values[kStateASlot], header_capacity, a);
+    state_name(values[kStateBSlot], header_capacity, b);
+    opxy::draw::copy(values[kFrameSlot], header_capacity, choice(input.slots[kFrameSlot], 2) ? "on" : "off");
+    opxy::draw::copy(values[kRateSlot], header_capacity, kRateNames[choice(input.slots[kRateSlot], kRates)]);
+    // Depth as -100..100.
+    const opxy::i32 d = depth(input.slots[kDepthSlot]);
+    const unsigned amount = static_cast<unsigned>((d < 0 ? -d : d) * 100 + 16383) / 32767;
+    values[kDepthSlot][0] = amount ? (d < 0 ? '-' : '+') : 0;
+    number(values[kDepthSlot] + (amount ? 1 : 0), header_capacity - 1, amount);
+    opxy::draw::copy(values[kShapeSlot], header_capacity, kShapeNames[choice(input.slots[kShapeSlot], kShapes)]);
+    page_header(state.header, input, frame, titles, values, kHeaderBar);
 
     // Only one Morphose runs: while another track holds one too, none does, and
     // every copy's page says so instead of showing the shape.

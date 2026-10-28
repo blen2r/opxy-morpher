@@ -25,7 +25,8 @@ engine and the other carries on, with its states intact.
 
 ## 2. the page
 
-morphose has two pages of four knobs. press any knob to switch pages. morphose has no envelope,
+morphose has two pages of four knobs. press any knob to switch pages. both pages show at the top, page 1
+above page 2; the one the knobs edit is the large, bright one. morphose has no envelope,
 filter or lfo page: M2 and M3 do nothing on its track, and M4 bypasses morphose (below).
 
 ### 2.1 page 1
