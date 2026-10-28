@@ -67,7 +67,9 @@ Start from the [setup](#setup): track 1's knobs at 50, the sequencer playing.
       leaves it alone
 - [ ] Sweep the morph fast for a while: no clicks, stutter, freezes or stuck values
 - [ ] Change track 2's engine away from Morphose: track 1 returns to its own sound
-- [ ] Save the project at morph 100, reload it with Morphose removed: track 1 has its own values
+- [ ] The morph is never saved into the project: at morph 100, save the project and load it again, then
+      change track 2's engine away from Morphose: track 1's knobs are at their own values (50), not
+      state 2's
 
 ## Marks on every page
 
