@@ -23,64 +23,103 @@ Report a failure with the section, the line and what you saw. A photo of the scr
 
 ## Morphose's page
 
-- [ ] The page shows a crossfader of 21 dots with a ring, an A circle on the left and a B circle on the right
-- [ ] Morph reads 0% to 100%, 50% in the middle; at every 5% the ring sits exactly on a dot
-- [ ] Mode reads play / wr a / wr b and states read off, 1 … 16, one choice per knob detent, both directions
-- [ ] Pressing a knob does nothing
-- [ ] A circle is dim while its state is off
-- [ ] p-lock the morph knob on a few steps and play: the ring follows
+- [ ] Morph 0 shows a circle, 100 a square with sharp corners; in between the shape blends smoothly
+      while turning. The header reads 0 to 100, 50 in the middle
+- [ ] The markers: a circle (A) on the left and a square (B) on the right, letters centred, dim while
+      their state is off
+- [ ] Mode reads play / wr a / wr b, and the states off, 1 to 16: one choice per detent, both directions
+- [ ] p-lock the morph knob on a few steps and play: the shape follows; sweeping fast causes no flicker
+      or slowdown
 - [ ] p-lock the mode on a step: the shown name follows the lock during playback
+- [ ] Pressing any knob switches to page 2 (frame, rate, depth, shape) and back
+- [ ] A small grey "bypass" label sits at the bottom right, above M4
 
 ## Applying states
 
-- [ ] State A = 1, state B = 2: turning morph from 0% to 100% sweeps track 1's sound
-- [ ] Track 1's page shows the morphed values, with the sequencer stopped and playing
-- [ ] State A = off: at morph 0% track 1 sounds as you set it
+- [ ] State A = 1, state B = 2: turning morph from 0 to 100 sweeps track 1's sound, and track 1's page
+      shows the morphed values, stopped and playing
+- [ ] State A = off: at morph 0 track 1 sounds as you set it
 - [ ] Turning one of track 1's morphed knobs: its page shows your value while you turn, then the morphed
-      value about half a second after you stop
-- [ ] Parameters no state sets behave as without Morphose, including parameter locks shown while holding a step
+      value again
+- [ ] Parameters no state sets behave as without Morphose, including parameter locks shown while holding
+      a step
 - [ ] A parameter lock on a morphed parameter is heard only as far as the morph leans toward a side that
-      leaves it alone (see "What wins" in the README)
+      leaves it alone
 - [ ] Sweep the morph fast for a while: no clicks, stutter, freezes or stuck values
 - [ ] Change track 2's engine away from Morphose: track 1 returns to its own sound
-- [ ] Save the project at morph 100%, reload it with Morphose removed: track 1 has its own values
+- [ ] Save the project at morph 100, reload it with Morphose removed: track 1 has its own values
 
 ## Writing states
 
-- [ ] State A = 1, mode wr a: turn knobs on track 1 (engine page and others, e.g. filter, envelope) and on
-      track 3. You hear the changes
-- [ ] While writing, the A circle is filled red, a red dot shows at the top right, the morph value is boxed
-      in red and the crossfader's ring is hidden
-- [ ] You hear state A alone, as at morph 0%, whatever the morph knob says
-- [ ] Back to play: every knob you turned returns to where it was, the ring comes back and the morph is
-      where it was
-- [ ] Same with state B = 2 and wr b (heard as at morph 100%)
-- [ ] Morph 0% → 100% now moves between the two states on every track and page you edited
-- [ ] Write mode with that side's state off: "off" is boxed in red, nothing is recorded, and the morph
-      plays as in play mode
+- [ ] Set state A to 1 and mode to wr a, then turn track 1's knobs on its engine, filter and envelope
+      pages, and a knob on track 3: you hear each turn
+- [ ] While writing, you hear state A alone, as at morph 0, whatever the morph knob says; Morphose's page
+      shows a red circle, a red A marker, a red dot at the top right and the morph value boxed in red
+- [ ] Back to play: every knob you turned returns to where it was, and the morph moves between the two
+      states on every track and page you edited
+- [ ] Same with state B and wr b (heard as at morph 100, shown as a red square)
+- [ ] Writing a side whose state is off: "off" is boxed in red and nothing is recorded
 - [ ] A parameter lock made while writing (hold a step, turn a knob) is not recorded and stays a lock
-- [ ] Turning Morphose's own knobs is never recorded
-- [ ] Knob turns in play mode are not recorded
+- [ ] Turning Morphose's own knobs is never recorded, nor are knob turns in play mode
+
+## Marks on every page
+
+- [ ] While writing, every page of every track has a red frame fading inward from the screen's edge
+- [ ] Frame on (page 2): the pages of tracks Morphose is changing have a thin dark red frame in play;
+      frame off: no thin frame
+- [ ] No frame without Morphose, while it is bypassed, or while two tracks hold it
 
 ## One Morphose at a time
 
-- [ ] Morphose on track 2 at 50% between states 1 and 2, then put Morphose on track 4 too: track 1 returns to
-      its own sound, and both Morphose pages show "ONLY ONE MORPHOSE" / "remove the extra copies"
+- [ ] Morphose on track 2 at 50 between states 1 and 2, then put Morphose on track 4 too: track 1 returns
+      to its own sound, and both Morphose pages show "ONLY ONE MORPHOSE" / "remove the extra copies",
+      centred, also after switching between the two tracks; nothing of it shows otherwise
 - [ ] Change track 4 away from Morphose: track 2's page is back and the morph applies again, states intact
 - [ ] In wr a on track 2, add a second Morphose: the edits made while writing are undone
 
 ## Saving states
 
-- [ ] Write states 1 and 2, save the project, power off and on, load it: morph 0% → 100% still moves
+- [ ] Write states 1 and 2, save the project, power off and on, load it: morph 0 to 100 still moves
       between them
 - [ ] The project folder has `<name>.oxy` beside `<name>.xy` (over MTP)
-- [ ] Load a project saved before states existed: every state is empty
-- [ ] Load the first project again: its states are back
+- [ ] Load a project saved before it had states: every state is empty; load the first project again:
+      its states are back
 - [ ] Write a state and power off without saving: after power on, the state is still there
+
+## M2, M3 and M4
+
+- [ ] On Morphose's track, M2 and M3 leave the page as it is
+- [ ] On M2 of another track, select Morphose's track: Morphose's own page shows, not its envelope
+- [ ] Other tracks' M2, M3 and M4 work as before
+- [ ] A stock synth with its M4 LFO on, moving a knob: change its engine to Morphose: nothing keeps
+      moving. Change it back to the stock synth: its LFO is off, and turns on again as usual
+
+## Morphose's LFO (page 2)
+
+- [ ] Depth 0: nothing moves. Depth +50, rate 1 (Hz): the shape swings once per second and track 1's
+      sound follows, on Morphose's page and on track 1's page
+- [ ] Free rates: at 0.5 a full swing takes 2 seconds, at 2 half a second
+- [ ] A synced rate (e.g. 1bar) with the sequencer playing: the swing lines up with the bar, the same each
+      pass; stopped, it keeps the tempo
+- [ ] Each shape: sine, tri, up, down, sqr and rand (a new random value each cycle)
+- [ ] Depth -50 reverses the swing; with the morph knob near an end, the swing stops at 0 or 100
+- [ ] In wr a or wr b the LFO pauses, so you hear the state as written, and it resumes in play
+- [ ] Rate, depth and shape can be p-locked
+
+## Bypass (M4)
+
+- [ ] At 50 between states 1 and 2, press M4 on Morphose's track: track 1 goes back to its own sound,
+      the label reads "bypassed", the shape and markers dim, no thin frame shows, and the LFO stops
+- [ ] While bypassed, wr a records nothing and shows no red frame
+- [ ] Press M4 again: everything comes back as it was
+- [ ] Bypass, save, power off and on, load: still bypassed
+- [ ] On another track's M4 (LFO page), select Morphose's track: Morphose's page shows, and the bypass
+      doesn't change
 
 ## Known limits
 
 Not failures, but worth confirming they haven't changed:
 
-- An LFO on Morphose's morph knob moves the morph only while Morphose's page is shown.
+- Pressing M2 or M3 on Morphose's track may flash the stock page for one frame before the page comes
+  back.
 - A parameter lock holds until the pattern loops, not just for its step (stock behaviour).
