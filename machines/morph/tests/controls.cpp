@@ -112,6 +112,14 @@ int main() {
     input.slots[kModeSlot] = word(kPlay, kModes);
     display(state, input, frame);
     expect(frame.texts[kCopiesTitle].chars[0] == 0 && frame.texts[kCopiesHint].chars[0] == 0, "no copies message");
+    // M4's label says what the key does; bypassed, the shape and markers dim.
+    expect(same(frame.texts[kBypassLabel].chars, "bypass"), "M4 label");
+    bypassed() = 1;
+    display(state, input, frame);
+    expect(same(frame.texts[kBypassLabel].chars, "bypassed") && frame.nodes[kShape].shade == kShapeDim &&
+           frame.nodes[kMarkerA].shade == kRingDim, "bypassed look");
+    bypassed() = 0;
+    display(state, input, frame);
     // A second copy anywhere: the page asks to remove it and hides the crossfader.
     copies_now = 2;
     display(state, input, frame);

@@ -14,7 +14,7 @@
 #include "states.h"
 
 namespace morph {
-struct ControlState { State states[kStates]; Lfo lfo; };
+struct ControlState { State states[kStates]; Lfo lfo; opxy::u32 bypassed; };
 
 const State kEmpty = {0, {}};
 
@@ -23,9 +23,10 @@ inline void control_reset(ControlState&) {}
 
 // What a project keeps (definition.json's savedBytes): a format byte, then for
 // states 1..16 their count and each parameter as track, index and the value's
-// four bytes, low first.
-const opxy::u8 kSavedFormat = 1;
-const opxy::u32 kSavedBytes = 1 + (kStates - 1) * (1 + kStateLocks * 6);
+// four bytes, low first, then (format 2) whether Morph is bypassed. Format 1,
+// without the last byte, still loads.
+const opxy::u8 kSavedFormat = 2;
+const opxy::u32 kSavedBytes = 1 + (kStates - 1) * (1 + kStateLocks * 6) + 1;
 
 inline opxy::u32 control_save(const ControlState& saved, opxy::u8* data, opxy::u32 capacity) {
     if (capacity < kSavedBytes) return 0;
@@ -42,6 +43,7 @@ inline opxy::u32 control_save(const ControlState& saved, opxy::u8* data, opxy::u
             for (unsigned b = 0; b < 4; ++b) data[n++] = static_cast<opxy::u8>(value >> (8 * b));
         }
     }
+    data[n++] = saved.bypassed ? 1 : 0;
     return n;
 }
 
@@ -49,11 +51,14 @@ inline opxy::u32 control_save(const ControlState& saved, opxy::u8* data, opxy::u
 // so does one whose data this version cannot read.
 inline void control_load(ControlState& saved, const opxy::u8* data, opxy::u32 bytes) {
     for (unsigned s = 0; s < kStates; ++s) saved.states[s].count = 0;
-    if (!bytes || data[0] != kSavedFormat) return;
+    saved.bypassed = 0;
+    if (!bytes || (data[0] != 1 && data[0] != kSavedFormat)) return;
+    // The states end where the bypass byte, if any, begins.
+    const opxy::u32 end = data[0] == kSavedFormat ? bytes - 1 : bytes;
     opxy::u32 n = 1;
     for (unsigned s = 1; s < kStates; ++s) {
-        const opxy::u32 count = n < bytes ? data[n++] : kStateLocks + 1;
-        if (count > kStateLocks || n + count * 6 > bytes || (s == kStates - 1 && n + count * 6 != bytes)) {
+        const opxy::u32 count = n < end ? data[n++] : kStateLocks + 1;
+        if (count > kStateLocks || n + count * 6 > end || (s == kStates - 1 && n + count * 6 != end)) {
             for (unsigned t = 0; t < kStates; ++t) saved.states[t].count = 0;
             return;
         }
@@ -64,6 +69,7 @@ inline void control_load(ControlState& saved, const opxy::u8* data, opxy::u32 by
                 record(saved.states[s], data[n], data[n + 1], static_cast<opxy::i32>(value));
         }
     }
+    if (data[0] == kSavedFormat) saved.bypassed = data[end] ? 1 : 0;
 }
 
 // Overlays one parameter, unless the state on the other side already did.
@@ -85,6 +91,11 @@ inline void control(ControlState& saved, const opxy::control::Input& input, opxy
     // The LFO keeps time whatever the mode, and moves the morph only in play.
     advance(saved.lfo, choice(own[kRateSlot], kRates), input.elapsed_us, input.transport);
     lfo_morph() = -1;
+    // M4 on Morph's track bypasses it: nothing is morphed, written or marked,
+    // and every track plays its own values.
+    if (input.page_key == 4) saved.bypassed = !saved.bypassed;
+    bypassed() = saved.bypassed;
+    if (saved.bypassed) return;
     if (target) {
         State& state = saved.states[target];
         for (opxy::u32 i = 0; i < input.edit_count; ++i) {

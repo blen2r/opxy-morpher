@@ -197,13 +197,13 @@
       "paths": 1,
       "points": 64,
       "nodes": 6,
-      "texts": 2,
-      "palette": 10
+      "texts": 3,
+      "palette": 11
     },
     "trackControl": {
-      "stateBytes": 4432,
+      "stateBytes": 4436,
       "stateAlignment": 4,
-      "savedBytes": 3089
+      "savedBytes": 3090
     }
   }
 }

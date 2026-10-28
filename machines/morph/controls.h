@@ -28,6 +28,12 @@ inline volatile opxy::i32& lfo_morph() {
     static volatile opxy::i32 value = -1;
     return value;
 }
+// Whether Morph is bypassed (M4), which the control writes each tick and the
+// page shows.
+inline volatile opxy::u32& bypassed() {
+    static volatile opxy::u32 value = 0;
+    return value;
+}
 // An LFO depth control's word as -32767..32767.
 inline opxy::i32 depth(opxy::i32 value) {
     const opxy::i32 d = (value < 0 ? 0 : value >> 15) - 32768;

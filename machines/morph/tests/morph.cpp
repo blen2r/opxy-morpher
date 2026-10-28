@@ -100,7 +100,7 @@ int main() {
     const opxy::u32 bytes = control_save(saved, data, kSavedBytes);
     opxy::u32 locks = 0;
     for (unsigned s = 1; s < kStates; ++s) locks += saved.states[s].count;
-    expect(bytes == 1 + 16 + locks * 6 && control_save(saved, data, kSavedBytes - 1) == 0, "save size");
+    expect(bytes == 1 + 16 + locks * 6 + 1 && control_save(saved, data, kSavedBytes - 1) == 0, "save size");
     static ControlState loaded;
     control_load(loaded, data, bytes);
     bool same = true;
@@ -112,9 +112,13 @@ int main() {
         }
     }
     expect(same, "states round trip");
-    data[0] = 2;
+    data[0] = 3;
     control_load(loaded, data, bytes);
     expect(loaded.states[1].count == 0 && loaded.states[3].count == 0, "unknown format starts empty");
+    // Format 1, from before bypass, still loads, not bypassed.
+    data[0] = 1;
+    control_load(loaded, data, bytes - 1);
+    expect(loaded.states[1].count == saved.states[1].count && !loaded.bypassed, "format 1 loads");
     data[0] = kSavedFormat;
     control_load(loaded, data, bytes - 1);
     expect(loaded.states[1].count == 0, "truncated data starts empty");
@@ -162,5 +166,24 @@ int main() {
     own[kDepthSlot] = 0x40000000;
     run(kPlay, 1, 2, 0x40000000);
     expect(lfo_morph() == -1, "depth 0 is off");
+
+    // M4 bypasses: nothing is overlaid or captured until it is pressed again;
+    // the bypass is kept with the project.
+    input.page_key = 4;
+    run(kPlay, 1, 2, 0x40000000);
+    input.page_key = 0;
+    expect(overlay.count == 0 && bypassed() == 1, "bypassed");
+    run(kWriteA, 1, 2, 0);
+    expect(overlay.count == 0 && !overlay.capture, "nothing written while bypassed");
+    const opxy::u32 kept_bytes = control_save(saved, data, kSavedBytes);
+    control_load(loaded, data, kept_bytes);
+    expect(loaded.bypassed == 1, "bypass saved");
+    input.page_key = 2;
+    run(kPlay, 1, 2, 0x40000000);
+    expect(bypassed() == 1, "M2 is not bypass");
+    input.page_key = 4;
+    run(kPlay, 1, 2, 0x40000000);
+    input.page_key = 0;
+    expect(overlay.count > 0 && bypassed() == 0, "bypass off again");
     return failures ? 1 : 0;
 }

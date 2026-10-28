@@ -9,6 +9,7 @@
   <path d="M435 103 L435 121 L443 121 L447 117 L447 116 L443 112 L435 112 M443 112 L446 109 L446 106 L443 103 L435 103" fill="none" stroke="#ffffff" stroke-width="2"/>
   <text id="morph_text_0" transform="matrix(1 0 0 1 72 112)" fill="#ff3b30" font-family="UniversNextPro-Light" font-size="24px">ONLY ONE MORPH ALLOWED</text>
   <text id="morph_text_1" transform="matrix(1 0 0 1 128 148)" fill="#ff3b30" font-family="UniversNextPro-Light" font-size="16px">remove the extra Morphs</text>
+  <text id="morph_text_2" transform="matrix(1 0 0 1 422 214)" fill="#888888" font-family="UniversNextPro-Light" font-size="12px">bypass</text>
   <circle id="morph_palette_0" cx="640" cy="0" r="1" fill="#000000" stroke="#000000" stroke-width="1"/>
   <circle id="morph_palette_1" cx="640" cy="0" r="1" fill="#333333" stroke="#333333" stroke-width="1"/>
   <circle id="morph_palette_2" cx="640" cy="0" r="1" fill="#888888" stroke="#888888" stroke-width="1"/>
@@ -19,4 +20,5 @@
   <circle id="morph_palette_7" cx="640" cy="0" r="1" fill="#000000" stroke="#ff3b30" stroke-width="1"/>
   <circle id="morph_palette_8" cx="640" cy="0" r="1" fill="#000000" stroke="#ffffff" stroke-width="3"/>
   <circle id="morph_palette_9" cx="640" cy="0" r="1" fill="#000000" stroke="#ff3b30" stroke-width="3"/>
+  <circle id="morph_palette_10" cx="640" cy="0" r="1" fill="#000000" stroke="#333333" stroke-width="3"/>
 </g>

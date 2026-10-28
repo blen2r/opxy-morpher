@@ -11,7 +11,13 @@ morph lives on an instrument track (1–8), like a synth. it makes no sound of i
 
 select an empty track, hold shift and press M1 to open the engine list, then pick morph.
 
-### 1.2 one morph at a time
+### 1.2 bypass
+
+press M4 on morph's track to switch morph off: your tracks go back to their own values, nothing is
+morphed or written, and morph's page dims. the small label above M4 reads "bypassed". press M4
+again to switch it back on. the bypass is saved with the project.
+
+### 1.3 one morph at a time
 
 only one morph can run. if two tracks hold morph, neither does anything: your tracks go back to
 their own sound and both morph pages show "ONLY ONE MORPH ALLOWED". change one of them to another
@@ -20,7 +26,7 @@ engine and the other carries on, with its states intact.
 ## 2. the page
 
 morph has two pages of four knobs. press any knob to switch pages. morph has no envelope,
-filter or lfo page, so M2, M3 and M4 do nothing on its track.
+filter or lfo page: M2 and M3 do nothing on its track, and M4 bypasses morph (below).
 
 ### 2.1 page 1
 

@@ -19,6 +19,11 @@ two pages of four controls; pressing any knob switches between them.
 | Depth (page 2) | -100 to +100: how far the LFO swings the morph either side of the Morph knob; 0 is off |
 | Shape (page 2) | sine, triangle, ramp up, ramp down, square, random |
 
+**Bypass:** M4 on Morph's track switches Morph off and on (the label above
+M4 says "bypass", or "bypassed" while off). Bypassed, Morph morphs, writes and
+marks nothing, every track plays its own values, and its page is dimmed. The
+bypass is saved with the project.
+
 Morph's LFO moves the morph in play mode, on every page; while writing it
 pauses. Synced rates follow the song position while the sequencer plays, so
 the LFO repeats the same way each pass, and the tempo while stopped. The page's
@@ -121,7 +126,7 @@ while that track is selected. Morph makes no sound, so stock's LFO moved the
 morph only while Morph's page was shown. We traced this in the firmware
 (OS 1.2.0 and 1.2.1), forced the selected-track check, and held notes on
 Morph's track: stock never evaluated the LFO for Morph's track while another
-track was shown. So Morph hides the stock LFO page (M4) and runs its own LFO
+track was shown. So Morph hides the stock LFO page and runs its own LFO
 on the morph, on its second page, computed on the GUI side every tick, where
 it works whichever page is shown.
 

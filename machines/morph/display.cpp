@@ -104,8 +104,12 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
         for (unsigned i = 0; i <= kStateBox; ++i) hide(frame, i);
         text(frame, kCopiesTitle, 72 * unit, 112 * unit, unit, "ONLY ONE MORPH ALLOWED");
         text(frame, kCopiesHint, 128 * unit, 148 * unit, unit, "remove the extra Morphs");
+        text(frame, kBypassLabel, hidden_x * unit, hidden_y * unit, unit, "");
         return;
     }
+    // M4's label: what the key does now.
+    const bool off = bypassed() != 0;
+    text(frame, kBypassLabel, (off ? 416 : 422) * unit, 214 * unit, unit, off ? "bypassed" : "bypass");
     text(frame, kCopiesTitle, hidden_x * unit, hidden_y * unit, unit, "");
     text(frame, kCopiesHint, hidden_x * unit, hidden_y * unit, unit, "");
 
@@ -114,21 +118,22 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     // off records nothing; that side's state is boxed in red instead.
     const unsigned states[2] = {a, b}, writes[2] = {kWriteA, kWriteB};
     const unsigned side = mode == kWriteB ? 1 : 0;
-    const bool writing = mode != kPlay && states[side];
+    const bool writing = !off && mode != kPlay && states[side];
 
     // The shape follows the morph; while writing it shows the written state, in red.
     // The shape shows the morph as the LFO moves it, the header the knob.
     const opxy::i32 moved = lfo_morph() >= 0 ? lfo_morph() : input.slots[kMorphSlot];
     const opxy::i32 q15 = moved < 0 ? 0 : moved >> 16;
     shape(frame, writing ? (side ? 32768 : 0) : q15 >= 32767 ? 32768 : q15);
-    place(frame, kShape, kCentreX * unit, kCentreY * unit, unit + unit / 2, writing ? kShapeRed : kShapeWhite, stroke);
+    place(frame, kShape, kCentreX * unit, kCentreY * unit, unit + unit / 2,
+          off ? kShapeDim : writing ? kShapeRed : kShapeWhite, stroke);
 
     // A marker is outlined red while its state is being written, white when a
     // state is chosen, and dim when that side is off.
     const opxy::i32 xs[2] = {kMarkerLeft, kMarkerRight};
     for (unsigned s = 0; s < 2; ++s)
         place(frame, kMarkerA + s, xs[s] * unit, kCentreY * unit, unit,
-              writing && mode == writes[s] ? kRingRed : states[s] ? kRingWhite : kRingDim,
+              writing && mode == writes[s] ? kRingRed : states[s] && !off ? kRingWhite : kRingDim,
               s ? stroke : fill_and_stroke);
     // The red boxes mark page 1's header values.
     if (writing)
@@ -139,7 +144,7 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
         place(frame, kMorphBox, header_x(kMorphSlot) * unit, kHeaderY * unit, unit, kRed, stroke);
     else
         hide(frame, kMorphBox);
-    if (mode != kPlay && !states[side] && !second)
+    if (!off && mode != kPlay && !states[side] && !second)
         place(frame, kStateBox, header_x(side ? kStateBSlot : kStateASlot) * unit, kHeaderY * unit, unit, kRed, stroke);
     else
         hide(frame, kStateBox);
