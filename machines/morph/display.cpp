@@ -3,6 +3,7 @@
 #include <opxy/track_control.hpp>
 #include "display.h"
 #include "controls.h"
+#include "lfo.h"
 
 namespace morph {
 // Geometry, in pixels: the shape in the middle at 1.5x, the state markers
@@ -81,7 +82,15 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     const bool second = input.shown[0] >= kFrameSlot;
     if (second) {
         opxy::draw::copy(frame.header[0], sizeof(frame.header[0]), choice(input.slots[kFrameSlot], 2) ? "on" : "off");
-        for (unsigned i = 1; i < 4; ++i) opxy::draw::copy(frame.header[i], sizeof(frame.header[i]), "-");
+        opxy::draw::copy(frame.header[1], sizeof(frame.header[1]), kRateNames[choice(input.slots[kRateSlot], kRates)]);
+        // Depth as -100..100.
+        const opxy::i32 d = depth(input.slots[kDepthSlot]);
+        const unsigned amount = static_cast<unsigned>((d < 0 ? -d : d) * 100 + 16383) / 32767;
+        char text[6] = {};
+        text[0] = amount ? (d < 0 ? '-' : '+') : 0;
+        number(text + (amount ? 1 : 0), sizeof(text) - 1, amount);
+        opxy::draw::copy(frame.header[2], sizeof(frame.header[2]), text);
+        opxy::draw::copy(frame.header[3], sizeof(frame.header[3]), kShapeNames[choice(input.slots[kShapeSlot], kShapes)]);
     } else {
         opxy::draw::copy(frame.header[kModeSlot], sizeof(frame.header[kModeSlot]), kModeNames[mode]);
         percent_text(frame.header[kMorphSlot], sizeof(frame.header[kMorphSlot]), p);
@@ -108,7 +117,9 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     const bool writing = mode != kPlay && states[side];
 
     // The shape follows the morph; while writing it shows the written state, in red.
-    const opxy::i32 q15 = input.slots[kMorphSlot] < 0 ? 0 : input.slots[kMorphSlot] >> 16;
+    // The shape shows the morph as the LFO moves it, the header the knob.
+    const opxy::i32 moved = lfo_morph() >= 0 ? lfo_morph() : input.slots[kMorphSlot];
+    const opxy::i32 q15 = moved < 0 ? 0 : moved >> 16;
     shape(frame, writing ? (side ? 32768 : 0) : q15 >= 32767 ? 32768 : q15);
     place(frame, kShape, kCentreX * unit, kCentreY * unit, unit + unit / 2, writing ? kShapeRed : kShapeWhite, stroke);
 

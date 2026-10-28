@@ -15,8 +15,14 @@ two pages of four controls; pressing any knob switches between them.
 | State A | off, 1–16 |
 | State B | off, 1–16 |
 | Frame (page 2) | on, off: whether the pages of tracks Morph is changing show a thin dark red frame |
+| Rate (page 2) | the LFO's rate: free, 0.05 to 20 Hz, then synced to the tempo, 16 bars to 1/16 |
+| Depth (page 2) | -100 to +100: how far the LFO swings the morph either side of the Morph knob; 0 is off |
+| Shape (page 2) | sine, triangle, ramp up, ramp down, square, random |
 
-The other three page 2 controls are spare, for later features.
+Morph's LFO moves the morph in play mode, on every page; while writing it
+pauses. Synced rates follow the song position while the sequencer plays, so
+the LFO repeats the same way each pass, and the tempo while stopped. The page's
+shape follows the LFO; the header shows the knob.
 
 A state is a set of parameter values on other tracks, what the Octatrack calls
 a scene (the OP-XY already uses "scene" for its sequencer).

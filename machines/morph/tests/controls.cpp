@@ -91,7 +91,18 @@ int main() {
     input.slots[kFrameSlot] = word(1, 2);
     for (unsigned i = 0; i < 4; ++i) input.shown[i] = static_cast<opxy::u8>(kFrameSlot + i);
     display(state, input, frame);
-    expect(same(frame.header[0], "on") && same(frame.header[1], "-") && same(frame.header[3], "-"), "page 2 header");
+    input.slots[kRateSlot] = word(21, kRates);
+    input.slots[kDepthSlot] = 0x60000000;  // +50
+    input.slots[kShapeSlot] = word(kSquare, kShapes);
+    display(state, input, frame);
+    expect(same(frame.header[0], "on") && same(frame.header[1], "1bar") && same(frame.header[2], "+50") &&
+           same(frame.header[3], "sqr"), "page 2 header");
+    input.slots[kDepthSlot] = 0x40000000;
+    display(state, input, frame);
+    expect(same(frame.header[2], "0"), "depth 0");
+    input.slots[kDepthSlot] = 0;
+    display(state, input, frame);
+    expect(same(frame.header[2], "-100"), "depth -100");
     const opxy::i32 off_screen = opxy::draw::hidden_x * opxy::draw::unit;
     expect(frame.nodes[kStateBox].x == off_screen && frame.nodes[kMorphBox].x == off_screen, "no header boxes on page 2");
     input.slots[kFrameSlot] = 0;

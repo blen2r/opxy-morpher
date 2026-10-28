@@ -5,14 +5,16 @@
 // records nothing and plays as in play mode. In play, every parameter state A
 // or B sets is overlaid with a blend of the two; a side that is off, or a state
 // that leaves a parameter alone, contributes the parameter's own value. States
-// are kept with each project (control_save, control_load).
+// are kept with each project (control_save, control_load). Morph's own LFO
+// (lfo.h) moves the morph in play.
 #include <opxy/q31.hpp>
 #include <opxy/track_control.hpp>
 #include "controls.h"
+#include "lfo.h"
 #include "states.h"
 
 namespace morph {
-struct ControlState { State states[kStates]; };
+struct ControlState { State states[kStates]; Lfo lfo; };
 
 const State kEmpty = {0, {}};
 
@@ -80,6 +82,9 @@ inline void control(ControlState& saved, const opxy::control::Input& input, opxy
     const unsigned mode = choice(own[kModeSlot], kModes);
     const unsigned a = choice(own[kStateASlot], kStates), b = choice(own[kStateBSlot], kStates);
     const unsigned target = mode == kWriteA ? a : mode == kWriteB ? b : 0;
+    // The LFO keeps time whatever the mode, and moves the morph only in play.
+    advance(saved.lfo, choice(own[kRateSlot], kRates), input.elapsed_us, input.transport);
+    lfo_morph() = -1;
     if (target) {
         State& state = saved.states[target];
         for (opxy::u32 i = 0; i < input.edit_count; ++i) {
@@ -95,7 +100,12 @@ inline void control(ControlState& saved, const opxy::control::Input& input, opxy
     overlay.mark = choice(own[kFrameSlot], 2);
     const State& from = a ? saved.states[a] : kEmpty;
     const State& to = b ? saved.states[b] : kEmpty;
-    const opxy::i32 morph = own[kMorphSlot] < 0 ? 0 : own[kMorphSlot];
+    opxy::i32 morph = own[kMorphSlot] < 0 ? 0 : own[kMorphSlot];
+    const opxy::i32 d = depth(own[kDepthSlot]);
+    if (d) {
+        morph = modulate(morph, d, wave(saved.lfo, choice(own[kShapeSlot], kShapes)));
+        lfo_morph() = morph;
+    }
     for (opxy::u32 i = 0; i < from.count; ++i) blend(input, overlay, from, to, from.locks[i], true, morph);
     for (opxy::u32 i = 0; i < to.count; ++i) blend(input, overlay, from, to, to.locks[i], false, morph);
 }

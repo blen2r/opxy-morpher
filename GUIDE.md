@@ -37,7 +37,11 @@ and b, and are dim when their state is off.
 
 - knob 1, frame: on or off. with frame on, the pages of tracks morph is changing have a thin dark
   red frame.
-- knobs 2–4 are spare, for later.
+- knob 2, rate: how fast morph's lfo moves, from 0.05 to 20 (hertz), then synced to the tempo,
+  from 16bar to 1/16.
+- knob 3, depth: -100 to +100. how far the lfo swings the morph either side of the morph knob.
+  0 turns it off.
+- knob 4, shape: sine, tri, up, down, sqr or rand (a new random value each cycle).
 
 ## 3. writing states
 
@@ -89,7 +93,14 @@ controlling that knob.
 a parameter lock on a morphed knob is heard only as far as the morph leans toward a side that
 doesn't hold that knob.
 
-### 4.3 sequence the morph
+### 4.3 morph's lfo
+
+turn depth up on page 2 and the morph swings around the morph knob, on every page, in play mode.
+the shape on morph's page follows it; the header still shows the knob. synced rates follow the
+song position while the sequencer plays, so each pass sounds the same. while you write a state the
+lfo pauses, so you hear the state as written.
+
+### 4.4 sequence the morph
 
 morph's knobs work like any other track's: hold a step and turn morph to lock it on that step.
 lock state a or state b on different steps to switch states as the pattern plays.
@@ -104,5 +115,4 @@ load a project and its states come back. a project saved without them starts wit
 
 ## 6. limits
 
-- an lfo on the morph knob moves the morph only while morph's page is shown.
 - there is no way to clear a single state yet.

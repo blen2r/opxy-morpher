@@ -105,40 +105,72 @@
       "display": "enum"
     },
     {
-      "id": "spare_1",
-      "label": "Spare 1",
+      "id": "rate",
+      "label": "Rate",
       "control": 1,
-      "default": 0,
+      "default": 0.84,
       "mapping": {
-        "kind": "linear",
-        "minimum": 0,
-        "maximum": 1
+        "kind": "enum",
+        "labels": [
+          "0.05 Hz",
+          "0.1 Hz",
+          "0.15 Hz",
+          "0.2 Hz",
+          "0.3 Hz",
+          "0.5 Hz",
+          "0.75 Hz",
+          "1 Hz",
+          "1.5 Hz",
+          "2 Hz",
+          "3 Hz",
+          "4 Hz",
+          "5 Hz",
+          "7 Hz",
+          "10 Hz",
+          "14 Hz",
+          "20 Hz",
+          "16 bars",
+          "8 bars",
+          "4 bars",
+          "2 bars",
+          "1 bar",
+          "half",
+          "quarter",
+          "eighth",
+          "sixteenth"
+        ]
       },
-      "display": "percent"
+      "display": "enum"
     },
     {
-      "id": "spare_2",
-      "label": "Spare 2",
+      "id": "depth",
+      "label": "Depth",
       "control": 2,
-      "default": 0,
+      "default": 0.5,
       "mapping": {
         "kind": "linear",
-        "minimum": 0,
+        "minimum": -1,
         "maximum": 1
       },
-      "display": "percent"
+      "display": "bipolar"
     },
     {
-      "id": "spare_3",
-      "label": "Spare 3",
+      "id": "shape",
+      "label": "Shape",
       "control": 3,
       "default": 0,
       "mapping": {
-        "kind": "linear",
-        "minimum": 0,
-        "maximum": 1
+        "kind": "enum",
+        "labels": [
+          "sine",
+          "triangle",
+          "ramp up",
+          "ramp down",
+          "square",
+          "random"
+        ]
       },
-      "display": "percent"
+      "display": "enum"
     }
   ],
   "presets": {
@@ -148,9 +180,9 @@
       "state_a": 0,
       "state_b": 0,
       "frame": 1,
-      "spare_1": 0,
-      "spare_2": 0,
-      "spare_3": 0
+      "rate": 0.84,
+      "depth": 0.5,
+      "shape": 0
     }
   },
   "resources": {
@@ -169,7 +201,7 @@
       "palette": 10
     },
     "trackControl": {
-      "stateBytes": 4420,
+      "stateBytes": 4432,
       "stateAlignment": 4,
       "savedBytes": 3089
     }

@@ -121,5 +121,46 @@ int main() {
     control_load(loaded, data, bytes);
     control_load(loaded, data, 0);
     expect(loaded.states[1].count == 0 && loaded.states[3].count == 0, "project without states starts empty");
+
+    // The LFO: shapes, depth around the knob, rates in real time and in time with the music.
+    Lfo lfo = {};
+    expect(wave(lfo, kSine) == 0 && wave(lfo, kTriangle) == 0 && wave(lfo, kRampUp) == -32767 &&
+           wave(lfo, kSquare) == 32767, "shapes at the start");
+    lfo.phase = 0x40000000;
+    expect(wave(lfo, kSine) == 32767 && wave(lfo, kTriangle) > 32700, "shapes at a quarter");
+    lfo.phase = 0xc0000000u;
+    expect(wave(lfo, kSine) == -32767 && wave(lfo, kSquare) == -32767 && wave(lfo, kRampDown) == -16385,
+           "shapes at three quarters");
+    expect(modulate(0x40000000, 8192, 32767) > 0x5ff00000 && modulate(0x40000000, 8192, 32767) < 0x60000000 &&
+           modulate(0x70000000, 32767, 32767) == 0x7fffffff && modulate(0x10000000, 32767, -32767) == 0,
+           "depth around the knob, clamped");
+    const opxy::Transport stopped = {1200, 0, false};
+    lfo = {};
+    for (unsigned i = 0; i < 100; ++i) advance(lfo, 7, 5000, stopped);  // 1 Hz for 0.5 s
+    expect(lfo.phase > 0x7f000000 && lfo.phase < 0x81000000, "free rate in real time");
+    lfo = {};
+    for (unsigned i = 0; i < 100; ++i) advance(lfo, 21, 10000, stopped);  // 1 bar at 120 BPM is 2 s; 1 s here
+    expect(lfo.phase > 0x7f000000 && lfo.phase < 0x81000000, "synced rate on the tempo while stopped");
+    const opxy::Transport playing = {1200, 384 * 3 + 96, true};
+    advance(lfo, 21, 10000, playing);
+    expect(lfo.phase == 0x40000000, "synced rate on the song position while playing");
+    const opxy::i32 first = lfo.held;
+    lfo.phase = 0xffff0000u;
+    advance(lfo, 7, 100000, stopped);
+    expect(lfo.held != first && lfo.held >= -32768 && lfo.held <= 32766, "random value each cycle");
+
+    // In play the LFO moves the morph and the page sees it; writing, it doesn't.
+    own[kDepthSlot] = 0x60000000;
+    own[kShapeSlot] = word(kSquare, kShapes);
+    own[kRateSlot] = word(7, kRates);
+    saved.lfo.phase = 0;
+    input.elapsed_us = 0;
+    run(kPlay, 1, 2, 0x40000000);
+    expect(lfo_morph() > 0x5ff00000, "LFO moves the morph");
+    run(kWriteA, 1, 2, 0x40000000);
+    expect(lfo_morph() == -1, "no LFO while writing");
+    own[kDepthSlot] = 0x40000000;
+    run(kPlay, 1, 2, 0x40000000);
+    expect(lfo_morph() == -1, "depth 0 is off");
     return failures ? 1 : 0;
 }
