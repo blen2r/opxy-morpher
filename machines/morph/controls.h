@@ -22,18 +22,10 @@ inline unsigned choice(opxy::i32 value, unsigned count) {
 inline unsigned percent(opxy::i32 value) {
     return value < 0 ? 0 : ((static_cast<unsigned>(value) >> 7) * 100u + (1u << 23)) >> 24;
 }
-// The morph as the LFO moves it, which the control writes each tick and the
-// page shows; -1 while the LFO is not moving it (or nothing ran it).
-inline volatile opxy::i32& lfo_morph() {
-    static volatile opxy::i32 value = -1;
-    return value;
-}
-// Whether Morph is bypassed (M4), which the control writes each tick and the
-// page shows.
-inline volatile opxy::u32& bypassed() {
-    static volatile opxy::u32 value = 0;
-    return value;
-}
+// What the control passes to the page each tick (opxy::control::from_control):
+// whether the LFO moves the morph, the morph it moved to, and whether Morph is
+// bypassed (M4).
+const unsigned kShownLfo = 0, kShownMorph = 1, kShownBypassed = 2;
 // An LFO depth control's word as -32767..32767.
 inline opxy::i32 depth(opxy::i32 value) {
     const opxy::i32 d = (value < 0 ? 0 : value >> 15) - 32768;

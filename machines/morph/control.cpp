@@ -90,11 +90,10 @@ inline void control(ControlState& saved, const opxy::control::Input& input, opxy
     const unsigned target = mode == kWriteA ? a : mode == kWriteB ? b : 0;
     // The LFO keeps time whatever the mode, and moves the morph only in play.
     advance(saved.lfo, choice(own[kRateSlot], kRates), input.elapsed_us, input.transport);
-    lfo_morph() = -1;
     // M4 on Morph's track bypasses it: nothing is morphed, written or marked,
     // and every track plays its own values.
     if (input.page_key == 4) saved.bypassed = !saved.bypassed;
-    bypassed() = saved.bypassed;
+    overlay.display[kShownBypassed] = static_cast<opxy::i32>(saved.bypassed);
     if (saved.bypassed) return;
     if (target) {
         State& state = saved.states[target];
@@ -115,7 +114,8 @@ inline void control(ControlState& saved, const opxy::control::Input& input, opxy
     const opxy::i32 d = depth(own[kDepthSlot]);
     if (d) {
         morph = modulate(morph, d, wave(saved.lfo, choice(own[kShapeSlot], kShapes)));
-        lfo_morph() = morph;
+        overlay.display[kShownLfo] = 1;
+        overlay.display[kShownMorph] = morph;
     }
     for (opxy::u32 i = 0; i < from.count; ++i) blend(input, overlay, from, to, from.locks[i], true, morph);
     for (opxy::u32 i = 0; i < to.count; ++i) blend(input, overlay, from, to, to.locks[i], false, morph);

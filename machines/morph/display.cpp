@@ -107,7 +107,7 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
     // The covers sit over the message, the rest is drawn over them.
     for (unsigned i = 0; i < kCovers; ++i)
         place(frame, kCover0 + i, (86 + 40 * static_cast<opxy::i32>(i)) * unit, 122 * unit, unit, kBlack, fill_and_stroke);
-    const bool off = bypassed() != 0;
+    const bool off = opxy::control::from_control(kShownBypassed) != 0;
 
     // Writing plays the written state alone, so the morph is not in effect:
     // its value is boxed in red. Writing a side that is
@@ -118,7 +118,8 @@ inline void display(DisplayState&, const opxy::draw::Input& input, Frame& frame)
 
     // The shape follows the morph; while writing it shows the written state, in red.
     // The shape shows the morph as the LFO moves it, the header the knob.
-    const opxy::i32 moved = lfo_morph() >= 0 ? lfo_morph() : input.slots[kMorphSlot];
+    const opxy::i32 moved = opxy::control::from_control(kShownLfo) ? opxy::control::from_control(kShownMorph)
+                                                                   : input.slots[kMorphSlot];
     const opxy::i32 q15 = moved < 0 ? 0 : moved >> 16;
     shape(frame, writing ? (side ? 32768 : 0) : q15 >= 32767 ? 32768 : q15);
     place(frame, kShape, kCentreX * unit, kCentreY * unit, unit + unit / 2,

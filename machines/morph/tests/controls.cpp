@@ -6,6 +6,9 @@
 // The SDK's count of tracks holding this machine, as the test sets it.
 static opxy::u32 copies_now = 1;
 extern "C" opxy::u32 sdk_control_copies(opxy::u32) { return copies_now; }
+// What the control passed to the page, as the test sets it.
+static opxy::i32 from_control_now[4];
+extern "C" opxy::i32 sdk_control_display(opxy::u32 index) { return index < 4 ? from_control_now[index] : 0; }
 
 static int failures = 0;
 static void expect(bool ok, const char* what) {
@@ -119,10 +122,10 @@ int main() {
                   frame.nodes[kCover0 + i].y == 122 * opxy::draw::unit;
     expect(covered, "message covered");
     // Bypassed, the shape and markers dim.
-    bypassed() = 1;
+    from_control_now[kShownBypassed] = 1;
     display(state, input, frame);
     expect(frame.nodes[kShape].shade == kShapeDim && frame.nodes[kMarkerA].shade == kRingDim, "bypassed look");
-    bypassed() = 0;
+    from_control_now[kShownBypassed] = 0;
     display(state, input, frame);
     // A second copy anywhere: every node moves away, uncovering the message.
     copies_now = 2;

@@ -33,6 +33,7 @@ int main() {
         overlay.count = 0;
         overlay.capture = 0;
         overlay.mark = 0;
+        for (unsigned i = 0; i < opxy::control::display_words; ++i) overlay.display[i] = 0;
         control(saved, input, overlay);
         input.edit_count = 0;
     };
@@ -160,19 +161,19 @@ int main() {
     saved.lfo.phase = 0;
     input.elapsed_us = 0;
     run(kPlay, 1, 2, 0x40000000);
-    expect(lfo_morph() > 0x5ff00000, "LFO moves the morph");
+    expect(overlay.display[kShownLfo] == 1 && overlay.display[kShownMorph] > 0x5ff00000, "LFO moves the morph");
     run(kWriteA, 1, 2, 0x40000000);
-    expect(lfo_morph() == -1, "no LFO while writing");
+    expect(overlay.display[kShownLfo] == 0, "no LFO while writing");
     own[kDepthSlot] = 0x40000000;
     run(kPlay, 1, 2, 0x40000000);
-    expect(lfo_morph() == -1, "depth 0 is off");
+    expect(overlay.display[kShownLfo] == 0, "depth 0 is off");
 
     // M4 bypasses: nothing is overlaid or captured until it is pressed again;
     // the bypass is kept with the project.
     input.page_key = 4;
     run(kPlay, 1, 2, 0x40000000);
     input.page_key = 0;
-    expect(overlay.count == 0 && bypassed() == 1, "bypassed");
+    expect(overlay.count == 0 && overlay.display[kShownBypassed] == 1, "bypassed");
     run(kWriteA, 1, 2, 0);
     expect(overlay.count == 0 && !overlay.capture, "nothing written while bypassed");
     const opxy::u32 kept_bytes = control_save(saved, data, kSavedBytes);
@@ -180,10 +181,10 @@ int main() {
     expect(loaded.bypassed == 1, "bypass saved");
     input.page_key = 2;
     run(kPlay, 1, 2, 0x40000000);
-    expect(bypassed() == 1, "M2 is not bypass");
+    expect(overlay.display[kShownBypassed] == 1, "M2 is not bypass");
     input.page_key = 4;
     run(kPlay, 1, 2, 0x40000000);
     input.page_key = 0;
-    expect(overlay.count > 0 && bypassed() == 0, "bypass off again");
+    expect(overlay.count > 0 && overlay.display[kShownBypassed] == 0, "bypass off again");
     return failures ? 1 : 0;
 }
