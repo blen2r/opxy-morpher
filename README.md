@@ -107,6 +107,18 @@ with Shift + M1) instead of an instrument track, so it doesn't use up one of
 the eight sound tracks. It needs more firmware hooks (silencing the CV output
 while Morph holds the track), so it waits until the rest is finished.
 
+## Why Morph doesn't use the OP-XY's LFO
+
+For reviewers. On the OP-XY, an LFO on a synth's control is evaluated by the
+audio side for voices that are sounding, and, for a track with none, only
+while that track is selected. Morph makes no sound, so stock's LFO moved the
+morph only while Morph's page was shown. We traced this in the firmware
+(OS 1.2.0 and 1.2.1), forced the selected-track check, and held notes on
+Morph's track: stock never evaluated the LFO for Morph's track while another
+track was shown. So Morph hides the stock LFO page (M4) and runs its own LFO
+on the morph, on its second page, computed on the GUI side every tick, where
+it works whichever page is shown.
+
 ## Checks
 
 From this repository, with the SDK checked out beside it:
