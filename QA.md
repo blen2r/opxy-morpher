@@ -91,13 +91,17 @@ Needs something on CV/gate out, or CV out into the line input, listening on trac
 each change of CV or gate is a click.
 - [ ] With `cv` on 12, notes on track 12 click; with Morphose there, no clicks, on notes, on play / stop
       or on fast key presses, and turning Morphose's knobs makes none either
-- [ ] Choose `cv` again: the clicks come back, and CV's four knobs are where they were before Morphose
+- [ ] Choose `cv` again: the clicks come back at once (no silent second), and CV's four knobs are where
+      they were before Morphose
+- [ ] Open a project saved with Morphose on 12 on a firmware without Morphose: track 12 is `cv`, with
+      CV's knobs as they were before Morphose (not Morphose's values)
 
 ## Presets
 
 - [ ] Shift + track key on track 12: "preset", with 12 under it; folders in the first column, sorted by
       name, presets in the second; `morphose` holds `init`
 - [ ] Knobs 2-4 scroll and choose; choosing `init` sets play, morph 0, states off, frame on
+- [ ] A `cv` folder holds `init`: choosing it gives track 12 back to CV, with CV's knobs as they were
 - [ ] A preset in `aux_presets/<folder>/` (copied over MTP) lists and works too; with `cv` on 12,
       choosing a Morphose preset puts Morphose there
 - [ ] Shift + track key on track 1: no aux presets among the instrument presets
@@ -121,6 +125,27 @@ each change of CV or gate is a click.
 - [ ] On track 12 with Morphose, M2 does nothing and M3 leaves Morphose's page as it is (no CV screen)
 - [ ] Select track 12 from another track's M3 or M4: Morphose's own page shows
 - [ ] Other tracks' M2, M3 and M4 work as before
+
+## Patterns
+
+Track 12 holds CV or Morphose per pattern, as tracks 1-8 hold an engine per pattern.
+- [ ] Track 12 with patterns 1 and 2, both `cv`, CV's knobs set differently in each. On pattern 1, choose
+      Morphose: pattern 1 shows Morphose, pattern 2 still shows CV with its own knobs
+- [ ] Chain patterns 1 and 2 and play: CV is silent during pattern 1 and plays during pattern 2, with no
+      stray gate or click at the switch; Morphose morphs only during pattern 1
+- [ ] On pattern 1, choose `cv` again: its CV knobs are as before; pattern 2 is unchanged
+- [ ] With Morphose on pattern 1, add a pattern copied from it: the copy holds Morphose with the same
+      knobs
+- [ ] Save with Morphose on pattern 1 and `cv` on pattern 2, power off and on, load: both are back
+- [ ] Song mode: scene 1 with Morphose at morph 0, scene 2 with Morphose at morph 100 (another pattern),
+      a song of scene 1 then 2, looping: each scene plays and shows its own morph from its first bar, on
+      every pass; add a scene with `cv` in between: same
+- [ ] A p-lock on the first step of a Morphose pattern in that song still applies
+
+## The stock LFO (M4) on track 12
+
+- [ ] With Morphose on track 12, M4's destinations read Morphose's control names (mode, morph, state a,
+      state b), not param1-4
 
 ## Morphose's LFO (page 2)
 
