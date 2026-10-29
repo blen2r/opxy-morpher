@@ -12,15 +12,18 @@ Report a failure with the section, the line and what you saw. A photo of the scr
 - Use a scratch project: Morphose changes other tracks' values while it runs.
 - Track 1: the stock synth **simple**, its four engine knobs at 50, and one note on step 1 lasting a
   whole bar, so it sounds all the time while the sequencer plays.
-- Track 2: Morphose, mode play, morph 0.
+- Track 12: Morphose (Shift + M1 on track 12, choose `morphose`), mode play, morph 0.
 - Press play. "State 1" is track 1's engine knobs all the way down, "state 2" all the way up: write
   them as in [Writing states](#writing-states) before the sections that use them.
 
 ## Firmware basics
 
 - [ ] The OP-XY boots, and stock engines, effects, the sequencer and project save/load work
-- [ ] Morphose is in the engine list (Shift + M1 on an instrument track)
-- [ ] Playing notes on Morphose's track makes no sound
+- [ ] Morphose is not in the engine list of tracks 1-8 (Shift + M1 there)
+- [ ] Shift + M1 on track 12: a list titled "engine" with `cv` and `morphose`, the current one highlighted;
+      M2 closes it without changing anything
+- [ ] Shift + M1 on tracks 9, 10, 11, 13 and 14 does nothing new; on 15 and 16 it opens the effect list,
+      as Shift + track key does there
 
 ## Morphose's page
 
@@ -70,9 +73,9 @@ Start from the [setup](#setup): track 1's knobs at 50, the sequencer playing.
 - [ ] A parameter lock on a morphed parameter is heard only as far as the morph leans toward a side that
       leaves it alone
 - [ ] Sweep the morph fast for a while: no clicks, stutter, freezes or stuck values
-- [ ] Change track 2's engine away from Morphose: track 1 returns to its own sound
+- [ ] Choose `cv` on track 12: track 1 returns to its own sound
 - [ ] The morph is never saved into the project: at morph 100, save the project and load it again, then
-      change track 2's engine away from Morphose: track 1's knobs are at their own values (50), not
+      choose `cv` on track 12: track 1's knobs are at their own values (50), not
       state 2's
 
 ## Marks on every page
@@ -82,13 +85,22 @@ Start from the [setup](#setup): track 1's knobs at 50, the sequencer playing.
       frame off: no thin frame
 - [ ] No frame without Morphose, while it is bypassed, or while two tracks hold it
 
-## One Morphose at a time
+## Track 12 and CV
 
-- [ ] Morphose on track 2 at 50 between states 1 and 2, then put Morphose on track 4 too: track 1 returns
-      to its own sound, and both Morphose pages show "ONLY ONE MORPHOSE" / "remove the extra copies",
-      centred, also after switching between the two tracks; nothing of it shows otherwise
-- [ ] Change track 4 away from Morphose: track 2's page is back and the morph applies again, states intact
-- [ ] In wr a on track 2, add a second Morphose: the edits made while writing are undone
+Needs something on CV/gate out, or CV out into the line input, listening on track 13 (input level low):
+each change of CV or gate is a click.
+- [ ] With `cv` on 12, notes on track 12 click; with Morphose there, no clicks, on notes, on play / stop
+      or on fast key presses, and turning Morphose's knobs makes none either
+- [ ] Choose `cv` again: the clicks come back, and CV's four knobs are where they were before Morphose
+
+## Presets
+
+- [ ] Shift + track key on track 12: "preset", with 12 under it; folders in the first column, sorted by
+      name, presets in the second; `morphose` holds `init`
+- [ ] Knobs 2-4 scroll and choose; choosing `init` sets play, morph 0, states off, frame on
+- [ ] A preset in `aux_presets/<folder>/` (copied over MTP) lists and works too; with `cv` on 12,
+      choosing a Morphose preset puts Morphose there
+- [ ] Shift + track key on track 1: no aux presets among the instrument presets
 
 ## Saving states
 
@@ -97,17 +109,18 @@ Start from the [setup](#setup): track 1's knobs at 50, the sequencer playing.
 - [ ] The project folder has `<name>.oxy` beside `<name>.xy` (over MTP)
 - [ ] Load a project saved before it had states: every state is empty; load the first project again:
       its states are back
-- [ ] Write a state and power off without saving: after power on, the state is still there
-- [ ] With states written, create a new project, put Morphose on a track and choose states 1 and 2: both
-      are empty (nothing from the previous project)
+- [ ] Write a state, wait a few seconds and power off without saving: after power on, the state is still
+      there, and Morphose is on track 12
+- [ ] Power off while Morphose's page is shown, without saving: the OP-XY starts normally
+- [ ] With states written, create a new project: track 12 is `cv`; put Morphose there and choose states
+      1 and 2: both are empty (nothing from the previous project)
+- [ ] A project saved with `cv` on 12 loads with `cv`
 
 ## M2, M3 and M4
 
-- [ ] On Morphose's track, M2 and M3 leave the page as it is
-- [ ] On M2 of another track, select Morphose's track: Morphose's own page shows, not its envelope
+- [ ] On track 12 with Morphose, M2 does nothing and M3 leaves Morphose's page as it is (no CV screen)
+- [ ] Select track 12 from another track's M3 or M4: Morphose's own page shows
 - [ ] Other tracks' M2, M3 and M4 work as before
-- [ ] A stock synth with its M4 LFO on, moving a knob: change its engine to Morphose: nothing keeps
-      moving. Change it back to the stock synth: its LFO is off, and turns on again as usual
 
 ## Morphose's LFO (page 2)
 
@@ -136,6 +149,4 @@ Start from the [setup](#setup): track 1's knobs at 50, the sequencer playing.
 
 Not failures, but worth confirming they haven't changed:
 
-- Pressing M2 or M3 on Morphose's track may flash the stock page for one frame before the page comes
-  back.
 - A parameter lock holds until the pattern loops, not just for its step (stock behaviour).

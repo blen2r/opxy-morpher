@@ -5,11 +5,14 @@ states, then sweep the morph knob from one to the other, by hand, with parameter
 
 ## 1. getting started
 
-### 1.1 put morphose on a track
+### 1.1 put morphose on track 12
 
-morphose lives on an instrument track (1–8), like a synth. it makes no sound of its own.
+morphose lives on auxiliary track 12, where cv out normally is, so all eight sound tracks stay free.
+it makes no sound of its own.
 
-select an empty track, hold shift and press M1 to open the engine list, then pick morphose.
+select track 12, hold shift and press M1 to open the engine list, then pick morphose. cv out and gate
+stay silent while morphose is there. to get cv back, open the same list and pick cv: its knobs come
+back as you left them.
 
 ### 1.2 bypass
 
@@ -17,11 +20,12 @@ press M4 on morphose's track (labelled "bypass" just above it) to switch morphos
 back to their own values, nothing is morphed or written, and morphose's shape and markers dim. press
 M4 again to switch it back on. the bypass is saved with the project.
 
-### 1.3 one morphose at a time
+### 1.3 presets
 
-only one morphose can run. if two tracks hold morphose, neither does anything: your tracks go back to
-their own sound and both morphose pages show "ONLY ONE MORPHOSE". change one of them to another
-engine and the other carries on, with its states intact.
+hold shift and press track 12's key to open the presets, in two columns as on the sound tracks:
+folders, then the presets in them. morphose comes with init (its starting settings). to add your
+own, copy them over usb into the aux_presets folder on the op-xy, inside a folder of your choice.
+picking a preset puts morphose on track 12 if cv was there.
 
 ## 2. the page
 
@@ -53,11 +57,11 @@ and b, and are dim when their state is off.
 
 ## 3. writing states
 
-a state remembers knob values on your other instrument tracks. each project has 16.
+a state remembers knob values on your instrument tracks. each project has 16.
 
 ### 3.1 write a state
 
-turn state a to the number you want, then turn mode to wr a. now turn knobs on any other
+turn state a to the number you want, then turn mode to wr a. now turn knobs on any
 instrument track, on any page: engine, filter, envelope and so on. each knob you turn is recorded
 into the state.
 
@@ -76,7 +80,7 @@ write state b the same way with wr b. you hear it as at morph 100%.
 ### 3.2 what is and isn't recorded
 
 - a state holds up to 32 knobs.
-- only instrument tracks 1–8 are recorded, not the auxiliary tracks.
+- only instrument tracks 1–8 are recorded, not the auxiliary tracks (morphose's own track among them).
 - turning knobs in play mode is never recorded.
 - parameter locks are never recorded: hold a step and turn a knob while writing, and it stays a
   lock on its step.
@@ -117,7 +121,9 @@ lock state a or state b on different steps to switch states as the pattern plays
 
 states are saved with the project. morphose keeps them in a small file beside the project
 (song.oxy beside song.xy): copy both when you share a project. like everything else in the
-project you are working on, they survive switching the op-xy off, even without saving.
+project you are working on, they survive switching the op-xy off, even without saving, once the op-xy
+has saved its working copy (a few seconds after a change). whether morphose or cv is on track 12 is
+saved with the project too; a new project starts with cv.
 
 load a project and its states come back. a project saved without them starts with all 16 empty.
 

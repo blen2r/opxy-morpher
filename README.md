@@ -5,7 +5,10 @@ An Octatrack-style parameter morpher for the OP-XY, built on the
 
 New to Morphose? Start with the [guide](GUIDE.md).
 
-The morpher is a silent synth: put it on an instrument track. It has two pages
+Morphose takes over auxiliary track 12 (CV), so it uses none of the eight sound
+tracks: on track 12, hold Shift and press M1, then choose `morphose`. While it
+holds the track, CV out and gate stay silent; choose `cv` the same way to bring
+them back, with CV's knobs as they were. It has two pages
 of four controls; pressing any knob switches between them. The header shows
 both, page 1 above page 2, the one the knobs edit large and bright.
 
@@ -19,6 +22,11 @@ both, page 1 above page 2, the one the knobs edit large and bright.
 | Rate (page 2) | the LFO's rate: free, 0.05 to 20 Hz, then synced to the tempo, 16 bars to 1/16 |
 | Depth (page 2) | -100 to +100: how far the LFO swings the morph either side of the Morph knob; 0 is off |
 | Shape (page 2) | sine, triangle, ramp up, ramp down, square, random |
+
+**Presets:** Shift + track key on track 12 lists presets in two columns, as on
+the sound tracks. Morphose comes with `init` (its defaults); add your own as
+`aux_presets/<folder>/<name>.json` on the OP-XY over USB (MTP). Choosing one puts
+Morphose on track 12 if `cv` was there.
 
 **Bypass:** M4 on Morphose's track switches Morphose off and on (Morphose's page
 labels it "bypass", just above M4). Bypassed, Morphose morphs, writes and
@@ -49,7 +57,7 @@ changing has a thin dark red frame (unless Frame is off).
 ## Writing states
 
 Choose a state number for A (or B), set the mode to write A (or write B), and
-turn any encoder on another instrument track: each edit is recorded into that
+turn any encoder on an instrument track: each edit is recorded into that
 state. While writing you hear that state alone, as at morph 0% (or 100%), with
 your edits, whatever the morph control says: its percentage is boxed in red
 until you return to play, where it carries on from
@@ -62,8 +70,8 @@ in red, and the morph plays as in play mode.
 
 ## Playing
 
-In play mode the morpher blends every parameter state A or B sets on the other
-instrument tracks. A side that is off, or a state that leaves a parameter
+In play mode the morpher blends every parameter state A or B sets on the
+instrument tracks (1–8). A side that is off, or a state that leaves a parameter
 alone, contributes the parameter's own value, so edits and parameter locks
 still show through. The blend is never saved: the project keeps its own
 values.
@@ -98,38 +106,25 @@ turn the knob.
 Parameter locks are never written into a state, even in a write mode: they
 stay locks on their step.
 
-## One Morphose at a time
-
-Only one Morphose can run. If more than one instrument track holds Morphose, none of
-them morphs: every track goes back to its own values, an unfinished write is
-undone, and each Morphose page shows "ONLY ONE MORPHOSE" until only one is
-left. States are kept, whichever track Morphose is on.
-
 ## Status
 
-The morpher needs the SDK's track control (SDK 1.5), which is not in a
-released SDK yet. States are saved with the project, in the companion file
+Morphose needs the SDK's track control (SDK 1.5) and aux tracks
+([etcetc000/open-xy#220](https://github.com/etcetc000/open-xy/issues/220)),
+which are not in a released SDK yet. States are saved with the project, in the companion file
 beside it (`song.oxy` beside `song.xy`; copy both when you share a project),
 and come back when it loads. A project saved without them, or on stock
 firmware since, starts with every state empty. There is no way to clear a
 single state yet.
 
-## Why Morphose sits on a sound track
+## Why track 12
 
-As a sound modifier, Morphose could also live on an auxiliary track, so it
-wouldn't use up one of the eight sound tracks. We studied that on OS 1.2.1 and
-kept it on tracks 1–8 for now:
-
-- Tracks 11 and 12 are hard-wired to MIDI and CV out, so Morphose would have to
-  replace a stock function there. For track 12 (CV), the most promising, that
-  is about 8–10 more firmware hooks: silencing the CV output while Morphose
-  holds the track, an engine choice with Shift + M1, and its page.
-- On tracks 1–8, Morphose is an ordinary synth, which the catalog and the
-  builder already handle, with less firmware to review and keep up with each
-  OS update.
-
-The SDK's track control doesn't depend on where the machine sits, so an
-auxiliary track remains a possible later upgrade.
+Morphose changes other tracks and makes no sound, so it belongs on an auxiliary
+track rather than one of the eight sound tracks. The OP-XY's auxiliary tracks
+each have a fixed role (brain, punch-in FX, MIDI, CV, audio in, tape), so a
+machine there replaces that role, and the SDK has to keep the role silent.
+CV is the first track the SDK does that for: its output is a few calls the SDK
+skips while a machine holds the track. Version 1.0.0 of Morphose ran on a sound
+track instead.
 
 ## Why Morphose doesn't use the OP-XY's LFO
 
