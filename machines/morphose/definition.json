@@ -204,6 +204,7 @@
       "stateBytes": 4436,
       "stateAlignment": 4,
       "unique": true,
+      "aux": [12],
       "savedBytes": 3090
     }
   }
