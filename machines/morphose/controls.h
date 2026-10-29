@@ -26,9 +26,10 @@ inline unsigned percent(opxy::i32 value) {
 // whether the LFO moves the morph, the morph it moved to, and whether Morphose is
 // bypassed (M4).
 const unsigned kShownLfo = 0, kShownMorph = 1, kShownBypassed = 2;
-// An LFO depth control's word as -32767..32767.
+// The LFO depth's choices, -100..+100 percent, one per encoder detent.
+const unsigned kDepths = 201;
+// An LFO depth control's word as -32767..32767, in whole percent.
 inline opxy::i32 depth(opxy::i32 value) {
-    const opxy::i32 d = (value < 0 ? 0 : value >> 15) - 32768;
-    return d < -32767 ? -32767 : d;
+    return (static_cast<opxy::i32>(choice(value, kDepths)) - 100) * 32767 / 100;
 }
 }  // namespace morphose
