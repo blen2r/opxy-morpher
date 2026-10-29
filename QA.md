@@ -156,6 +156,7 @@ Track 12 holds CV or Morphose per pattern, as tracks 1-8 hold an engine per patt
       pass; stopped, it keeps the tempo
 - [ ] Each shape: sine, tri, up, down, sqr and rand (a new random value each cycle, spread evenly over
       the range the swing can reach: with the knob near 0 and a large depth, it doesn't keep landing on 0)
+- [ ] Depth moves one per detent (-100..+100), two when turned fast; projects saved before keep their depth
 - [ ] Depth -50 reverses the swing; with the morph knob near an end, the swing stops at 0 or 100
 - [ ] In wr a or wr b the LFO pauses, so you hear the state as written, and it resumes in play
 - [ ] Rate, depth and shape can be p-locked
