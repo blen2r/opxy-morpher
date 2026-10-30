@@ -93,14 +93,14 @@ inline void display(DisplayState& state, const opxy::draw::Input& input, Frame& 
 
     // Only one Morphose runs: while another track holds one too, none does, and
     // every copy's page says so instead of showing the shape.
-    // The "muted" label above M4 shows only while the track is muted: two
-    // circles cover it otherwise.
+    // The "muted" label in the middle of the shape shows only while the track
+    // is muted: two circles drawn over it cover it otherwise.
     const bool off = opxy::control::from_control(kShownMuted) != 0;
     for (unsigned i = 0; i < kLabelCovers; ++i)
         if (off)
             hide(frame, kLabelCover + i);
         else
-            place(frame, kLabelCover + i, (418 + 16 * static_cast<opxy::i32>(i)) * unit, 209 * unit, unit, kBlack,
+            place(frame, kLabelCover + i, (231 + 18 * static_cast<opxy::i32>(i)) * unit, kCentreY * unit, unit, kBlack,
                   fill_and_stroke);
     if (opxy::control::copies(input.track) > 1) {
         // A frame is drawn only once its path has points (a nonzero key),
@@ -111,7 +111,7 @@ inline void display(DisplayState& state, const opxy::draw::Input& input, Frame& 
     }
     // The covers sit over the message, the rest is drawn over them.
     for (unsigned i = 0; i < kCovers; ++i)
-        place(frame, kCover0 + i, (86 + 40 * static_cast<opxy::i32>(i)) * unit, 134 * unit, unit, kBlack, fill_and_stroke);
+        place(frame, kCover0 + i, (86 + 40 * static_cast<opxy::i32>(i)) * unit, kCentreY * unit, unit, kBlack, fill_and_stroke);
 
     // Writing plays the written state alone, so the morph is not in effect:
     // its value is boxed in red. Writing a side that is

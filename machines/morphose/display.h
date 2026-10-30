@@ -8,8 +8,8 @@ namespace morphose {
 // circle and a square (1, 2); the write dot (3); two red boxes around header
 // values: the morph's (4) and an off state's (5); nine black circles (6..14)
 // that cover the artwork's "only one Morphose" message until two copies are
-// placed; and two (15, 16) that cover the "muted" label above M4 except while
-// the track is muted; then the SDK's two-row header (opxy/page_header.hpp):
+// placed; and two (15, 16) that cover the "muted" label in the middle except
+// while the track is muted; then the SDK's two-row header (opxy/page_header.hpp):
 // its eight bar nodes (17..24) and all 16 text slots. (Until 30b3d6c a
 // crossfader of 21 ticks and a ring sat under the shape.)
 const unsigned kShape = 0, kMarkerA = 1, kMarkerB = 2, kWriteDot = 3;

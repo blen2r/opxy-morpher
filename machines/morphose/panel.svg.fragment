@@ -25,27 +25,26 @@
   <text id="morphose_text_13" transform="matrix(1 0 0 1 185 33)" fill="#707070" font-family="UniversNextPro-Light" font-size="13px">-</text>
   <text id="morphose_text_14" transform="matrix(1 0 0 1 305 33)" fill="#707070" font-family="UniversNextPro-Light" font-size="13px">-</text>
   <text id="morphose_text_15" transform="matrix(1 0 0 1 425 33)" fill="#707070" font-family="UniversNextPro-Light" font-size="13px">-</text>
-  <text transform="matrix(1 0 0 1 112 124)" fill="#ff3b30" font-family="UniversNextPro-Light" font-size="24px">ONLY ONE MORPHOSE</text>
-  <text transform="matrix(1 0 0 1 161 160)" fill="#ff3b30" font-family="UniversNextPro-Light" font-size="16px">remove the extra copies</text>
-  <circle id="morphose_node_6" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
-  <circle id="morphose_node_7" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
-  <circle id="morphose_node_8" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
-  <circle id="morphose_node_9" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
-  <circle id="morphose_node_10" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
-  <circle id="morphose_node_11" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
-  <circle id="morphose_node_12" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
-  <circle id="morphose_node_13" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
-  <circle id="morphose_node_14" cx="0" cy="0" r="36" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <text transform="matrix(1 0 0 1 112 104)" fill="#ff3b30" font-family="UniversNextPro-Light" font-size="24px">ONLY ONE MORPHOSE</text>
+  <text transform="matrix(1 0 0 1 161 158)" fill="#ff3b30" font-family="UniversNextPro-Light" font-size="16px">remove the extra copies</text>
+  <circle id="morphose_node_6" cx="0" cy="0" r="50" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morphose_node_7" cx="0" cy="0" r="50" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morphose_node_8" cx="0" cy="0" r="50" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morphose_node_9" cx="0" cy="0" r="50" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morphose_node_10" cx="0" cy="0" r="50" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morphose_node_11" cx="0" cy="0" r="50" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morphose_node_12" cx="0" cy="0" r="50" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morphose_node_13" cx="0" cy="0" r="50" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morphose_node_14" cx="0" cy="0" r="50" fill="#000000" stroke="#000000" stroke-width="1"/>
   <path id="morphose_node_0" d="M48 0 L47.7689 4.7048 L47.0777 9.3643 L45.9331 13.9337 L44.3462 18.3688 L42.3322 22.627 L39.9105 26.6674 L37.1045 30.4509 L33.9411 33.9411 L30.4509 37.1045 L26.6674 39.9105 L22.627 42.3322 L18.3688 44.3462 L13.9337 45.9331 L9.3643 47.0777 L4.7048 47.7689 L0 48 L-4.7048 47.7689 L-9.3643 47.0777 L-13.9337 45.9331 L-18.3688 44.3462 L-22.627 42.3322 L-26.6674 39.9105 L-30.4509 37.1045 L-33.9411 33.9411 L-37.1045 30.4509 L-39.9105 26.6674 L-42.3322 22.627 L-44.3462 18.3688 L-45.9331 13.9337 L-47.0777 9.3643 L-47.7689 4.7048 L-48 0 L-47.7689 -4.7048 L-47.0777 -9.3643 L-45.9331 -13.9337 L-44.3462 -18.3688 L-42.3322 -22.627 L-39.9105 -26.6674 L-37.1045 -30.4509 L-33.9411 -33.9411 L-30.4509 -37.1045 L-26.6674 -39.9105 L-22.627 -42.3322 L-18.3688 -44.3462 L-13.9337 -45.9331 L-9.3643 -47.0777 L-4.7048 -47.7689 L0 -48 L4.7048 -47.7689 L9.3643 -47.0777 L13.9337 -45.9331 L18.3688 -44.3462 L22.627 -42.3322 L26.6674 -39.9105 L30.4509 -37.1045 L33.9411 -33.9411 L37.1045 -30.4509 L39.9105 -26.6674 L42.3322 -22.627 L44.3462 -18.3688 L45.9331 -13.9337 L47.0777 -9.3643 L47.7689 -4.7048 Z" fill="none" stroke="#ffffff" stroke-width="3"/>
   <circle id="morphose_node_1" cx="0" cy="0" r="16" fill="#000000" stroke="#333333" stroke-width="2"/>
   <path id="morphose_node_2" d="M-14 -14 L14 -14 L14 14 L-14 14 Z" fill="none" stroke="#333333" stroke-width="2"/>
   <circle id="morphose_node_3" cx="0" cy="0" r="6" fill="#ff3b30" stroke="#ff3b30" stroke-width="1"/>
   <path id="morphose_node_4" d="M-28 -9 L28 -9 L28 9 L-28 9 Z" fill="none" stroke="#ff3b30" stroke-width="2"/>
   <path id="morphose_node_5" d="M-28 -9 L28 -9 L28 9 L-28 9 Z" fill="none" stroke="#ff3b30" stroke-width="2"/>
-  <text transform="matrix(1 0 0 1 410 214)" fill="#888888" font-family="UniversNextPro-Light" font-size="12px">muted</text>
-  <text transform="matrix(1 0 0 1 452 214)" fill="#888888" font-family="UniversNextPro-Light" font-size="12px">ed</text>
-  <circle id="morphose_node_15" cx="0" cy="0" r="12" fill="#000000" stroke="#000000" stroke-width="1"/>
-  <circle id="morphose_node_16" cx="0" cy="0" r="12" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <text transform="matrix(1 0 0 1 221 129)" fill="#888888" font-family="UniversNextPro-Light" font-size="14px">muted</text>
+  <circle id="morphose_node_15" cx="0" cy="0" r="15" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morphose_node_16" cx="0" cy="0" r="15" fill="#000000" stroke="#000000" stroke-width="1"/>
   <path d="M34 132 L40 115 L46 132 M36.5 126 L43.5 126" fill="none" stroke="#ffffff" stroke-width="2"/>
   <path d="M435 115 L435 133 L443 133 L447 129 L447 128 L443 124 L435 124 M443 124 L446 121 L446 118 L443 115 L435 115" fill="none" stroke="#ffffff" stroke-width="2"/>
   <circle id="morphose_palette_0" cx="640" cy="0" r="1" fill="#000000" stroke="#000000" stroke-width="1"/>
