@@ -100,7 +100,7 @@ inline void display(DisplayState& state, const opxy::draw::Input& input, Frame& 
         if (off)
             hide(frame, kLabelCover + i);
         else
-            place(frame, kLabelCover + i, (231 + 18 * static_cast<opxy::i32>(i)) * unit, kCentreY * unit, unit, kBlack,
+            place(frame, kLabelCover + i, (229 + 22 * static_cast<opxy::i32>(i)) * unit, kCentreY * unit, unit, kBlack,
                   fill_and_stroke);
     if (opxy::control::copies(input.track) > 1) {
         // A frame is drawn only once its path has points (a nonzero key),

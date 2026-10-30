@@ -128,8 +128,8 @@ int main() {
     for (unsigned i = 0; i < kCovers; ++i)
         covered = covered && frame.nodes[kCover0 + i].x == (86 + 40 * static_cast<opxy::i32>(i)) * opxy::draw::unit &&
                   frame.nodes[kCover0 + i].y == 124 * opxy::draw::unit;
-    expect(covered && frame.nodes[kLabelCover].x == 231 * opxy::draw::unit &&
-           frame.nodes[kLabelCover + 1].x == 249 * opxy::draw::unit, "message and muted label covered");
+    expect(covered && frame.nodes[kLabelCover].x == 229 * opxy::draw::unit &&
+           frame.nodes[kLabelCover + 1].x == 251 * opxy::draw::unit, "message and muted label covered");
     // Muted, the shape and markers dim and the label shows.
     from_control_now[kShownMuted] = 1;
     display(state, input, frame);
