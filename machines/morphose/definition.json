@@ -3,10 +3,6 @@
   "id": "morphose",
   "name": "Morphose",
   "press": "page",
-  "hidePages": [
-    "envelope",
-    "filter"
-  ],
   "parameters": [
     {
       "id": "mode",
@@ -404,6 +400,7 @@
       "stateBytes": 4432,
       "stateAlignment": 4,
       "unique": true,
+      "sharedLfo": true,
       "aux": [
         12
       ],
