@@ -14,11 +14,13 @@ select track 12, hold shift and press M1 to open the engine list, then pick morp
 stay silent while morphose is there. to get cv back, open the same list and pick cv: its knobs come
 back as you left them.
 
-### 1.2 bypass
+### 1.2 muting
 
-press M4 on morphose's track (labelled "bypass" just above it) to switch morphose off: your tracks go
-back to their own values, nothing is morphed or written, and morphose's shape and markers dim. press
-M4 again to switch it back on. the bypass is saved with the project.
+mute track 12 to switch morphose off, as you would mute the brain: hold aux and press track 12's key,
+or use the mixer. your tracks go back to their own values, nothing is morphed or written, morphose's
+shape and markers dim and "muted" shows above M4. unmute it to switch morphose back on. like any mute,
+it belongs to the scene: a scene can have morphose muted and another not, and it is saved with the
+project.
 
 ### 1.3 presets
 
@@ -31,7 +33,7 @@ picking a preset puts morphose on track 12 if cv was there.
 
 morphose has two pages of four knobs. press any knob to switch pages. both pages show at the top, page 1
 above page 2; the one the knobs edit is the large, bright one. morphose has no envelope,
-filter or lfo page: M2 and M3 do nothing on its track, and M4 bypasses morphose (below).
+filter or lfo page: M2, M3 and M4 do nothing on its track (mute it to switch it off, above).
 
 ### 2.1 page 1
 

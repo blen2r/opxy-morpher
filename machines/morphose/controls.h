@@ -23,9 +23,9 @@ inline unsigned percent(opxy::i32 value) {
     return value < 0 ? 0 : ((static_cast<unsigned>(value) >> 7) * 100u + (1u << 23)) >> 24;
 }
 // What the control passes to the page each tick (opxy::control::from_control):
-// whether the LFO moves the morph, the morph it moved to, and whether Morphose is
-// bypassed (M4).
-const unsigned kShownLfo = 0, kShownMorph = 1, kShownBypassed = 2;
+// whether the LFO moves the morph, the morph it moved to, and whether Morphose's
+// track is muted (aux + track key, or the mixer), which switches it off.
+const unsigned kShownLfo = 0, kShownMorph = 1, kShownMuted = 2;
 // The LFO depth's choices, -100..+100 percent, one per encoder detent.
 const unsigned kDepths = 201;
 // An LFO depth control's word as -32767..32767, in whole percent.

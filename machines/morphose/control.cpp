@@ -14,19 +14,19 @@
 #include "states.h"
 
 namespace morphose {
-struct ControlState { State states[kStates]; Lfo lfo; opxy::u32 bypassed; };
+struct ControlState { State states[kStates]; Lfo lfo; };
 
 const State kEmpty = {0, {}};
 
 // States outlast a move to another track.
 inline void control_reset(ControlState&) {}
 
-// What a project keeps (definition.json's savedBytes): a format byte, then for
-// states 1..16 their count and each parameter as track, index and the value's
-// four bytes, low first, then (format 2) whether Morphose is bypassed. Format 1,
-// without the last byte, still loads.
-const opxy::u8 kSavedFormat = 2;
-const opxy::u32 kSavedBytes = 1 + (kStates - 1) * (1 + kStateLocks * 6) + 1;
+// What a project keeps (definition.json's savedBytes): a format byte (1), then
+// for states 1..16 their count and each parameter as track, index and the
+// value's four bytes, low first. Format 2 (v1.0-v1.1) added whether Morphose was
+// bypassed, now its track's mute: it still loads, without that byte.
+const opxy::u8 kSavedFormat = 1, kBypassFormat = 2;
+const opxy::u32 kSavedBytes = 1 + (kStates - 1) * (1 + kStateLocks * 6);
 
 inline opxy::u32 control_save(const ControlState& saved, opxy::u8* data, opxy::u32 capacity) {
     if (capacity < kSavedBytes) return 0;
@@ -43,7 +43,6 @@ inline opxy::u32 control_save(const ControlState& saved, opxy::u8* data, opxy::u
             for (unsigned b = 0; b < 4; ++b) data[n++] = static_cast<opxy::u8>(value >> (8 * b));
         }
     }
-    data[n++] = saved.bypassed ? 1 : 0;
     return n;
 }
 
@@ -51,10 +50,9 @@ inline opxy::u32 control_save(const ControlState& saved, opxy::u8* data, opxy::u
 // so does one whose data this version cannot read.
 inline void control_load(ControlState& saved, const opxy::u8* data, opxy::u32 bytes) {
     for (unsigned s = 0; s < kStates; ++s) saved.states[s].count = 0;
-    saved.bypassed = 0;
-    if (!bytes || (data[0] != 1 && data[0] != kSavedFormat)) return;
-    // The states end where the bypass byte, if any, begins.
-    const opxy::u32 end = data[0] == kSavedFormat ? bytes - 1 : bytes;
+    if (!bytes || (data[0] != kSavedFormat && data[0] != kBypassFormat)) return;
+    // The states end where format 2's bypass byte begins.
+    const opxy::u32 end = data[0] == kBypassFormat ? bytes - 1 : bytes;
     opxy::u32 n = 1;
     for (unsigned s = 1; s < kStates; ++s) {
         const opxy::u32 count = n < end ? data[n++] : kStateLocks + 1;
@@ -69,7 +67,6 @@ inline void control_load(ControlState& saved, const opxy::u8* data, opxy::u32 by
                 record(saved.states[s], data[n], data[n + 1], static_cast<opxy::i32>(value));
         }
     }
-    if (data[0] == kSavedFormat) saved.bypassed = data[end] ? 1 : 0;
 }
 
 // Overlays one parameter, unless the state on the other side already did.
@@ -90,11 +87,11 @@ inline void control(ControlState& saved, const opxy::control::Input& input, opxy
     const unsigned target = mode == kWriteA ? a : mode == kWriteB ? b : 0;
     // The LFO keeps time whatever the mode, and moves the morph only in play.
     advance(saved.lfo, choice(own[kRateSlot], kRates), input.elapsed_us, input.transport);
-    // M4 on Morphose's track bypasses it: nothing is morphed, written or marked,
-    // and every track plays its own values.
-    if (input.page_key == 4) saved.bypassed = !saved.bypassed;
-    overlay.display[kShownBypassed] = static_cast<opxy::i32>(saved.bypassed);
-    if (saved.bypassed) return;
+    // Muting Morphose's track switches it off, as it does stock's brain: nothing
+    // is morphed, written or marked (the SDK applies none of it), and every track
+    // plays its own values. Its page says so.
+    overlay.display[kShownMuted] = static_cast<opxy::i32>(input.muted);
+    if (input.muted) return;
     if (target) {
         State& state = saved.states[target];
         for (opxy::u32 i = 0; i < input.edit_count; ++i) {

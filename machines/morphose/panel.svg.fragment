@@ -42,10 +42,10 @@
   <circle id="morphose_node_3" cx="0" cy="0" r="6" fill="#ff3b30" stroke="#ff3b30" stroke-width="1"/>
   <path id="morphose_node_4" d="M-28 -9 L28 -9 L28 9 L-28 9 Z" fill="none" stroke="#ff3b30" stroke-width="2"/>
   <path id="morphose_node_5" d="M-28 -9 L28 -9 L28 9 L-28 9 Z" fill="none" stroke="#ff3b30" stroke-width="2"/>
-  <text transform="matrix(1 0 0 1 410 214)" fill="#888888" font-family="UniversNextPro-Light" font-size="12px">bypass</text>
+  <text transform="matrix(1 0 0 1 410 214)" fill="#888888" font-family="UniversNextPro-Light" font-size="12px">muted</text>
   <text transform="matrix(1 0 0 1 452 214)" fill="#888888" font-family="UniversNextPro-Light" font-size="12px">ed</text>
-  <circle id="morphose_node_15" cx="0" cy="0" r="6" fill="#000000" stroke="#000000" stroke-width="1"/>
-  <circle id="morphose_node_16" cx="0" cy="0" r="6" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morphose_node_15" cx="0" cy="0" r="12" fill="#000000" stroke="#000000" stroke-width="1"/>
+  <circle id="morphose_node_16" cx="0" cy="0" r="12" fill="#000000" stroke="#000000" stroke-width="1"/>
   <path d="M34 132 L40 115 L46 132 M36.5 126 L43.5 126" fill="none" stroke="#ffffff" stroke-width="2"/>
   <path d="M435 115 L435 133 L443 133 L447 129 L447 128 L443 124 L435 124 M443 124 L446 121 L446 118 L443 115 L435 115" fill="none" stroke="#ffffff" stroke-width="2"/>
   <circle id="morphose_palette_0" cx="640" cy="0" r="1" fill="#000000" stroke="#000000" stroke-width="1"/>

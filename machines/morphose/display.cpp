@@ -93,19 +93,20 @@ inline void display(DisplayState& state, const opxy::draw::Input& input, Frame& 
 
     // Only one Morphose runs: while another track holds one too, none does, and
     // every copy's page says so instead of showing the shape.
-    // M4's label reads "bypassed" only while bypassed: a circle covers the "ed".
-    const bool off = opxy::control::from_control(kShownBypassed) != 0;
-    for (unsigned i = 0; i < kEdCovers; ++i)
+    // The "muted" label above M4 shows only while the track is muted: two
+    // circles cover it otherwise.
+    const bool off = opxy::control::from_control(kShownMuted) != 0;
+    for (unsigned i = 0; i < kLabelCovers; ++i)
         if (off)
-            hide(frame, kEdCover + i);
+            hide(frame, kLabelCover + i);
         else
-            place(frame, kEdCover + i, (457 + 7 * static_cast<opxy::i32>(i)) * unit, 209 * unit, unit, kBlack,
+            place(frame, kLabelCover + i, (418 + 16 * static_cast<opxy::i32>(i)) * unit, 209 * unit, unit, kBlack,
                   fill_and_stroke);
     if (opxy::control::copies(input.track) > 1) {
         // A frame is drawn only once its path has points (a nonzero key),
         // and the SDK clears them whenever the track or page changes.
         shape(frame, 0);
-        for (unsigned i = 0; i < kEdCover; ++i) hide(frame, i);
+        for (unsigned i = 0; i < kLabelCover; ++i) hide(frame, i);
         return;
     }
     // The covers sit over the message, the rest is drawn over them.

@@ -128,21 +128,21 @@ int main() {
     for (unsigned i = 0; i < kCovers; ++i)
         covered = covered && frame.nodes[kCover0 + i].x == (86 + 40 * static_cast<opxy::i32>(i)) * opxy::draw::unit &&
                   frame.nodes[kCover0 + i].y == 134 * opxy::draw::unit;
-    expect(covered && frame.nodes[kEdCover].x == 457 * opxy::draw::unit &&
-           frame.nodes[kEdCover + 1].x == 464 * opxy::draw::unit, "message and label's ed covered");
-    // Bypassed, the shape and markers dim.
-    from_control_now[kShownBypassed] = 1;
+    expect(covered && frame.nodes[kLabelCover].x == 418 * opxy::draw::unit &&
+           frame.nodes[kLabelCover + 1].x == 434 * opxy::draw::unit, "message and muted label covered");
+    // Muted, the shape and markers dim and the label shows.
+    from_control_now[kShownMuted] = 1;
     display(state, input, frame);
     expect(frame.nodes[kShape].shade == kShapeDim && frame.nodes[kMarkerA].shade == kRingDim &&
-           frame.nodes[kEdCover].x == away && frame.nodes[kEdCover + 1].x == away, "bypassed look and label");
-    from_control_now[kShownBypassed] = 0;
+           frame.nodes[kLabelCover].x == away && frame.nodes[kLabelCover + 1].x == away, "muted look and label");
+    from_control_now[kShownMuted] = 0;
     display(state, input, frame);
     // A second copy anywhere: every node moves away, uncovering the message.
     copies_now = 2;
     display(state, input, frame);
     bool hidden = true;
-    for (unsigned i = 0; i < kEdCover; ++i) hidden = hidden && frame.nodes[i].x == away;
-    expect(hidden && frame.nodes[kEdCover].x != away, "message shown, shape hidden with copies; label stays bypass");
+    for (unsigned i = 0; i < kLabelCover; ++i) hidden = hidden && frame.nodes[i].x == away;
+    expect(hidden && frame.nodes[kLabelCover].x != away, "message shown, shape hidden with copies; label stays covered");
     expect(opxy::draw::valid(frame), "copies frame valid");
     // Selecting the other copy resets the display (and the frame): the
     // message must still be drawn, so the frame must be valid from scratch.

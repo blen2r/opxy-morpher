@@ -28,10 +28,11 @@ the sound tracks. Morphose comes with `init` (its defaults); add your own as
 `aux_presets/<folder>/<name>.json` on the OP-XY over USB (MTP). Choosing one puts
 Morphose on track 12 if `cv` was there.
 
-**Bypass:** M4 on Morphose's track switches Morphose off and on (Morphose's page
-labels it "bypass", just above M4). Bypassed, Morphose morphs, writes and
-marks nothing, every track plays its own values, and its page is dimmed. The
-bypass is saved with the project.
+**Muting:** muting track 12 (aux + track key, or the mixer) switches Morphose
+off, as it does stock's brain: Morphose morphs, writes and marks nothing, every
+track plays its own values, and its page is dimmed and says "muted". Like any
+mute it belongs to the scene and is saved with the project. M2, M3 and M4 do
+nothing on Morphose's track.
 
 Morphose's LFO moves the morph in play mode, on every page; while writing it
 pauses. Synced rates follow the song position while the sequencer plays, so

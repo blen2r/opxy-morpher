@@ -40,7 +40,7 @@ Report a failure with the section, the line and what you saw. A photo of the scr
       and grey
 - [ ] Pressing any knob switches the knobs to the other page: the rows swap size smoothly, page 1 stays on
       top, and a second press mid-way reverses
-- [ ] A small grey "bypass" label sits at the bottom right, above M4
+- [ ] Nothing shows above M4 (the "muted" label only shows while track 12 is muted)
 
 ## Writing states
 
@@ -83,7 +83,7 @@ Start from the [setup](#setup): track 1's knobs at 50, the sequencer playing.
 - [ ] While writing, every page of every track has a red frame fading inward from the screen's edge
 - [ ] Frame on (page 2): the pages of tracks Morphose is changing have a thin dark red frame in play;
       frame off: no thin frame
-- [ ] No frame without Morphose, while it is bypassed, or while two tracks hold it
+- [ ] No frame without Morphose, while its track is muted, or while two tracks hold it
 
 ## Track 12 and CV
 
@@ -122,7 +122,8 @@ each change of CV or gate is a click.
 
 ## M2, M3 and M4
 
-- [ ] On track 12 with Morphose, M2 does nothing and M3 leaves Morphose's page as it is (no CV screen)
+- [ ] On track 12 with Morphose, M2 and M4 do nothing and M3 leaves Morphose's page as it is (no CV
+      screen, no LFO page)
 - [ ] Select track 12 from another track's M3 or M4: Morphose's own page shows
 - [ ] Other tracks' M2, M3 and M4 work as before
 
@@ -161,15 +162,18 @@ Track 12 holds CV or Morphose per pattern, as tracks 1-8 hold an engine per patt
 - [ ] In wr a or wr b the LFO pauses, so you hear the state as written, and it resumes in play
 - [ ] Rate, depth and shape can be p-locked
 
-## Bypass (M4)
+## Muting (switches Morphose off)
 
-- [ ] At 50 between states 1 and 2, press M4 on Morphose's track: track 1 goes back to its own sound,
-      the label reads "bypassed", the shape and markers dim, no thin frame shows, and the LFO stops
-- [ ] While bypassed, wr a records nothing and shows no red frame
-- [ ] Press M4 again: everything comes back as it was
-- [ ] Bypass, save, power off and on, load: still bypassed
-- [ ] On another track's M4 (LFO page), select Morphose's track: Morphose's page shows, and the bypass
-      doesn't change
+- [ ] At 50 between states 1 and 2, mute track 12 (hold aux, press track 12's key): track 1 goes back to
+      its own sound, "muted" shows above M4 (the whole word, nothing cut off), the shape and markers dim,
+      no thin frame shows, and the LFO stops moving the shape
+- [ ] While muted, wr a records nothing and shows no red frame
+- [ ] Unmute: everything comes back as it was
+- [ ] The same from the mixer
+- [ ] Two scenes, track 12 muted in one only: switching scenes (and a song alternating them) switches
+      Morphose off and on
+- [ ] Mute, save, power off and on, load: still muted
+- [ ] A project saved with v1.1 while bypassed loads with its states, not bypassed
 
 ## Known limits
 

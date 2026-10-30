@@ -101,7 +101,8 @@ int main() {
     const opxy::u32 bytes = control_save(saved, data, kSavedBytes);
     opxy::u32 locks = 0;
     for (unsigned s = 1; s < kStates; ++s) locks += saved.states[s].count;
-    expect(bytes == 1 + 16 + locks * 6 + 1 && control_save(saved, data, kSavedBytes - 1) == 0, "save size");
+    expect(data[0] == 1 && bytes == 1 + 16 + locks * 6 && control_save(saved, data, kSavedBytes - 1) == 0,
+           "save size");
     static ControlState loaded;
     control_load(loaded, data, bytes);
     bool same = true;
@@ -116,13 +117,15 @@ int main() {
     data[0] = 3;
     control_load(loaded, data, bytes);
     expect(loaded.states[1].count == 0 && loaded.states[3].count == 0, "unknown format starts empty");
-    // Format 1, from before bypass, still loads, not bypassed.
-    data[0] = 1;
-    control_load(loaded, data, bytes - 1);
-    expect(loaded.states[1].count == saved.states[1].count && !loaded.bypassed, "format 1 loads");
-    data[0] = kSavedFormat;
-    control_load(loaded, data, bytes - 1);
+    // Format 2 (v1.0-v1.1) still loads: its last byte, the old bypass, is ignored.
+    data[0] = 2;
+    data[bytes] = 1;
+    control_load(loaded, data, bytes + 1);
+    expect(loaded.states[1].count == saved.states[1].count && loaded.states[3].count == saved.states[3].count,
+           "format 2 loads");
+    control_load(loaded, data, bytes);
     expect(loaded.states[1].count == 0, "truncated data starts empty");
+    data[0] = 1;
     control_load(loaded, data, bytes);
     control_load(loaded, data, 0);
     expect(loaded.states[1].count == 0 && loaded.states[3].count == 0, "project without states starts empty");
@@ -185,23 +188,17 @@ int main() {
     run(kPlay, 1, 2, 0x40000000);
     expect(overlay.display[kShownLfo] == 0, "depth 0 is off");
 
-    // M4 bypasses: nothing is overlaid or captured until it is pressed again;
-    // the bypass is kept with the project.
-    input.page_key = 4;
+    // Muting its track switches Morphose off: nothing is overlaid, captured or
+    // marked, and its page is told; unmuted, it carries on. M4 does nothing.
+    input.muted = 1;
     run(kPlay, 1, 2, 0x40000000);
-    input.page_key = 0;
-    expect(overlay.count == 0 && overlay.display[kShownBypassed] == 1, "bypassed");
+    expect(overlay.count == 0 && !overlay.mark && overlay.display[kShownMuted] == 1, "muted");
     run(kWriteA, 1, 2, 0);
-    expect(overlay.count == 0 && !overlay.capture, "nothing written while bypassed");
-    const opxy::u32 kept_bytes = control_save(saved, data, kSavedBytes);
-    control_load(loaded, data, kept_bytes);
-    expect(loaded.bypassed == 1, "bypass saved");
-    input.page_key = 2;
-    run(kPlay, 1, 2, 0x40000000);
-    expect(overlay.display[kShownBypassed] == 1, "M2 is not bypass");
+    expect(overlay.count == 0 && !overlay.capture, "nothing written while muted");
+    input.muted = 0;
     input.page_key = 4;
     run(kPlay, 1, 2, 0x40000000);
     input.page_key = 0;
-    expect(overlay.count > 0 && overlay.display[kShownBypassed] == 0, "bypass off again");
+    expect(overlay.count > 0 && overlay.display[kShownMuted] == 0, "unmuted; M4 is no bypass");
     return failures ? 1 : 0;
 }
