@@ -40,7 +40,8 @@ Report a failure with the section, the line and what you saw. A photo of the scr
       and grey
 - [ ] Pressing any knob switches the knobs to the other page: the rows swap size smoothly, page 1 stays on
       top, and a second press mid-way reverses
-- [ ] Nothing shows above M4 (the "muted" label only shows while track 12 is muted)
+- [ ] Nothing shows in the middle of the shape or above M4 (no "muted", no stray letter); "muted"
+      shows in the middle only while track 12 is muted
 
 ## Writing states
 
@@ -84,6 +85,8 @@ Start from the [setup](#setup): track 1's knobs at 50, the sequencer playing.
 - [ ] Frame on (page 2): the pages of tracks Morphose is changing have a thin dark red frame in play;
       frame off: no thin frame
 - [ ] No frame without Morphose, while its track is muted, or while two tracks hold it
+- [ ] Two tracks holding Morphose: "ONLY ONE MORPHOSE" and "remove the extra copies" show whole, with
+      nothing red visible once one copy is gone
 
 ## Track 12 and CV
 
@@ -165,7 +168,7 @@ Track 12 holds CV or Morphose per pattern, as tracks 1-8 hold an engine per patt
 ## Muting (switches Morphose off)
 
 - [ ] At 50 between states 1 and 2, mute track 12 (hold aux, press track 12's key): track 1 goes back to
-      its own sound, "muted" shows above M4 (the whole word, nothing cut off), the shape and markers dim,
+      its own sound, "muted" shows in the middle of the shape (the whole word), the shape and markers dim,
       no thin frame shows, and the LFO stops moving the shape
 - [ ] While muted, wr a records nothing and shows no red frame
 - [ ] Unmute: everything comes back as it was

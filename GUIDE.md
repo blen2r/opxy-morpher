@@ -18,7 +18,7 @@ back as you left them.
 
 mute track 12 to switch morphose off, as you would mute the brain: hold aux and press track 12's key,
 or use the mixer. your tracks go back to their own values, nothing is morphed or written, morphose's
-shape and markers dim and "muted" shows above M4. unmute it to switch morphose back on. like any mute,
+shape and markers dim and "muted" shows in the middle. unmute it to switch morphose back on. like any mute,
 it belongs to the scene: a scene can have morphose muted and another not, and it is saved with the
 project.
 
