@@ -5,8 +5,7 @@
   "press": "page",
   "hidePages": [
     "envelope",
-    "filter",
-    "lfo"
+    "filter"
   ],
   "parameters": [
     {

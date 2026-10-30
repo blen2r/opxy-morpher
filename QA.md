@@ -125,8 +125,8 @@ each change of CV or gate is a click.
 
 ## M2, M3 and M4
 
-- [ ] On track 12 with Morphose, M2 and M4 do nothing and M3 leaves Morphose's page as it is (no CV
-      screen, no LFO page)
+- [ ] On track 12 with Morphose, M2 does nothing, M3 leaves Morphose's page as it is (no CV screen),
+      and M4 opens the stock LFO page
 - [ ] Select track 12 from another track's M3 or M4: Morphose's own page shows
 - [ ] Other tracks' M2, M3 and M4 work as before
 
@@ -150,6 +150,12 @@ Track 12 holds CV or Morphose per pattern, as tracks 1-8 hold an engine per patt
 
 - [ ] With Morphose on track 12, M4's destinations read Morphose's control names (mode, morph, state a,
       state b), not param1-4
+- [ ] M4's LFO on morph, states 1 and 2 written: the morph sweeps and track 1's sound follows, on
+      Morphose's page and with another track selected (track 1's page, a send's page), playing or stopped
+- [ ] The LFO's rate, depth and shape behave as on a stock synth; turning it off stops the sweep
+- [ ] The LFO on mode or a state: it switches them as it moves (expected), and nothing freezes
+- [ ] Muted, the LFO moves nothing; unmuted, it carries on
+- [ ] Save with the stock LFO on, power cycle, load: still on and sweeping
 
 ## Morphose's LFO (page 2)
 
