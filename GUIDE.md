@@ -33,7 +33,8 @@ picking a preset puts morphose on track 12 if cv was there.
 
 morphose has two pages of four knobs. press any knob to switch pages. both pages show at the top, page 1
 above page 2; the one the knobs edit is the large, bright one. morphose has no envelope,
-filter or lfo page: M2, M3 and M4 do nothing on its track (mute it to switch it off, above).
+filter page: M2 and M3 do nothing on its track (mute it to switch it off, above). M4 is the op-xy's
+own lfo, as on any track (below).
 
 ### 2.1 page 1
 
@@ -107,12 +108,18 @@ controlling that knob.
 a parameter lock on a morphed knob is heard only as far as the morph leans toward a side that
 doesn't hold that knob.
 
-### 4.3 morphose's lfo
+### 4.3 two lfos
 
-turn depth up on page 2 and the morph swings around the morph knob, on every page, in play mode.
-the shape on morphose's page follows it; the header still shows the knob. synced rates follow the
-song position while the sequencer plays, so each pass sounds the same. while you write a state the
-lfo pauses, so you hear the state as written.
+morphose has two lfos, and they add up.
+
+- **morphose's lfo (page 2):** turn depth up and the morph swings around the morph knob, on every
+  page, in play mode. it has shapes the op-xy's lfo doesn't: ramps, square and random. the shape on
+  morphose's page follows it; the header still shows the knob. synced rates follow the song position
+  while the sequencer plays, so each pass sounds the same. while you write a state it pauses, so you
+  hear the state as written.
+- **the op-xy's lfo (M4):** as on any track, it keeps running whichever track you're on. it can move
+  mode, morph, state a or state b. use it on morph, or on a state while morphose's lfo moves the
+  morph. don't point it at mode: it would sweep morphose into wr a / wr b, which records.
 
 ### 4.4 sequence the morph
 

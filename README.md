@@ -31,13 +31,23 @@ Morphose on track 12 if `cv` was there.
 **Muting:** muting track 12 (aux + track key, or the mixer) switches Morphose
 off, as it does stock's brain: Morphose morphs, writes and marks nothing, every
 track plays its own values, and its page is dimmed and says "muted". Like any
-mute it belongs to the scene and is saved with the project. M2, M3 and M4 do
+mute it belongs to the scene and is saved with the project. M2 and M3 do
 nothing on Morphose's track.
 
-Morphose's LFO moves the morph in play mode, on every page; while writing it
-pauses. Synced rates follow the song position while the sequencer plays, so
-the LFO repeats the same way each pass, and the tempo while stopped. The page's
-shape follows the LFO; the header shows the knob.
+**Two LFOs.** M4 is the OP-XY's own LFO, as on any track: it can move mode,
+morph, state a or state b (the aux LFO reaches the first four controls), and
+it keeps running whichever track is selected. Point it at morph or a state; on
+mode it would sweep Morphose into its write modes, which record. Morphose's
+own LFO, on page 2, moves the morph in play mode, on every page; while writing
+it pauses. Synced rates follow the song position while the sequencer plays, so
+it repeats the same way each pass, and the tempo while stopped. The page's
+shape follows it; the header shows the knob.
+
+Why both: Morphose's LFO has shapes the OP-XY's doesn't (ramps, square,
+random), and stock can't add LFO shapes or switch the LFO's engine on an aux
+track. Two LFOs also let one move the states while the other moves the morph.
+They add up: the stock LFO moves a control as a knob turn would, and Morphose's
+swings the morph around wherever that leaves it.
 
 A state is a set of parameter values on other tracks, what the Octatrack calls
 a scene (the OP-XY already uses "scene" for its sequencer).
@@ -127,17 +137,16 @@ CV is the first track the SDK does that for: its output is a few calls the SDK
 skips while a machine holds the track. Version 1.0.0 of Morphose ran on a sound
 track instead.
 
-## Why Morphose doesn't use the OP-XY's LFO
+## The OP-XY's LFO on a silent machine
 
 For reviewers. On the OP-XY, an LFO on a synth's control is evaluated by the
 audio side for voices that are sounding, and, for a track with none, only
-while that track is selected. Morphose makes no sound, so stock's LFO moved the
-morph only while Morphose's page was shown. We traced this in the firmware
-(OS 1.2.0 and 1.2.1), forced the selected-track check, and held notes on
-Morphose's track: stock never evaluated the LFO for Morphose's track while another
-track was shown. So Morphose hides the stock LFO page and runs its own LFO
-on the morph, on its second page, computed on the GUI side every tick, where
-it works whichever page is shown.
+while that track is selected, so it used to stop when another track was
+shown (etcetc000/open-xy#238). On aux track 12 the SDK now carries the track's
+own LFO amount to the GUI whichever track is selected (by mmockett,
+blen2r/open-xy#1, part of etcetc000/open-xy#234), so M4's LFO keeps moving
+Morphose. Morphose's own LFO came first, as the workaround; it stays as a
+second LFO with its own shapes.
 
 ## Checks
 

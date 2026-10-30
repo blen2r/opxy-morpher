@@ -154,6 +154,8 @@ Track 12 holds CV or Morphose per pattern, as tracks 1-8 hold an engine per patt
       Morphose's page and with another track selected (track 1's page, a send's page), playing or stopped
 - [ ] The LFO's rate, depth and shape behave as on a stock synth; turning it off stops the sweep
 - [ ] The LFO on mode or a state: it switches them as it moves (expected), and nothing freezes
+- [ ] Both LFOs at once: M4's on state a (or morph) and Morphose's (page 2) on the morph: both are heard,
+      adding up, with nothing stuck when either stops
 - [ ] Muted, the LFO moves nothing; unmuted, it carries on
 - [ ] Save with the stock LFO on, power cycle, load: still on and sweeping
 
