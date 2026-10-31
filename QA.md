@@ -61,6 +61,11 @@ Start from the [setup](#setup): track 1's knobs at 50, the sequencer playing.
 - [ ] Writing a side whose state is off: "off" is boxed in red and nothing is recorded
 - [ ] A parameter lock made while writing (hold a step, turn a knob) is not recorded and stays a lock
 - [ ] Turning Morphose's own knobs is never recorded, nor are knob turns in play mode
+- [ ] Writing across patterns: track 1's knob 1 at 20 in pattern 1 and 80 in pattern 2, Morphose on 12 in
+      both. Writing on pattern 1, turn it to 50, switch to pattern 2, then mode to play: pattern 2's knob
+      is still 80; back on pattern 1, it is 20 and the state holds 50
+- [ ] While writing, turn one of track 1's knobs, then load a stock preset on track 1 (Shift + track 1
+      key): in play, track 1 keeps the preset's values, not those from before writing
 
 ## Applying states
 
@@ -122,11 +127,16 @@ each change of CV or gate is a click.
 - [ ] With states written, create a new project: track 12 is `cv`; put Morphose there and choose states
       1 and 2: both are empty (nothing from the previous project)
 - [ ] A project saved with `cv` on 12 loads with `cv`
+- [ ] With states written, load another project and then this one again, while playing: the states come
+      back, nothing freezes, no stray values on track 1
+- [ ] Load another project while writing (red frame): it opens with its own values, no red frame, none of
+      the first project's states. The same with a new project
+- [ ] A project saved with the previous release of Morphose loads with its states
 
 ## M2, M3 and M4
 
-- [ ] On track 12 with Morphose, M2 does nothing, M3 leaves Morphose's page as it is (no CV screen),
-      and M4 opens the stock LFO page
+- [ ] On track 12 with Morphose, M2 and M3 do nothing: no CV, envelope or filter page, not even for a
+      moment. M4 opens the stock LFO page
 - [ ] Select track 12 from another track's M3 or M4: Morphose's own page shows
 - [ ] Other tracks' M2, M3 and M4 work as before
 
@@ -145,6 +155,8 @@ Track 12 holds CV or Morphose per pattern, as tracks 1-8 hold an engine per patt
       a song of scene 1 then 2, looping: each scene plays and shows its own morph from its first bar, on
       every pass; add a scene with `cv` in between: same
 - [ ] A p-lock on the first step of a Morphose pattern in that song still applies
+- [ ] A song alternating a `cv` pattern and a Morphose pattern, for a few loops: on each return, Morphose's
+      states are there and its LFO (page 2) carries on
 
 ## The stock LFO (M4) on track 12
 
