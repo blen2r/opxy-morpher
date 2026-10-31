@@ -157,8 +157,8 @@ Here, track 12 gets three patterns: 1 Morphose, 2 `cv`, 3 a copy of 1. A song pl
 scenes are: scene 1 with track 12 on pattern 1, scene 2 on pattern 2, scene 3 on pattern 3.
 - [ ] Add pattern 2 on track 12 and choose `cv` there. Pattern 1 still shows Morphose with its states;
       pattern 2 shows CV
-- [ ] Chain patterns 1 and 2 on track 12 (the track plays them one after the other by itself): Morphose
-      morphs only during pattern 1, track 1 plays its own sound during pattern 2
+- [ ] While playing, switch track 12 between patterns 1 and 2 a few times: Morphose morphs only on pattern
+      1, track 1 plays its own sound on pattern 2
 - [ ] Add pattern 3, copied from pattern 1: it holds Morphose with the same knobs and states
 - [ ] Make scenes 1, 2 and 3 as above. A song of scene 1 then scene 2, looping, for a few loops:
       Morphose morphs only in scene 1, and on each return its states are there and both LFOs carry on
@@ -189,8 +189,8 @@ Needs something on CV/gate out, or CV out into the line input, listening on trac
 each change of CV or gate is a click. Skip this section without one.
 - [ ] With `cv` on 12 (pattern 2), notes on track 12 click; with Morphose there (pattern 1), no clicks, on
       notes, on play / stop or on fast key presses, and turning Morphose's knobs makes none either
-- [ ] Chain patterns 1 and 2: CV is silent during pattern 1 and plays during pattern 2, with no stray gate
-      or click at the switch
+- [ ] While playing, switch between patterns 1 and 2, and play the song of scenes 1 and 2: CV is silent on
+      pattern 1 and plays on pattern 2, with no stray gate or click at the switch
 - [ ] On pattern 1, choose `cv`: the clicks come back at once (no silent second). Then choose `morphose`
       again, state A = 1, state B = 2, morph 50
 
