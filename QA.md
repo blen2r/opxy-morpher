@@ -1,20 +1,26 @@
 # Testing Morphose on an OP-XY
 
-Checks to run on a device with a firmware that includes Morphose. Each section stands on its own:
-run the sections a change touches, or every section for a full end-to-end pass before a
-release. Host tests (`python ../open-xy/sdk.py test --machine machines/morphose --firmware`) don't
+Checks to run on a device with a firmware that includes Morphose, from top to bottom, in one project:
+each section leaves the project ready for the next. To run only some sections, set up what their first
+line says. Host tests (`python ../open-xy/sdk.py test --machine machines/morphose --firmware`) don't
 replace these: they can't hear the sound or see the screen.
 
 Report a failure with the section, the line and what you saw. A photo of the screen helps.
 
+## Before you start
+
+On the firmware you use now (with the previous release of Morphose), save two projects:
+- **old-states:** Morphose on 12 with states 1 and 2 written (below), the stock LFO (M4) on morph.
+- **plain:** `cv` on 12, no states, track 1 with a sound of its own.
+
 ## Setup
 
-- Use a scratch project: Morphose changes other tracks' values while it runs.
+- Install the firmware, then create a new project, **qa**: Morphose changes other tracks' values while it
+  runs, so don't use a project you care about.
 - Track 1: the stock synth **simple**, its four engine knobs at 50, and one note on step 1 lasting a
   whole bar, so it sounds all the time while the sequencer plays.
 - Track 12: Morphose (Shift + M1 on track 12, choose `morphose`), mode play, morph 0.
-- Press play. "State 1" is track 1's engine knobs all the way down, "state 2" all the way up: write
-  them as in [Writing states](#writing-states) before the sections that use them.
+- Press play, and leave it playing unless a step says otherwise.
 
 ## Firmware basics
 
@@ -40,12 +46,20 @@ Report a failure with the section, the line and what you saw. A photo of the scr
       and grey
 - [ ] Pressing any knob switches the knobs to the other page: the rows swap size smoothly, page 1 stays on
       top, and a second press mid-way reverses
-- [ ] Nothing shows in the middle of the shape or above M4 (no "muted", no stray letter); "muted"
-      shows in the middle only while track 12 is muted
+- [ ] Nothing shows in the middle of the shape or above M4 (no "muted", no stray letter)
+
+Then clear those p-locks on track 12, and set mode play, morph 0, both states off.
+
+## M2, M3 and M4
+
+- [ ] On track 12 with Morphose, M2 and M3 do nothing: no CV, envelope or filter page, not even for a
+      moment. M4 opens the stock LFO page
+- [ ] Select track 12 from another track's M3 or M4: Morphose's own page shows
+- [ ] Other tracks' M2, M3 and M4 work as before
 
 ## Writing states
 
-Start from the [setup](#setup): track 1's knobs at 50, the sequencer playing.
+Track 1's engine knobs at 50. "State 1" will hold them all the way down, "state 2" all the way up.
 
 - [ ] **State 1:** on Morphose's page, set morph to 100 (state B stays off), state A to 1, then mode to
       wr a. On track 1's engine page, turn its four knobs all the way down: you hear each turn
@@ -59,50 +73,36 @@ Start from the [setup](#setup): track 1's knobs at 50, the sequencer playing.
       envelope and track 3 knobs are back where they were. Turning morph to 100 moves to state 2 on every
       track and page you edited
 - [ ] Writing a side whose state is off: "off" is boxed in red and nothing is recorded
-- [ ] A parameter lock made while writing (hold a step, turn a knob) is not recorded and stays a lock
+- [ ] A parameter lock made while writing (hold a step, turn a knob) is not recorded and stays a lock;
+      clear it afterwards
 - [ ] Turning Morphose's own knobs is never recorded, nor are knob turns in play mode
-- [ ] Writing across patterns: track 1's knob 1 at 20 in pattern 1 and 80 in pattern 2, Morphose on 12 in
-      both. Writing on pattern 1, turn it to 50, switch to pattern 2, then mode to play: pattern 2's knob
-      is still 80; back on pattern 1, it is 20 and the state holds 50
-- [ ] While writing, turn one of track 1's knobs, then load a stock preset on track 1 (Shift + track 1
-      key): in play, track 1 keeps the preset's values, not those from before writing
+
+From here on, states 1 and 2 are written, and state A = 1, state B = 2, mode play.
 
 ## Applying states
 
-- [ ] With state A = 1 and state B = 2 written, turning morph from 0 to 100 sweeps track 1's sound, and
-      track 1's page shows the morphed values, stopped and playing
-- [ ] State A = off: at morph 0 track 1 sounds as you set it
+- [ ] Turning morph from 0 to 100 sweeps track 1's sound, and track 1's page shows the morphed values,
+      stopped and playing
+- [ ] State A = off: at morph 0 track 1 sounds as you set it. Then state A back to 1
 - [ ] Turning one of track 1's morphed knobs: its page shows your value while you turn, then the morphed
       value again
 - [ ] Parameters no state sets behave as without Morphose, including parameter locks shown while holding
       a step
 - [ ] A parameter lock on a morphed parameter is heard only as far as the morph leans toward a side that
-      leaves it alone
+      leaves it alone; clear it afterwards
 - [ ] Sweep the morph fast for a while: no clicks, stutter, freezes or stuck values
-- [ ] Choose `cv` on track 12: track 1 returns to its own sound
 - [ ] The morph is never saved into the project: at morph 100, save the project and load it again, then
-      choose `cv` on track 12: track 1's knobs are at their own values (50), not
+      choose `cv` on track 12: track 1 returns to its own sound, its knobs at their own values (50), not
       state 2's
+- [ ] Choose `morphose` on 12 again: it starts at its defaults (play, morph 0, states off); set state A to
+      1 and state B to 2: states 1 and 2 are still there
 
 ## Marks on every page
 
 - [ ] While writing, every page of every track has a red frame fading inward from the screen's edge
 - [ ] Frame on (page 2): the pages of tracks Morphose is changing have a thin dark red frame in play;
-      frame off: no thin frame
-- [ ] No frame without Morphose, while its track is muted, or while two tracks hold it
-- [ ] Two tracks holding Morphose: "ONLY ONE MORPHOSE" and "remove the extra copies" show whole, with
-      nothing red visible once one copy is gone
-
-## Track 12 and CV
-
-Needs something on CV/gate out, or CV out into the line input, listening on track 13 (input level low):
-each change of CV or gate is a click.
-- [ ] With `cv` on 12, notes on track 12 click; with Morphose there, no clicks, on notes, on play / stop
-      or on fast key presses, and turning Morphose's knobs makes none either
-- [ ] Choose `cv` again: the clicks come back at once (no silent second), and CV's four knobs are where
-      they were before Morphose
-- [ ] Open a project saved with Morphose on 12 on a firmware without Morphose: track 12 is `cv`, with
-      CV's knobs as they were before Morphose (not Morphose's values)
+      frame off: no thin frame. Then frame on again
+- [ ] No frame with `cv` on 12
 
 ## Presets
 
@@ -110,66 +110,10 @@ each change of CV or gate is a click.
       name, presets in the second; `morphose` holds `init`
 - [ ] Knobs 2-4 scroll and choose; choosing `init` sets play, morph 0, states off, frame on
 - [ ] A `cv` folder holds `init`: choosing it gives track 12 back to CV, with CV's knobs as they were
-- [ ] A preset in `aux_presets/<folder>/` (copied over MTP) lists and works too; with `cv` on 12,
-      choosing a Morphose preset puts Morphose there
+- [ ] With `cv` on 12, choosing Morphose's `init` puts Morphose there
 - [ ] Shift + track key on track 1: no aux presets among the instrument presets
 
-## Saving states
-
-- [ ] Write states 1 and 2, save the project, power off and on, load it: morph 0 to 100 still moves
-      between them
-- [ ] The project folder has `<name>.oxy` beside `<name>.xy` (over MTP)
-- [ ] Load a project saved before it had states: every state is empty; load the first project again:
-      its states are back
-- [ ] Write a state, wait a few seconds and power off without saving: after power on, the state is still
-      there, and Morphose is on track 12
-- [ ] Power off while Morphose's page is shown, without saving: the OP-XY starts normally
-- [ ] With states written, create a new project: track 12 is `cv`; put Morphose there and choose states
-      1 and 2: both are empty (nothing from the previous project)
-- [ ] A project saved with `cv` on 12 loads with `cv`
-- [ ] With states written, load another project and then this one again, while playing: the states come
-      back, nothing freezes, no stray values on track 1
-- [ ] Load another project while writing (red frame): it opens with its own values, no red frame, none of
-      the first project's states. The same with a new project
-- [ ] A project saved with the previous release of Morphose loads with its states
-
-## M2, M3 and M4
-
-- [ ] On track 12 with Morphose, M2 and M3 do nothing: no CV, envelope or filter page, not even for a
-      moment. M4 opens the stock LFO page
-- [ ] Select track 12 from another track's M3 or M4: Morphose's own page shows
-- [ ] Other tracks' M2, M3 and M4 work as before
-
-## Patterns
-
-Track 12 holds CV or Morphose per pattern, as tracks 1-8 hold an engine per pattern.
-- [ ] Track 12 with patterns 1 and 2, both `cv`, CV's knobs set differently in each. On pattern 1, choose
-      Morphose: pattern 1 shows Morphose, pattern 2 still shows CV with its own knobs
-- [ ] Chain patterns 1 and 2 and play: CV is silent during pattern 1 and plays during pattern 2, with no
-      stray gate or click at the switch; Morphose morphs only during pattern 1
-- [ ] On pattern 1, choose `cv` again: its CV knobs are as before; pattern 2 is unchanged
-- [ ] With Morphose on pattern 1, add a pattern copied from it: the copy holds Morphose with the same
-      knobs
-- [ ] Save with Morphose on pattern 1 and `cv` on pattern 2, power off and on, load: both are back
-- [ ] Song mode: scene 1 with Morphose at morph 0, scene 2 with Morphose at morph 100 (another pattern),
-      a song of scene 1 then 2, looping: each scene plays and shows its own morph from its first bar, on
-      every pass; add a scene with `cv` in between: same
-- [ ] A p-lock on the first step of a Morphose pattern in that song still applies
-- [ ] A song alternating a `cv` pattern and a Morphose pattern, for a few loops: on each return, Morphose's
-      states are there and its LFO (page 2) carries on
-
-## The stock LFO (M4) on track 12
-
-- [ ] With Morphose on track 12, M4's destinations read Morphose's control names (mode, morph, state a,
-      state b), not param1-4
-- [ ] M4's LFO on morph, states 1 and 2 written: the morph sweeps and track 1's sound follows, on
-      Morphose's page and with another track selected (track 1's page, a send's page), playing or stopped
-- [ ] The LFO's rate, depth and shape behave as on a stock synth; turning it off stops the sweep
-- [ ] The LFO on mode or a state: it switches them as it moves (expected), and nothing freezes
-- [ ] Both LFOs at once: M4's on state a (or morph) and Morphose's (page 2) on the morph: both are heard,
-      adding up, with nothing stuck when either stops
-- [ ] Muted, the LFO moves nothing; unmuted, it carries on
-- [ ] Save with the stock LFO on, power cycle, load: still on and sweeping
+Then state A = 1, state B = 2 again.
 
 ## Morphose's LFO (page 2)
 
@@ -180,26 +124,114 @@ Track 12 holds CV or Morphose per pattern, as tracks 1-8 hold an engine per patt
       pass; stopped, it keeps the tempo
 - [ ] Each shape: sine, tri, up, down, sqr and rand (a new random value each cycle, spread evenly over
       the range the swing can reach: with the knob near 0 and a large depth, it doesn't keep landing on 0)
-- [ ] Depth moves one per detent (-100..+100), two when turned fast; projects saved before keep their depth
+- [ ] Depth moves one per detent (-100..+100), two when turned fast
 - [ ] Depth -50 reverses the swing; with the morph knob near an end, the swing stops at 0 or 100
-- [ ] In wr a or wr b the LFO pauses, so you hear the state as written, and it resumes in play
-- [ ] Rate, depth and shape can be p-locked
+- [ ] In wr a or wr b the LFO pauses, so you hear the state as written, and it resumes in play (turn no
+      other track's knob while writing here)
+- [ ] Rate, depth and shape can be p-locked; clear the locks afterwards
+
+Then depth +50, rate 1, shape sine, morph 50: Morphose's LFO is kept on for the next sections.
+
+## The stock LFO (M4) on track 12
+
+- [ ] With Morphose on track 12, M4's destinations read Morphose's control names (mode, morph, state a,
+      state b), not param1-4
+- [ ] Morphose's LFO at depth 0 for now. M4's LFO on morph: the morph sweeps and track 1's sound follows,
+      on Morphose's page and with another track selected (track 1's page, a send's page), playing or stopped
+- [ ] The LFO's rate, depth and shape behave as on a stock synth; turning it off stops the sweep
+- [ ] The LFO on mode or a state: it switches them as it moves (expected), and nothing freezes
+- [ ] Both LFOs at once: M4's on state a (or morph) and Morphose's (page 2, depth +50) on the morph: both
+      are heard, adding up, with nothing stuck when either stops
+
+Then M4's LFO on morph, on; Morphose's LFO at depth +50.
+
+## Patterns and songs
+
+Track 12 holds CV or Morphose per pattern, as tracks 1-8 hold an engine per pattern.
+- [ ] Add pattern 2 on track 12 and choose `cv` there; set CV's knobs differently from pattern 1's
+      CV values. Pattern 1 still shows Morphose with its states; pattern 2 shows CV with its own knobs
+- [ ] Chain patterns 1 and 2 and play: Morphose morphs only during pattern 1, track 1 plays its own sound
+      during pattern 2
+- [ ] A song alternating pattern 1 (Morphose) and pattern 2 (`cv`), for a few loops: on each return,
+      Morphose's states are there and both LFOs carry on
+- [ ] Add a pattern copied from pattern 1: the copy holds Morphose with the same knobs
+- [ ] Song mode: scene 1 with Morphose at morph 0, scene 2 with Morphose at morph 100 (another pattern),
+      both LFOs at depth 0, a song of scene 1 then 2, looping: each scene plays and shows its own morph
+      from its first bar, on every pass; add a scene with `cv` in between: same
+- [ ] A p-lock on the first step of a Morphose pattern in that song still applies
+
+Then leave the song, back on pattern 1 (Morphose, morph 50, both LFOs on).
 
 ## Muting (switches Morphose off)
 
 - [ ] At 50 between states 1 and 2, mute track 12 (hold aux, press track 12's key): track 1 goes back to
       its own sound, "muted" shows in the middle of the shape (the whole word), the shape and markers dim,
-      no thin frame shows, and the LFO stops moving the shape
-- [ ] While muted, wr a records nothing and shows no red frame
+      no thin frame shows, and neither LFO moves the shape
+- [ ] While muted, wr a records nothing and shows no red frame; back to play
 - [ ] Unmute: everything comes back as it was
 - [ ] The same from the mixer
 - [ ] Two scenes, track 12 muted in one only: switching scenes (and a song alternating them) switches
       Morphose off and on
-- [ ] Mute, save, power off and on, load: still muted
-- [ ] A project saved with v1.1 while bypassed loads with its states, not bypassed
+
+Leave track 12 muted in scene 2 only, and play scene 1.
+
+## Track 12 and CV
+
+Needs something on CV/gate out, or CV out into the line input, listening on track 13 (input level low):
+each change of CV or gate is a click. Skip this section without one.
+- [ ] With `cv` on 12 (pattern 2), notes on track 12 click; with Morphose there (pattern 1), no clicks, on
+      notes, on play / stop or on fast key presses, and turning Morphose's knobs makes none either
+- [ ] Chain patterns 1 and 2: CV is silent during pattern 1 and plays during pattern 2, with no stray gate
+      or click at the switch
+- [ ] On pattern 1, choose `cv`: the clicks come back at once (no silent second), and CV's four knobs are
+      where they were before Morphose. Then choose `morphose` again, state A = 1, state B = 2, morph 50
+
+## Saving and loading
+
+- [ ] Save **qa**, power off and on, load it: states 1 and 2 still morph, M4's LFO is on and sweeping,
+      pattern 1 holds Morphose and pattern 2 `cv`, track 12 is muted in scene 2 only, and Morphose's
+      depth and rate are as you left them
+- [ ] Write a state 3 (state A = 3, wr a, turn track 1's knob 1, back to play, state A = 1), wait a few
+      seconds and power off without saving, while Morphose's page is shown: the OP-XY starts normally,
+      Morphose is on track 12 and state 3 is there
+- [ ] Load **plain** (no states, `cv` on 12): track 12 is `cv`, track 1 has its own sound, no frames;
+      put Morphose on 12: every state is empty. Load **qa** again: its states are back
+- [ ] While playing, load **plain** and then **qa** again: the states come back, nothing freezes, no
+      stray values on track 1
+- [ ] Load **old-states** (saved with the previous release): its states are there, and M4's LFO is on and
+      sweeping. Load **qa** again
+
+## Writing across patterns and presets
+
+In **qa**, on pattern 1. These change track 1's values: run them after everything above.
+- [ ] Set track 1's knob 1 to 20 in pattern 1 and 80 in pattern 2 (pattern 2 on track 12: choose
+      `morphose` there too). On pattern 1, state A = 4, mode wr a, turn track 1's knob 1 to 50, switch to
+      pattern 2, then mode to play: pattern 2's knob is still 80; back on pattern 1, it is 20, and with
+      state A = 4 at morph 0 you hear 50
+- [ ] State A = 5, mode wr a, turn one of track 1's knobs, then load a stock preset on track 1 (Shift +
+      track 1 key), turn a knob again, mode to play: track 1 has the preset's values, not those from
+      before writing
+
+## Loading while writing, and a new project
+
+- [ ] Mode wr a (red frame), then load **plain**: it opens with its own values, no red frame, none of
+      **qa**'s states. Nothing freezes
+- [ ] Load **qa**, mode wr a, then create a new project: track 12 is `cv`; put Morphose there and choose
+      states 1 and 2: both are empty (nothing from **qa**)
+
+## After the pass
+
+These need another setup.
+- [ ] Over MTP: **qa**'s folder has `qa.oxy` beside `qa.xy`. Copy a preset into
+      `aux_presets/<folder>/`: it lists and works; with `cv` on 12, choosing it puts Morphose there
+- [ ] On a firmware without Morphose, open **qa**: track 12 is `cv`, with CV's knobs as they were before
+      Morphose (not Morphose's values)
+- [ ] If you have a project saved with v1.1 while bypassed: it loads with its states, not bypassed
 
 ## Known limits
 
 Not failures, but worth confirming they haven't changed:
 
 - A parameter lock holds until the pattern loops, not just for its step (stock behaviour).
+- Only track 12 can hold Morphose, so the "ONLY ONE MORPHOSE" warning (two tracks holding it) can't be
+  shown today; check it if another aux track can ever take machines.
