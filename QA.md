@@ -113,11 +113,17 @@ Then state A = 1, state B = 2 again.
 
 ## Morphose's LFO (page 2)
 
+Morph at 50, so the whole swing shows: near 0 or 100, the part past the end is cut off and the swing
+looks shorter and faster than it is.
+
 - [ ] Depth 0: nothing moves. Depth +50, rate 1 (Hz): the shape swings once per second and track 1's
       sound follows, on Morphose's page and on track 1's page
 - [ ] Free rates: at 0.5 a full swing takes 2 seconds, at 2 half a second
 - [ ] A synced rate (e.g. 1bar) with the sequencer playing: the swing lines up with the bar, the same each
       pass; stopped, it keeps the tempo
+- [ ] Shape tri, rate 1bar, depth +50, a 1-bar pattern: each bar starts at 50 rising, peaks at 100 on
+      beat 2 (step 5), is back at 50 on beat 3 (step 9) and at 0 on beat 4 (step 13). Depth -50: the
+      other way round
 - [ ] Each shape: sine, tri, up, down, sqr and rand (a new random value each cycle, spread evenly over
       the range the swing can reach: with the knob near 0 and a large depth, it doesn't keep landing on 0)
 - [ ] Depth moves one per detent (-100..+100), two when turned fast
