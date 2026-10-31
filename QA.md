@@ -162,7 +162,8 @@ scenes are: scene 1 with track 12 on pattern 1, scene 2 on pattern 2, scene 3 on
 - [ ] Add pattern 3, copied from pattern 1: it holds Morphose with the same knobs and states
 - [ ] Make scenes 1, 2 and 3 as above. A song of scene 1 then scene 2, looping, for a few loops:
       Morphose morphs only in scene 1, and on each return its states are there and both LFOs carry on
-- [ ] Both LFOs at depth 0, morph 0 on pattern 1 and 100 on pattern 3. A song of scene 1 then scene 3,
+- [ ] On patterns 1 and 3, both LFOs at depth 0 (M4's amount and Morphose's depth); morph 0 on pattern 1
+      and 100 on pattern 3. A song of scene 1 then scene 3,
       looping: each scene plays and shows its own morph from its first bar, on every pass; a song of
       scenes 1, 2 and 3: the same, with CV in scene 2
 - [ ] On track 12, with both LFOs still at depth 0 on patterns 1 and 3 (M4's amount and Morphose's
