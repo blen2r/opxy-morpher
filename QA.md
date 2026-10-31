@@ -7,16 +7,12 @@ replace these: they can't hear the sound or see the screen.
 
 Report a failure with the section, the line and what you saw. A photo of the screen helps.
 
-## Before you start
-
-On the firmware you use now (with the previous release of Morphose), save two projects:
-- **old-states:** Morphose on 12 with states 1 and 2 written (below), the stock LFO (M4) on morph.
-- **plain:** `cv` on 12, no states, track 1 with a sound of its own.
-
 ## Setup
 
-- Install the firmware, then create a new project, **qa**: Morphose changes other tracks' values while it
-  runs, so don't use a project you care about.
+- Install the firmware. Create a new project, **plain**: leave `cv` on 12, give track 1 a sound of its
+  own, and save it. Later steps load it as a project without Morphose's data.
+- Create another new project, **qa**: Morphose changes other tracks' values while it runs, so don't use a
+  project you care about.
 - Track 1: the stock synth **simple**, its four engine knobs at 50, and one note on step 1 lasting a
   whole bar, so it sounds all the time while the sequencer plays.
 - Track 12: Morphose (Shift + M1 on track 12, choose `morphose`), mode play, morph 0.
@@ -198,8 +194,6 @@ each change of CV or gate is a click. Skip this section without one.
       put Morphose on 12: every state is empty. Load **qa** again: its states are back
 - [ ] While playing, load **plain** and then **qa** again: the states come back, nothing freezes, no
       stray values on track 1
-- [ ] Load **old-states** (saved with the previous release): its states are there, and M4's LFO is on and
-      sweeping. Load **qa** again
 
 ## Writing across patterns and presets
 
@@ -226,7 +220,6 @@ These need another setup.
       `aux_presets/<folder>/`: it lists and works; with `cv` on 12, choosing it puts Morphose there
 - [ ] On a firmware without Morphose, open **qa**: track 12 is `cv`, with CV's knobs as they were before
       Morphose (not Morphose's values)
-- [ ] If you have a project saved with v1.1 while bypassed: it loads with its states, not bypassed
 
 ## Known limits
 
