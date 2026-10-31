@@ -165,8 +165,9 @@ scenes are: scene 1 with track 12 on pattern 1, scene 2 on pattern 2, scene 3 on
 - [ ] Both LFOs at depth 0, morph 0 on pattern 1 and 100 on pattern 3. A song of scene 1 then scene 3,
       looping: each scene plays and shows its own morph from its first bar, on every pass; a song of
       scenes 1, 2 and 3: the same, with CV in scene 2
-- [ ] On track 12, p-lock Morphose's morph to 50 on step 1 of pattern 3 (its morph knob stays at 100). In
-      the song of scenes 1 and 3, scene 3 starts at 50, on every pass, not at 100. Then clear the lock
+- [ ] On track 12, with both LFOs still at depth 0 on patterns 1 and 3 (M4's amount and Morphose's
+      depth), p-lock Morphose's morph to 50 on step 1 of pattern 3 (its morph knob stays at 100). In the
+      song of scenes 1 and 3, scene 3 starts at 50, on every pass, not at 100. Then clear the lock
 - [ ] Track 12's own settings follow the scene: M4's LFO amount at 0 on pattern 1 and at max on pattern 3,
       with a different rate or shape too. Start the song of scenes 1 and 3 from pattern 3: scene 1 plays and
       shows its own LFO (none) from the start, scene 3 its own, on every pass
