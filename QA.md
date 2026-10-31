@@ -218,6 +218,10 @@ Listening to CV and gate, with only a cable: each change of CV or gate is a clic
 
 ## Saving and loading
 
+Some steps load **plain**, the project made in [Setup](#setup): `cv` on 12, never had Morphose, track 1
+with a sound of its own. If you didn't make it then: save **qa**, create a new project, give track 1 a
+different sound, save it as **plain**, and load **qa** again.
+
 - [ ] Save **qa**, power off and on, load it: states 1 and 2 still morph, M4's LFO is on and sweeping,
       pattern 1 holds Morphose and pattern 2 `cv`, track 12 is muted in scene 3 only, and Morphose's
       depth and rate are as you left them
