@@ -203,8 +203,12 @@ Leave track 12 muted in scene 3 only, and play scene 1.
 
 ## Track 12 and CV
 
-Needs something on CV/gate out, or CV out into the line input, listening on track 13 (input level low):
-each change of CV or gate is a click. Skip this section without one.
+Listening to CV and gate, with only a cable: each change of CV or gate is a click.
+- Connect a cable from the MIDI out jack to the audio in, and set the MIDI out port to CV.
+- On track 12's `cv` pattern (pattern 2), sequence a few notes.
+- Set track 13 (aux track 5) to listen to the audio in, with monitor on, and listen on headphones (input
+  level low).
+- On pattern 2, the sequenced notes click in the headphones.
 - [ ] With `cv` on 12 (pattern 2), notes on track 12 click; with Morphose there (pattern 1), no clicks, on
       notes, on play / stop or on fast key presses, and turning Morphose's knobs makes none either
 - [ ] While playing, switch between patterns 1 and 2, and play the song of scenes 1 and 2: CV is silent on
