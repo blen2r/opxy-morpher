@@ -153,25 +153,37 @@ Track 12 holds CV or Morphose per pattern, as tracks 1-8 hold an engine per patt
 tell its patterns apart: once another aux machine is released, put it on pattern 2 with its knobs set
 differently and check that each pattern keeps its own machine and values.
 
-Here, track 12 gets three patterns: 1 Morphose, 2 `cv`, 3 a copy of 1. A song plays scenes, so the
-scenes are: scene 1 with track 12 on pattern 1, scene 2 on pattern 2, scene 3 on pattern 3.
+Track 12 gets five patterns, each in the scene of the same number (a song plays scenes):
+- pattern 1: Morphose, as set up so far
+- pattern 2: `cv`
+- pattern 3: a copy of 1, with M4's LFO at max (for the LFO check)
+- patterns 4 and 5: copies of 1 with no LFO at all (for the morph checks)
+
+**Switching patterns**
 - [ ] Add pattern 2 on track 12 and choose `cv` there. Pattern 1 still shows Morphose with its states;
       pattern 2 shows CV
 - [ ] While playing, switch track 12 between patterns 1 and 2 a few times: Morphose morphs only on pattern
       1, track 1 plays its own sound on pattern 2
+- [ ] Make scenes 1 and 2. A song of scene 1 then scene 2, looping, for a few loops: Morphose morphs only
+      in scene 1, and on each return its states are there and both LFOs carry on
+
+**Track 12's own settings follow the scene.** Two patterns holding Morphose, one with an LFO and one
+without: a song's scene change between them must also change the track's LFO (amount, rate, shape,
+destination), not only Morphose's knobs. (An earlier build kept the previous pattern's LFO.)
 - [ ] Add pattern 3, copied from pattern 1: it holds Morphose with the same knobs and states
-- [ ] Make scenes 1, 2 and 3 as above. A song of scene 1 then scene 2, looping, for a few loops:
-      Morphose morphs only in scene 1, and on each return its states are there and both LFOs carry on
-- [ ] On patterns 1 and 3, both LFOs at depth 0 (M4's amount and Morphose's depth); morph 0 on pattern 1
-      and 100 on pattern 3. A song of scene 1 then scene 3,
-      looping: each scene plays and shows its own morph from its first bar, on every pass; a song of
-      scenes 1, 2 and 3: the same, with CV in scene 2
-- [ ] On track 12, with both LFOs still at depth 0 on patterns 1 and 3 (M4's amount and Morphose's
-      depth), p-lock Morphose's morph to 50 on step 1 of pattern 3 (its morph knob stays at 100). In the
-      song of scenes 1 and 3, scene 3 starts at 50, on every pass, not at 100. Then clear the lock
-- [ ] Track 12's own settings follow the scene: M4's LFO amount at 0 on pattern 1 and at max on pattern 3,
-      with a different rate or shape too. Start the song of scenes 1 and 3 from pattern 3: scene 1 plays and
-      shows its own LFO (none) from the start, scene 3 its own, on every pass
+- [ ] On pattern 1, M4's LFO amount at 0 and Morphose's depth at 0. On pattern 3, M4's LFO on morph at
+      max amount, with a different rate and shape, and Morphose's depth at 0. Make scene 3
+- [ ] Start the song of scenes 1 and 3 while pattern 3 is shown: scene 1 has no LFO from its first bar (the
+      shape stays still, M4's page shows amount 0), scene 3 sweeps with its own rate and shape, on every
+      pass. Start it again from pattern 1: the same
+
+**Each scene's own morph**
+- [ ] Add patterns 4 and 5, copied from pattern 1, and make scenes 4 and 5. On both, M4's LFO amount at 0
+      and Morphose's depth at 0; morph 0 on pattern 4 and 100 on pattern 5
+- [ ] A song of scenes 4 and 5, looping: each scene plays and shows its own morph from its first bar, on
+      every pass. A song of scenes 4, 2 and 5: the same, with CV in scene 2
+- [ ] On pattern 5, p-lock Morphose's morph to 50 on step 1 (its morph knob stays at 100). In the song of
+      scenes 4 and 5, scene 5 starts at 50, on every pass, not at 100. Then clear the lock
 
 Then leave the song and play scene 1: pattern 1 at morph 50, both LFOs back on (Morphose's at depth +50,
 M4's on morph).
