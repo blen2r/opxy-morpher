@@ -240,13 +240,14 @@ they go back to the right pattern, and that a preset loaded meanwhile wins. They
 run them after everything above.
 
 In **qa**, track 12 on pattern 1 (Morphose). First free track 1: on Morphose's page, state A off and
-state B off, mode play, so track 1 plays its own values and its knobs stay where you turn them.
+state B off, morph 100, mode play, so track 1 plays its own values and its knobs stay where you turn
+them. Keep morph at 100 (state B off) throughout: back in play, track 1 then plays its own values.
 - [ ] Give track 1 a second pattern: knob 1 at 20 on track 1's pattern 1, at 80 on its pattern 2. Track
       1 back on its pattern 1; track 12 stays on its pattern 1 throughout
 - [ ] On Morphose's page, state A = 4, mode wr a. Turn track 1's knob 1 to 50, then switch track 1 to its
       pattern 2, then mode play: track 1's pattern 2 knob is still 80 (not 20 or 50). Switch track 1 back to
       its pattern 1: knob 1 is 20. On Morphose's page, morph 0: you hear state 4, with knob 1 at 50
-- [ ] Morph back to 100 (state B off: track 1 plays its own values). State A = 5, mode wr a, turn one of
+- [ ] Morph back to 100. State A = 5, mode wr a, turn one of
       track 1's knobs, then load a stock preset on track 1 (Shift + track 1 key), turn a knob again, mode
       play: track 1 has the preset's values, not those from before writing
 
