@@ -105,7 +105,7 @@ From here on, states 1 and 2 are written, and state A = 1, state B = 2, mode pla
 - [ ] Shift + track key on track 12: "preset", with 12 under it; folders in the first column, sorted by
       name, presets in the second; `morphose` holds `init`
 - [ ] Knobs 2-4 scroll and choose; choosing `init` sets play, morph 0, states off, frame on
-- [ ] A `cv` folder holds `init`: choosing it gives track 12 back to CV, with CV's knobs as they were
+- [ ] A `cv` folder holds `init`: choosing it gives track 12 back to CV
 - [ ] With `cv` on 12, choosing Morphose's `init` puts Morphose there
 - [ ] Shift + track key on track 1: no aux presets among the instrument presets
 
@@ -149,9 +149,11 @@ Then M4's LFO on morph, on; Morphose's LFO at depth +50.
 
 ## Patterns and songs
 
-Track 12 holds CV or Morphose per pattern, as tracks 1-8 hold an engine per pattern.
-- [ ] Add pattern 2 on track 12 and choose `cv` there; set CV's knobs differently from pattern 1's
-      CV values. Pattern 1 still shows Morphose with its states; pattern 2 shows CV with its own knobs
+Track 12 holds CV or Morphose per pattern, as tracks 1-8 hold an engine per pattern. CV has no knobs to
+tell its patterns apart: once another aux machine is released, put it on pattern 2 with its knobs set
+differently and check that each pattern keeps its own machine and values.
+- [ ] Add pattern 2 on track 12 and choose `cv` there. Pattern 1 still shows Morphose with its states;
+      pattern 2 shows CV
 - [ ] Chain patterns 1 and 2 and play: Morphose morphs only during pattern 1, track 1 plays its own sound
       during pattern 2
 - [ ] A song alternating pattern 1 (Morphose) and pattern 2 (`cv`), for a few loops: on each return,
@@ -185,8 +187,8 @@ each change of CV or gate is a click. Skip this section without one.
       notes, on play / stop or on fast key presses, and turning Morphose's knobs makes none either
 - [ ] Chain patterns 1 and 2: CV is silent during pattern 1 and plays during pattern 2, with no stray gate
       or click at the switch
-- [ ] On pattern 1, choose `cv`: the clicks come back at once (no silent second), and CV's four knobs are
-      where they were before Morphose. Then choose `morphose` again, state A = 1, state B = 2, morph 50
+- [ ] On pattern 1, choose `cv`: the clicks come back at once (no silent second). Then choose `morphose`
+      again, state A = 1, state B = 2, morph 50
 
 ## Saving and loading
 
@@ -224,8 +226,8 @@ In **qa**, on pattern 1. These change track 1's values: run them after everythin
 These need another setup.
 - [ ] Over MTP: **qa**'s folder has `qa.oxy` beside `qa.xy`. Copy a preset into
       `aux_presets/<folder>/`: it lists and works; with `cv` on 12, choosing it puts Morphose there
-- [ ] On a firmware without Morphose, open **qa**: track 12 is `cv`, with CV's knobs as they were before
-      Morphose (not Morphose's values)
+- [ ] On a firmware without Morphose, open **qa**: track 12 is `cv` and works as CV (notes click on its
+      outputs, as in "Track 12 and CV")
 
 ## Known limits
 
