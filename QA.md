@@ -235,14 +235,20 @@ different sound, save it as **plain**, and load **qa** again.
 
 ## Writing across patterns and presets
 
-In **qa**, on pattern 1. These change track 1's values: run them after everything above.
-- [ ] Set track 1's knob 1 to 20 in pattern 1 and 80 in pattern 2 (pattern 2 on track 12: choose
-      `morphose` there too). On pattern 1, state A = 4, mode wr a, turn track 1's knob 1 to 50, switch to
-      pattern 2, then mode to play: pattern 2's knob is still 80; back on pattern 1, it is 20, and with
-      state A = 4 at morph 0 you hear 50
-- [ ] State A = 5, mode wr a, turn one of track 1's knobs, then load a stock preset on track 1 (Shift +
-      track 1 key), turn a knob again, mode to play: track 1 has the preset's values, not those from
-      before writing
+When Morphose stops writing, the knobs you turned go back to their values from before. These check that
+they go back to the right pattern, and that a preset loaded meanwhile wins. They change track 1's values:
+run them after everything above.
+
+In **qa**, track 12 on pattern 1 (Morphose). First free track 1: on Morphose's page, state A off and
+state B off, mode play, so track 1 plays its own values and its knobs stay where you turn them.
+- [ ] Give track 1 a second pattern: knob 1 at 20 on track 1's pattern 1, at 80 on its pattern 2. Track
+      1 back on its pattern 1; track 12 stays on its pattern 1 throughout
+- [ ] On Morphose's page, state A = 4, mode wr a. Turn track 1's knob 1 to 50, then switch track 1 to its
+      pattern 2, then mode play: track 1's pattern 2 knob is still 80 (not 20 or 50). Switch track 1 back to
+      its pattern 1: knob 1 is 20. On Morphose's page, morph 0: you hear state 4, with knob 1 at 50
+- [ ] Morph back to 100 (state B off: track 1 plays its own values). State A = 5, mode wr a, turn one of
+      track 1's knobs, then load a stock preset on track 1 (Shift + track 1 key), turn a knob again, mode
+      play: track 1 has the preset's values, not those from before writing
 
 ## Loading while writing, and a new project
 
