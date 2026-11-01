@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "sdk": "1.7",
+  "sdk": "1.8",
   "kind": "synth",
   "description": "Allows you to morph selected parameters on instrument tracks between various states."
 }
