@@ -5,6 +5,14 @@ An Octatrack-style parameter morpher for the OP-XY, built on the
 
 New to Morphose? Start with the [guide](GUIDE.md).
 
+**Building v2.** This branch needs an SDK newer than any release: branch
+`sdk/states` of [blen2r/open-xy](https://github.com/blen2r/open-xy/tree/sdk/states),
+at commit
+[`97a705142289aa0b9bada9e9d491221f4a6397eb`](https://github.com/blen2r/open-xy/commit/97a705142289aa0b9bada9e9d491221f4a6397eb)
+(OS 1.2.1), the one the last device pass ([QA](QA.md)) used. Check that commit
+out beside this repository and build with
+`python ../open-xy/sdk.py build ... --machine machines/morphose`.
+
 Morphose takes over auxiliary track 12 (CV), so it uses none of the eight sound
 tracks: on track 12, hold Shift and press M1, then choose `morphose`. While it
 holds the track, CV out and gate stay silent; choose `cv` the same way to bring

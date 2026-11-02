@@ -10,8 +10,8 @@ Report a failure with the section, the line and what you saw. A photo of the scr
 **Firmware.** Morphose v2 needs the SDK branch `sdk/states` of
 [blen2r/open-xy](https://github.com/blen2r/open-xy/tree/sdk/states) (track control with silent capture,
 gesture claims, shown values, aux tracks): build it with `sdk.py build ... --machine machines/morphose`
-from that branch. The last full pass was on build 113 (OS 1.2.1, `sdk/states` 97a7051, this branch at
-the commit that added this file).
+from that branch. The last full pass was on build 113 (OS 1.2.1, SDK commit
+`97a705142289aa0b9bada9e9d491221f4a6397eb`, as in the [README](README.md#morphose)).
 
 **What changed from v1.** There are no write modes any more. Holding the **metronome** key and pressing a
 **black key** writes that state; tapping the metronome stops. Writing is silent by default: what plays
