@@ -1,4 +1,4 @@
-# Testing Morphose on an OP-XY
+# Testing Morphose v2 on an OP-XY
 
 Checks to run on a device with a firmware that includes Morphose, from top to bottom, in one project:
 each section leaves the project ready for the next. To run only some sections, set up what their first
@@ -7,16 +7,30 @@ replace these: they can't hear the sound or see the screen.
 
 Report a failure with the section, the line and what you saw. A photo of the screen helps.
 
+**Firmware.** Morphose v2 needs the SDK branch `sdk/states` of
+[blen2r/open-xy](https://github.com/blen2r/open-xy/tree/sdk/states) (track control with silent capture,
+gesture claims, shown values, aux tracks): build it with `sdk.py build ... --machine machines/morphose`
+from that branch. The last full pass was on build 113 (OS 1.2.1, `sdk/states` 97a7051, this branch at
+the commit that added this file).
+
+**What changed from v1.** There are no write modes any more. Holding the **metronome** key and pressing a
+**black key** writes that state; tapping the metronome stops. Writing is silent by default: what plays
+doesn't change while you turn knobs, and every page shows the state's values. Page 1's first knob is now
+**preview** (off/on): on, the state being written plays alone. Send effects (tracks 15 and 16) and the
+other aux tracks no machine holds can be morphed too.
+
 ## Setup
 
 - Install the firmware. Create a new project, **plain**: leave `cv` on 12, give track 1 a sound of its
   own, and save it. Later steps load it as a project without Morphose's data.
 - Create another new project, **qa**: Morphose changes other tracks' values while it runs, so don't use a
-  project you care about.
+  project you care about. (A project from v1 also works, but its first knob was "mode": start new.)
 - Track 1: the stock synth **simple**, its four engine knobs at 50, and one note on step 1 lasting a
   whole bar, so it sounds all the time while the sequencer plays.
-- Track 12: Morphose (Shift + M1 on track 12, choose `morphose`), mode play, morph 0.
+- Track 12: Morphose (Shift + M1 on track 12, choose `morphose`), preview off, morph 0.
 - Press play, and leave it playing unless a step says otherwise.
+
+The black keys, lowest first (F# up), are states 1 to 10.
 
 ## Firmware basics
 
@@ -29,22 +43,21 @@ Report a failure with the section, the line and what you saw. A photo of the scr
 
 ## Morphose's page
 
+- [ ] The header: page 1 (preview, morph, state a, state b) on top, page 2 (frame, rate, depth, shape)
+      below; the row the knobs edit is large and bright on the stepped bar, the other small and grey
+- [ ] Pressing any knob switches the knobs to the other page: the rows swap size smoothly, page 1 stays on
+      top, and a second press mid-way reverses
 - [ ] Morph 0 shows a circle, 100 a square with sharp corners; in between the shape blends smoothly
       while turning. The header reads 0 to 100, 50 in the middle
 - [ ] The markers: a circle (A) on the left and a square (B) on the right, letters centred, dim while
       their state is off
-- [ ] Mode reads play / wr a / wr b, and the states off, 1 to 16: one choice per detent, both directions
+- [ ] Preview reads off / on, and the states off, 1 to 16: one choice per detent, both directions
 - [ ] p-lock the morph knob on a few steps and play: the shape follows; sweeping fast causes no flicker
       or slowdown
-- [ ] p-lock the mode on a step: the shown name follows the lock during playback
-- [ ] Both pages show in the header: page 1 (mode, morph, state a, state b) on top, page 2 (frame, rate,
-      depth, shape) below; the row the knobs edit is large and bright on the stepped bar, the other small
-      and grey
-- [ ] Pressing any knob switches the knobs to the other page: the rows swap size smoothly, page 1 stays on
-      top, and a second press mid-way reverses
-- [ ] Nothing shows in the middle of the shape or above M4 (no "muted", no stray letter)
+- [ ] Nothing shows in the middle of the shape or above M4 (no "muted", no stray letter), and no red dot
+      at the top right
 
-Then clear those p-locks on track 12, and set mode play, morph 0, both states off.
+Then clear those p-locks on track 12, and set preview off, morph 0, both states off.
 
 ## M2, M3 and M4
 
@@ -53,32 +66,68 @@ Then clear those p-locks on track 12, and set mode play, morph 0, both states of
 - [ ] Select track 12 from another track's M3 or M4: Morphose's own page shows
 - [ ] Other tracks' M2, M3 and M4 work as before
 
+## The metronome key
+
+- [ ] Tap the metronome alone: the metronome page opens when you release it, as without Morphose. Hold it
+      a while and release: the page opens too. A second tap that doesn't close the page is stock's
+- [ ] Hold the metronome and press a **white** key: popup "black keys pick states", no note, nothing
+      written. On a drum track, metronome + a pad: no sound, and the selected pad doesn't change
+- [ ] Holding the metronome while sequenced notes, the arpeggiator or MIDI in play: they play normally
+- [ ] Shift + metronome does what it does without Morphose
+
 ## Writing states
 
 Track 1's engine knobs at 50. "State 1" will hold them all the way down, "state 2" all the way up.
 
-- [ ] **State 1:** on Morphose's page, set morph to 100 (state B stays off), state A to 1, then mode to
-      wr a. On track 1's engine page, turn its four knobs all the way down: you hear each turn
-- [ ] While writing, you hear state A alone, as at morph 0, whatever the morph knob says; Morphose's page
-      shows a red circle, a red A marker, a red dot at the top right and the morph value boxed in red
-- [ ] Mode to play: at morph 100 with state B off, track 1 plays its own values again, its knobs back at 50
-- [ ] **State 2:** set morph to 0, state B to 2, then mode to wr b. Turn track 1's four engine knobs all
-      the way up, and also one knob on its filter page, one on its envelope page and one on track 3: you
-      hear each turn, and Morphose's page shows a red square
-- [ ] Mode to play, at morph 0: track 1's engine knobs show state 1 (all the way down), and the filter,
-      envelope and track 3 knobs are back where they were. Turning morph to 100 moves to state 2 on every
-      track and page you edited
-- [ ] Writing a side whose state is off: "off" is boxed in red and nothing is recorded
+- [ ] **State 1:** hold the metronome and press the lowest black key (F#): popup "writing to state 1",
+      a red frame fading inward on every page, and a red "1" in the top right corner, clear of the fourth
+      value and inside the frame
+- [ ] On track 1's engine page, turn its four knobs all the way down: you **don't** hear the turns. Each
+      knob shows your value while you turn it, then state 1's value (all the way down)
+- [ ] Morphose's page while writing: a red shape and a red dot at the top right
+- [ ] **State 2:** without stopping, hold the metronome and press the next black key: "writing to state
+      2", the corner reads "2". Turn track 1's four engine knobs all the way up, and also one knob on its
+      filter page, one on its envelope page and one on track 3: none of it is heard, each page shows
+      state 2's values
+- [ ] Tap the metronome alone: popup "done writing state 2", the red frame and number go, the metronome
+      page does **not** open, and every knob you turned is back where it was (50)
 - [ ] A parameter lock made while writing (hold a step, turn a knob) is not recorded and stays a lock;
       clear it afterwards
-- [ ] Turning Morphose's own knobs is never recorded, nor are knob turns in play mode
+- [ ] Turning Morphose's own knobs is never recorded, nor are knob turns when not writing
 
-From here on, states 1 and 2 are written, and state A = 1, state B = 2, mode play.
+From here on, states 1 and 2 are written.
+
+## Writing with the sequencer running
+
+A parameter you turn while writing silently must not be heard at any point: not at the loop, not when
+play starts, not on a pattern change, and not through a step's lock. Setup: on track 1, notes on steps 1,
+5, 9 and 13; on step 5, lock one engine parameter (hold step 5, turn **pw** to an extreme), and leave
+another (**shape**) unlocked. Give track 1 a pattern 2 with a few notes, a different sound if possible.
+Play.
+
+- [ ] Write state 3 (metronome + the third black key). Turn shape a long way: never heard, over 3-4 loops;
+      listen at step 1 of each loop
+- [ ] Turn pw (the locked one) a long way: step 5 still plays its lock, the rest of the bar keeps the old
+      pw, and the lock doesn't spread over the bar
+- [ ] Stop, start: the first notes still sound as before
+- [ ] Switch track 1 to pattern 2, let it loop, then back to pattern 1: unchanged on both, no blip at the
+      switch. A knob turned on pattern 2 is not heard either
+- [ ] Tap the metronome: "done writing state 3", track 1 plays its own values. Set state A to 3: now the
+      turned shape and pw are heard, on step 5 too: at morph 0 the state's pw plays over the lock
+- [ ] Clear the lock on step 5 and track 1's pattern 2, state A off
+
+## Preview
+
+- [ ] Preview on, then write state 1 again: now state 1 plays alone while writing, and you hear each
+      turn. Morphose's page boxes the morph value in red (the morph isn't in effect)
+- [ ] Tap the metronome: track 1 plays its own values again. Preview off
 
 ## Applying states
 
+State A = 1, state B = 2.
+
 - [ ] Turning morph from 0 to 100 sweeps track 1's sound, and track 1's page shows the morphed values,
-      stopped and playing
+      stopped and playing, on every page you edited (engine, filter, envelope, and track 3)
 - [ ] State A = off: at morph 0 track 1 sounds as you set it. Then state A back to 1
 - [ ] Turning one of track 1's morphed knobs: its page shows your value while you turn, then the morphed
       value again
@@ -87,24 +136,45 @@ From here on, states 1 and 2 are written, and state A = 1, state B = 2, mode pla
 - [ ] A parameter lock on a morphed parameter is heard only as far as the morph leans toward a side that
       leaves it alone; clear it afterwards
 - [ ] Sweep the morph fast for a while: no clicks, stutter, freezes or stuck values
+- [ ] While a state is written silently, the morph keeps playing that state as it was before: write state
+      1 at morph 0, turn a knob, and the morph still plays the old state 1 until you stop
 - [ ] The morph is never saved into the project: at morph 100, save the project and load it again, then
       choose `cv` on track 12: track 1 returns to its own sound, its knobs at their own values (50), not
       state 2's
-- [ ] Choose `morphose` on 12 again: it starts at its defaults (play, morph 0, states off); set state A to
-      1 and state B to 2: states 1 and 2 are still there
+- [ ] Choose `morphose` on 12 again: it starts at its defaults (preview off, morph 0, states off); set
+      state A to 1 and state B to 2: states 1 and 2 are still there
+
+## Punch-in
+
+- [ ] Select track 12 (Morphose's page) and hold a black key: its state plays at 100%, whatever the morph;
+      release: back to the morph. The key plays no note
+- [ ] On another track's page, the keyboard plays notes as usual
+
+## Send effects and aux tracks
+
+Tracks 15 and 16 hold the sends' stock effects (delay and reverb by default).
+
+- [ ] On track 15, Dry at 0. Write state 4 (fourth black key) and turn track 15's Dry to 99, and one more
+      of its knobs: not heard, its page shows state 4's values, with the red frame and number
+- [ ] Stop writing; state A = 4, morph 0: the delay's Dry is at 99 and the other knob at state 4's value.
+      Morph toward state B: they move back
+- [ ] The same on track 16 (reverb), and on tracks 13 and 14 if they have parameters you can turn
+- [ ] Track 12 itself is never written or morphed
+- [ ] Then state A = 1, state B = 2
 
 ## Marks on every page
 
-- [ ] While writing, every page of every track has a red frame fading inward from the screen's edge
-- [ ] Frame on (page 2): the pages of tracks Morphose is changing have a thin dark red frame in play;
-      frame off: no thin frame. Then frame on again
+- [ ] While writing, every page of every track has a red frame fading inward from the screen's edge, and
+      the state's number in the top right corner
+- [ ] Frame on (page 2): the pages of tracks Morphose is changing have a thin dark red frame; frame off:
+      no thin frame. Then frame on again
 - [ ] No frame with `cv` on 12
 
 ## Presets
 
 - [ ] Shift + track key on track 12: "preset", with 12 under it; folders in the first column, sorted by
       name, presets in the second; `morphose` holds `init`
-- [ ] Knobs 2-4 scroll and choose; choosing `init` sets play, morph 0, states off, frame on
+- [ ] Knobs 2-4 scroll and choose; choosing `init` sets preview off, morph 0, states off, frame on
 - [ ] A `cv` folder holds `init`: choosing it gives track 12 back to CV
 - [ ] With `cv` on 12, choosing Morphose's `init` puts Morphose there
 - [ ] Shift + track key on track 1: no aux presets among the instrument presets
@@ -128,20 +198,21 @@ looks shorter and faster than it is.
       the range the swing can reach: with the knob near 0 and a large depth, it doesn't keep landing on 0)
 - [ ] Depth moves one per detent (-100..+100), two when turned fast
 - [ ] Depth -50 reverses the swing; with the morph knob near an end, the swing stops at 0 or 100
-- [ ] In wr a or wr b the LFO pauses, so you hear the state as written, and it resumes in play (turn no
-      other track's knob while writing here)
+- [ ] While writing silently the LFO keeps moving the morph (what plays doesn't change); with preview on,
+      the state being written plays alone and the LFO has no effect until you stop
 - [ ] Rate, depth and shape can be p-locked; clear the locks afterwards
 
 Then depth +50, rate 1, shape sine, morph 50: Morphose's LFO is kept on for the next sections.
 
 ## The stock LFO (M4) on track 12
 
-- [ ] With Morphose on track 12, M4's destinations read Morphose's control names (mode, morph, state a,
+- [ ] With Morphose on track 12, M4's destinations read Morphose's control names (preview, morph, state a,
       state b), not param1-4
 - [ ] Morphose's LFO at depth 0 for now. M4's LFO on morph: the morph sweeps and track 1's sound follows,
       on Morphose's page and with another track selected (track 1's page, a send's page), playing or stopped
 - [ ] The LFO's rate, depth and shape behave as on a stock synth; turning it off stops the sweep
-- [ ] The LFO on mode or a state: it switches them as it moves (expected), and nothing freezes
+- [ ] The LFO on preview or a state: it switches them as it moves (expected), nothing is recorded, and
+      nothing freezes
 - [ ] Both LFOs at once: M4's on state a (or morph) and Morphose's (page 2, depth +50) on the morph: both
       are heard, adding up, with nothing stuck when either stops
 
@@ -193,7 +264,8 @@ M4's on morph).
 - [ ] At 50 between states 1 and 2, mute track 12 (hold aux, press track 12's key): track 1 goes back to
       its own sound, "muted" shows in the middle of the shape (the whole word), the shape and markers dim,
       no thin frame shows, and neither LFO moves the shape
-- [ ] While muted, wr a records nothing and shows no red frame; back to play
+- [ ] While muted, metronome + a black key writes nothing and shows no red frame; the metronome works as
+      stock's, and metronome + a key plays its note
 - [ ] Unmute: everything comes back as it was
 - [ ] The same from the mixer
 - [ ] Track 12 muted in scene 3 only: switching between scenes 1 and 3 (and the song of scenes 1 and 3)
@@ -225,9 +297,9 @@ different sound, save it as **plain**, and load **qa** again.
 - [ ] Save **qa**, power off and on, load it: states 1 and 2 still morph, M4's LFO is on and sweeping,
       pattern 1 holds Morphose and pattern 2 `cv`, track 12 is muted in scene 3 only, and Morphose's
       depth and rate are as you left them
-- [ ] Write a state 3 (state A = 3, wr a, turn track 1's knob 1, back to play, state A = 1), wait a few
+- [ ] Write state 5 (metronome + fifth black key, turn track 1's knob 1, tap the metronome), wait a few
       seconds and power off without saving, while Morphose's page is shown: the OP-XY starts normally,
-      Morphose is on track 12 and state 3 is there
+      Morphose is on track 12 and state 5 is there
 - [ ] Load **plain** (no states, `cv` on 12): track 12 is `cv`, track 1 has its own sound, no frames;
       put Morphose on 12: every state is empty. Load **qa** again: its states are back
 - [ ] While playing, load **plain** and then **qa** again: the states come back, nothing freezes, no
@@ -240,23 +312,22 @@ they go back to the right pattern, and that a preset loaded meanwhile wins. They
 run them after everything above.
 
 In **qa**, track 12 on pattern 1 (Morphose). First free track 1: on Morphose's page, state A off and
-state B off, morph 100, mode play, so track 1 plays its own values and its knobs stay where you turn
-them. Keep morph at 100 (state B off) throughout: back in play, track 1 then plays its own values.
+state B off, so track 1 plays its own values and its knobs stay where you turn them.
 - [ ] Give track 1 a second pattern: knob 1 at 20 on track 1's pattern 1, at 80 on its pattern 2. Track
       1 back on its pattern 1; track 12 stays on its pattern 1 throughout
-- [ ] On Morphose's page, state A = 4, mode wr a. Turn track 1's knob 1 to 50, then switch track 1 to its
-      pattern 2, then mode play: track 1's pattern 2 knob is still 80 (not 20 or 50). Switch track 1 back to
-      its pattern 1: knob 1 is 20. On Morphose's page, morph 0: you hear state 4, with knob 1 at 50
-- [ ] Morph back to 100. State A = 5, mode wr a, turn one of
-      track 1's knobs, then load a stock preset on track 1 (Shift + track 1 key), turn a knob again, mode
-      play: track 1 has the preset's values, not those from before writing
+- [ ] Write state 6 (metronome + sixth black key). Turn track 1's knob 1 to 50, then switch track 1 to its
+      pattern 2, then tap the metronome: track 1's pattern 2 knob is still 80 (not 20 or 50). Switch track 1
+      back to its pattern 1: knob 1 is 20. State A = 6, morph 0: you hear state 6, with knob 1 at 50
+- [ ] State A off. Write state 7, turn one of track 1's knobs, then load a stock preset on track 1 (Shift +
+      track 1 key), turn a knob again, tap the metronome: track 1 has the preset's values, not those from
+      before writing
 
 ## Loading while writing, and a new project
 
-- [ ] Mode wr a (red frame), then load **plain**: it opens with its own values, no red frame, none of
-      **qa**'s states. Nothing freezes
-- [ ] Load **qa**, mode wr a, then create a new project: track 12 is `cv`; put Morphose there and choose
-      states 1 and 2: both are empty (nothing from **qa**)
+- [ ] Start writing a state (red frame), then load **plain**: it opens with its own values, no red frame,
+      none of **qa**'s states, and the metronome works as stock's. Nothing freezes
+- [ ] Load **qa**, start writing, then create a new project: track 12 is `cv`; put Morphose there and
+      choose states 1 and 2: both are empty (nothing from **qa**)
 
 ## After the pass
 
@@ -273,3 +344,7 @@ Not failures, but worth confirming they haven't changed:
 - A parameter lock holds until the pattern loops, not just for its step (stock behaviour).
 - Only track 12 can hold Morphose, so the "ONLY ONE MORPHOSE" warning (two tracks holding it) can't be
   shown today; check it if another aux track can ever take machines.
+- Only black keys 1-10 pick states while writing; states 11-16 are chosen with the state knobs but can't
+  be written yet.
+- Morphose's own track (12) holds the keyboard while it's selected: the keys play states (punch-in), not
+  notes.
