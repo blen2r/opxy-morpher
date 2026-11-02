@@ -5,15 +5,14 @@
   "press": "page",
   "parameters": [
     {
-      "id": "mode",
-      "label": "Mode",
+      "id": "preview",
+      "label": "Preview",
       "default": 0,
       "mapping": {
         "kind": "enum",
         "labels": [
-          "play",
-          "wr a",
-          "wr b"
+          "off",
+          "on"
         ]
       },
       "display": "enum"
@@ -371,7 +370,7 @@
   ],
   "presets": {
     "Init": {
-      "mode": 0,
+      "preview": 0,
       "morph": 0,
       "state_a": 0,
       "state_b": 0,
@@ -404,7 +403,11 @@
       "aux": [
         12
       ],
-      "savedBytes": 3089
+      "savedBytes": 3089,
+      "claims": [
+        "metronome_chord"
+      ],
+      "keyboard": true
     }
   }
 }

@@ -1,5 +1,5 @@
 // The morpher's page: where the morph sits between states A and B, which
-// states are chosen, and whether an edit would be written to one of them.
+// states are chosen, and which state is being written (metronome + black key).
 #include <opxy/track_control.hpp>
 #include "display.h"
 #include "controls.h"
@@ -54,9 +54,8 @@ inline void number(char* out, unsigned capacity, unsigned value) {
 // The morph as the header shows it: 0 to 100, without a percent sign, as the
 // OP-XY shows amounts.
 inline void percent_text(char* out, unsigned capacity, unsigned p) { number(out, capacity, p); }
-// The mode and state names, as the controls' labels give them. Stock shows an
-// enum's raw 0..99 value; the header replaces it with the name.
-const char* const kModeNames[kModes] = {"play", "wr a", "wr b"};
+// The state names, as the controls' labels give them. Stock shows an enum's
+// raw 0..99 value; the header replaces it with the name.
 inline void state_name(char* out, unsigned capacity, unsigned state) {
     if (state)
         number(out, capacity, state);
@@ -68,16 +67,16 @@ inline void display_reset(DisplayState& state) { state.header.reset(); }
 
 inline void display(DisplayState& state, const opxy::draw::Input& input, Frame& frame) {
     using namespace opxy::draw;
-    const unsigned mode = choice(input.slots[kModeSlot], kModes);
+    const bool preview = choice(input.slots[kPreviewSlot], 2) != 0;
     const unsigned p = percent(input.slots[kMorphSlot]);
     const unsigned a = choice(input.slots[kStateASlot], kStates);
     const unsigned b = choice(input.slots[kStateBSlot], kStates);
-    // The SDK's two-row header: page 1 (mode, morph, the states) on top, page 2
+    // The SDK's two-row header: page 1 (preview, morph, the states) on top, page 2
     // (frame and the LFO) under it; the row the encoders edit is the large one.
     const bool second = input.shown[0] >= kFrameSlot;
-    const char* const titles[8] = {"mode", "morph", "state a", "state b", "frame", "rate", "depth", "shape"};
+    const char* const titles[8] = {"preview", "morph", "state a", "state b", "frame", "rate", "depth", "shape"};
     char values[8][header_capacity] = {};
-    opxy::draw::copy(values[kModeSlot], header_capacity, kModeNames[mode]);
+    opxy::draw::copy(values[kPreviewSlot], header_capacity, preview ? "on" : "off");
     percent_text(values[kMorphSlot], header_capacity, p);
     state_name(values[kStateASlot], header_capacity, a);
     state_name(values[kStateBSlot], header_capacity, b);
@@ -113,19 +112,20 @@ inline void display(DisplayState& state, const opxy::draw::Input& input, Frame& 
     for (unsigned i = 0; i < kCovers; ++i)
         place(frame, kCover0 + i, (86 + 40 * static_cast<opxy::i32>(i)) * unit, kCentreY * unit, unit, kBlack, fill_and_stroke);
 
-    // Writing plays the written state alone, so the morph is not in effect:
-    // its value is boxed in red. Writing a side that is
-    // off records nothing; that side's state is boxed in red instead.
-    const unsigned states[2] = {a, b}, writes[2] = {kWriteA, kWriteB};
-    const unsigned side = mode == kWriteB ? 1 : 0;
-    const bool writing = !off && mode != kPlay && states[side];
+    // The state being written (the control's, 0 in previews). With preview on,
+    // it plays alone, so the morph is not in effect: its value is boxed in red.
+    const unsigned states[2] = {a, b};
+    const unsigned written = static_cast<unsigned>(opxy::control::from_control(kShownWriting));
+    const bool writing = !off && written != 0;
 
-    // The shape follows the morph; while writing it shows the written state, in red.
-    // The shape shows the morph as the LFO moves it, the header the knob.
+    // The shape follows the morph, in red while writing; previewing state A or
+    // B, it shows that side. The shape shows the morph as the LFO moves it, the
+    // header the knob.
     const opxy::i32 moved = opxy::control::from_control(kShownLfo) ? opxy::control::from_control(kShownMorph)
                                                                    : input.slots[kMorphSlot];
     const opxy::i32 q15 = moved < 0 ? 0 : moved >> 16;
-    shape(frame, writing ? (side ? 32768 : 0) : q15 >= 32767 ? 32768 : q15);
+    const bool alone = writing && preview && (written == a || written == b);
+    shape(frame, alone ? (written == a ? 0 : 32768) : q15 >= 32767 ? 32768 : q15);
     place(frame, kShape, kCentreX * unit, kCentreY * unit, unit + unit / 2,
           off ? kShapeDim : writing ? kShapeRed : kShapeWhite, stroke);
 
@@ -134,20 +134,17 @@ inline void display(DisplayState& state, const opxy::draw::Input& input, Frame& 
     const opxy::i32 xs[2] = {kMarkerLeft, kMarkerRight};
     for (unsigned s = 0; s < 2; ++s)
         place(frame, kMarkerA + s, xs[s] * unit, kCentreY * unit, unit,
-              writing && mode == writes[s] ? kRingRed : states[s] && !off ? kRingWhite : kRingDim,
+              writing && states[s] == written ? kRingRed : states[s] && !off ? kRingWhite : kRingDim,
               s ? stroke : fill_and_stroke);
     // The red boxes mark page 1's header values.
     if (writing)
         place(frame, kWriteDot, 456 * unit, 56 * unit, unit, kRed, fill_and_stroke);
     else
         hide(frame, kWriteDot);
-    if (writing && !second)
+    if (writing && preview && !second)
         place(frame, kMorphBox, header_x(kMorphSlot) * unit, kHeaderY * unit, unit, kRed, stroke);
     else
         hide(frame, kMorphBox);
-    if (!off && mode != kPlay && !states[side] && !second)
-        place(frame, kStateBox, header_x(side ? kStateBSlot : kStateASlot) * unit, kHeaderY * unit, unit, kRed, stroke);
-    else
-        hide(frame, kStateBox);
+    hide(frame, kStateBox);
 }
 }

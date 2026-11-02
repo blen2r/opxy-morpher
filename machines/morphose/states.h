@@ -3,7 +3,7 @@
 #include "controls.h"
 
 namespace morphose {
-// One parameter a state sets: an instrument track, its live parameter index
+// One parameter a state sets: a track, its live parameter index
 // and the value.
 struct Lock { opxy::u8 track, index; opxy::u16 reserved; opxy::i32 value; };
 // States 1..16 (slot 0 unused: state 0 is "off"). Two full states fill the

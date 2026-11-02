@@ -25,17 +25,15 @@ int main() {
     input.track = 3;
     for (unsigned i = 0; i < 4; ++i) input.values[0][i] = 0x30000000;
     opxy::i32* own = input.values[3];
-    const auto run = [&](unsigned mode, unsigned a, unsigned b, opxy::i32 position) {
-        own[kModeSlot] = word(mode, kModes);
+    const auto run = [&](unsigned a, unsigned b, opxy::i32 position) {
         own[kStateASlot] = word(a, kStates);
         own[kStateBSlot] = word(b, kStates);
         own[kMorphSlot] = position;
-        overlay.count = 0;
-        overlay.capture = 0;
-        overlay.mark = 0;
+        overlay.count = overlay.capture = overlay.mark = overlay.take = overlay.shown_count = 0;
+        overlay.popup[0] = overlay.mark_text[0] = 0;
         for (unsigned i = 0; i < opxy::control::display_words; ++i) overlay.display[i] = 0;
         control(saved, input, overlay);
-        input.edit_count = 0;
+        input.edit_count = input.gesture_count = 0;
     };
     const auto edit = [&](unsigned track, unsigned index, opxy::i32 value) {
         opxy::control::Entry& e = input.edits[input.edit_count++];
@@ -44,57 +42,121 @@ int main() {
         e.reserved = 0;
         e.value = value;
     };
+    // A gesture as the SDK gives it: the metronome (1) held with a key, or a key
+    // on Morphose's own track (lead 0).
+    const auto gesture = [&](unsigned lead, unsigned key, bool pressed) {
+        input.gestures[input.gesture_count++] = {static_cast<opxy::u8>(lead), static_cast<opxy::u8>(key),
+                                                 static_cast<opxy::u8>(pressed), 0};
+    };
+    const auto popup_is = [&](const char* text) {
+        unsigned i = 0;
+        while (text[i] && overlay.popup[i] == text[i]) ++i;
+        return !text[i] && !overlay.popup[i];
+    };
+    // Black keys, lowest first, are states 1..10.
+    const unsigned kState1 = 27, kState2 = 29, kState3 = 31, kWhite = 26;
 
-    run(kPlay, 1, 2, 0x40000000);
-    expect(overlay.count == 0 && !overlay.capture, "empty states");
-    // Writing a side with state off captures nothing.
-    run(kWriteA, 0, 2, 0);
-    expect(!overlay.capture, "write to off");
-    // Write A into state 1: edits are captured and recorded, and state 1 plays
-    // alone whatever the morph, its new edits included.
+    run(1, 2, 0x40000000);
+    expect(overlay.count == 0 && !overlay.capture && !overlay.take, "empty states");
+    // A white key picks no state.
+    gesture(1, kWhite, true);
+    run(1, 2, 0);
+    expect(!overlay.capture && popup_is("black keys pick states") && saved.writing == 0, "white key");
+    gesture(1, kWhite, false);
+    // Metronome + the first black key writes state 1 silently: edits are recorded,
+    // pages show its values, the metronome is taken, its number marks the pages.
+    gesture(1, kState1, true);
+    run(1, 2, 0x7fffffff);
+    expect(saved.writing == 1 && popup_is("writing to state 1") && overlay.capture == 2 && overlay.take == 1 &&
+           overlay.mark_text[0] == '1' && !overlay.mark_text[1] && overlay.display[kShownWriting] == 1, "write state 1");
+    gesture(1, kState1, false);
     edit(0, 1, 0x10000000);
     edit(0, 2, 0x20000000);
     edit(0, 1, 0);
-    run(kWriteA, 1, 2, 0x7fffffff);
-    expect(overlay.capture && saved.states[1].count == 2 && overlay.count == 2, "write A");
-    expect(overlay.entries[0].index == 1 && overlay.entries[0].value == 0 &&
-           overlay.entries[1].index == 2 && overlay.entries[1].value == 0x20000000, "write A plays state A");
+    run(1, 2, 0x7fffffff);
+    expect(saved.states[1].count == 2 && overlay.shown_count == 2 && overlay.shown[0].value == 0 &&
+           overlay.shown[1].value == 0x20000000, "edits recorded and shown");
+    // Silently, what plays doesn't change: the morph plays state 1 as it was (empty).
+    expect(overlay.count == 0, "silent writing plays the state as it was");
+    // While writing, metronome + another black key switches state; a tap stops.
+    gesture(1, 1, true);
+    gesture(1, kState2, true);
+    gesture(1, kState2, false);
+    gesture(1, 1, false);
     edit(0, 2, 0x7fffffff);
-    run(kWriteB, 1, 2, 0);
-    expect(overlay.capture && saved.states[2].count == 1, "write B");
-    expect(overlay.count == 1 && overlay.entries[0].value == 0x7fffffff, "write B plays state B alone");
-    // Writing an off side records nothing and plays as in play mode.
-    edit(0, 3, 5);
-    run(kWriteA, 0, 2, 0x7fffffff);
-    expect(!overlay.capture && overlay.count == 1 && distance(overlay.entries[0].value, 0x7fffffff) <= 2, "write to off plays");
-    expect(!find(saved.states[2], 0, 3), "write to off records nothing");
+    run(1, 2, 0);
+    expect(saved.writing == 2 && popup_is("writing to state 2") && saved.states[2].count == 1, "switch to state 2");
+    gesture(1, 1, true);
+    gesture(1, 1, false);
+    run(1, 2, 0);
+    expect(saved.writing == 0 && popup_is("done writing state 2") && !overlay.capture && !overlay.take &&
+           overlay.shown_count == 0, "tap stops writing");
 
-    run(kPlay, 1, 2, 0);
+    // Preview plays the written state alone, the morph not in effect.
+    own[kPreviewSlot] = word(1, 2);
+    gesture(1, kState1, true);
+    run(1, 2, 0x7fffffff);
+    expect(saved.writing == 1 && overlay.capture == 1 && overlay.count == 2 && overlay.entries[0].value == 0 &&
+           overlay.entries[1].value == 0x20000000, "preview plays the state");
+    gesture(1, kState1, false);
+    gesture(1, 1, true);
+    gesture(1, 1, false);
+    run(1, 2, 0);
+    own[kPreviewSlot] = 0;
+    expect(saved.writing == 0, "preview stopped");
+
+    run(1, 2, 0);
     expect(!overlay.capture && overlay.count == 2, "play overlays the union");
     expect(overlay.entries[0].index == 1 && overlay.entries[0].value == 0, "all A, A's value");
     expect(overlay.entries[1].index == 2 && overlay.entries[1].value == 0x20000000, "all A, shared parameter");
-    run(kPlay, 1, 2, 0x7fffffff);
+    run(1, 2, 0x7fffffff);
     expect(distance(overlay.entries[0].value, 0x30000000) <= 2, "all B, parameter only A sets");
     expect(distance(overlay.entries[1].value, 0x7fffffff) <= 2, "all B, B's value");
-    run(kPlay, 1, 2, 0x40000000);
+    run(1, 2, 0x40000000);
     expect(distance(overlay.entries[1].value, 0x50000000) <= 2, "midpoint");
     // An off side contributes the parameter's own value.
-    run(kPlay, 0, 2, 0);
+    run(0, 2, 0);
     expect(overlay.count == 1 && overlay.entries[0].value == 0x30000000, "A off");
-    run(kPlay, 2, 2, 0x20000000);
+    run(2, 2, 0x20000000);
     expect(overlay.count == 1 && overlay.entries[0].value == 0x7fffffff, "same state");
+    // On Morphose's track, a held black key plays its state alone; released, the morph is back.
+    gesture(0, kState1, true);
+    run(0, 2, 0x7fffffff);
+    expect(saved.punch == 1 && overlay.count == 2 && overlay.entries[0].value == 0, "punch-in plays state 1");
+    gesture(0, kState1, false);
+    run(0, 2, 0x7fffffff);
+    expect(saved.punch == 0 && overlay.count == 1 && distance(overlay.entries[0].value, 0x7fffffff) <= 2,
+           "punch-in released");
     // The frame control marks the morphed tracks' pages, on unless turned off.
     expect(!overlay.mark, "frame off by its zero word");
     own[kFrameSlot] = word(1, 2);
-    run(kPlay, 2, 2, 0x20000000);
+    run(2, 2, 0x20000000);
     expect(overlay.mark == 1, "frame on");
-    // States outlast a reset; a full state keeps what it has.
+    // States outlast a reset, which stops writing; a full state keeps what it has.
     control_reset(saved);
+    gesture(1, kState3, true);
+    run(3, 0, 0);
     for (unsigned i = 0; i < 20; ++i) edit(1, i, 5);
-    run(kWriteA, 3, 0, 0);
+    run(3, 0, 0);
     for (unsigned i = 20; i < 40; ++i) edit(1, i, 5);
-    run(kWriteA, 3, 0, 0);
+    run(3, 0, 0);
     expect(saved.states[1].count == 2 && saved.states[3].count == kStateLocks, "full state");
+    // A state can hold aux tracks' parameters (a send's effect, track 15).
+    edit(14, 3, 77);
+    run(3, 0, 0);
+    expect(find(saved.states[3], 14, 3) == nullptr, "a full state takes no more");
+    gesture(1, 1, true);
+    gesture(1, 34, true);
+    gesture(1, 34, false);
+    gesture(1, 1, false);
+    run(3, 0, 0);
+    edit(14, 3, 77);
+    run(3, 0, 0);
+    expect(saved.writing == 4 && find(saved.states[4], 14, 3) && find(saved.states[4], 14, 3)->value == 77,
+           "aux track parameter recorded");
+    saved.states[4].count = 0;
+    control_reset(saved);
+    expect(saved.writing == 0, "reset stops writing");
 
     // States go with the project: saved, loaded back, and emptied by a project without them.
     static opxy::u8 data[opxy::control::saved_capacity];
@@ -180,24 +242,34 @@ int main() {
     own[kRateSlot] = word(7, kRates);
     saved.lfo.phase = 0;
     input.elapsed_us = 0;
-    run(kPlay, 1, 2, 0x40000000);
+    run(1, 2, 0x40000000);
     expect(overlay.display[kShownLfo] == 1 && overlay.display[kShownMorph] > 0x5ff00000, "LFO moves the morph");
-    run(kWriteA, 1, 2, 0x40000000);
-    expect(overlay.display[kShownLfo] == 0, "no LFO while writing");
+    // Previewing a state, the morph is not in effect.
+    own[kPreviewSlot] = word(1, 2);
+    gesture(1, kState1, true);
+    run(1, 2, 0x40000000);
+    expect(overlay.display[kShownLfo] == 0, "no LFO while previewing");
+    gesture(1, kState1, false);
+    gesture(1, 1, true);
+    gesture(1, 1, false);
+    run(1, 2, 0x40000000);
+    own[kPreviewSlot] = 0;
     own[kDepthSlot] = 0x40000000;
-    run(kPlay, 1, 2, 0x40000000);
+    run(1, 2, 0x40000000);
     expect(overlay.display[kShownLfo] == 0, "depth 0 is off");
 
     // Muting its track switches Morphose off: nothing is overlaid, captured or
     // marked, and its page is told; unmuted, it carries on. M4 does nothing.
     input.muted = 1;
-    run(kPlay, 1, 2, 0x40000000);
+    run(1, 2, 0x40000000);
     expect(overlay.count == 0 && !overlay.mark && overlay.display[kShownMuted] == 1, "muted");
-    run(kWriteA, 1, 2, 0);
-    expect(overlay.count == 0 && !overlay.capture, "nothing written while muted");
+    saved.writing = 1;
+    run(1, 2, 0);
+    expect(overlay.count == 0 && !overlay.capture && !overlay.take, "nothing written while muted");
+    saved.writing = 0;
     input.muted = 0;
     input.page_key = 4;
-    run(kPlay, 1, 2, 0x40000000);
+    run(1, 2, 0x40000000);
     input.page_key = 0;
     expect(overlay.count > 0 && overlay.display[kShownMuted] == 0, "unmuted; M4 is no bypass");
     return failures ? 1 : 0;

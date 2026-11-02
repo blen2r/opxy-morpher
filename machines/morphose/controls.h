@@ -3,12 +3,10 @@
 
 namespace morphose {
 // Parameter slots (definition.json).
-// Page 1: mode, morph and the two states; page 2 (a press switches pages): the
-// frame on morphed tracks' pages, then the LFO's rate, depth and shape.
-const unsigned kModeSlot = 0, kMorphSlot = 1, kStateASlot = 2, kStateBSlot = 3, kFrameSlot = 4;
+// Page 1: preview, morph and the two states; page 2 (a press switches pages):
+// the frame on morphed tracks' pages, then the LFO's rate, depth and shape.
+const unsigned kPreviewSlot = 0, kMorphSlot = 1, kStateASlot = 2, kStateBSlot = 3, kFrameSlot = 4;
 const unsigned kRateSlot = 5, kDepthSlot = 6, kShapeSlot = 7;
-// Modes, in the order of the mode control's labels.
-const unsigned kPlay = 0, kWriteA = 1, kWriteB = 2, kModes = 3;
 // State 0 is "off": that side leaves every parameter as it is. Then 1..16.
 const unsigned kStates = 17;
 
@@ -23,9 +21,10 @@ inline unsigned percent(opxy::i32 value) {
     return value < 0 ? 0 : ((static_cast<unsigned>(value) >> 7) * 100u + (1u << 23)) >> 24;
 }
 // What the control passes to the page each tick (opxy::control::from_control):
-// whether the LFO moves the morph, the morph it moved to, and whether Morphose's
-// track is muted (aux + track key, or the mixer), which switches it off.
-const unsigned kShownLfo = 0, kShownMorph = 1, kShownMuted = 2;
+// whether the LFO moves the morph, the morph it moved to, whether Morphose's
+// track is muted (aux + track key, or the mixer), which switches it off, and
+// the state being written (0 for none).
+const unsigned kShownLfo = 0, kShownMorph = 1, kShownMuted = 2, kShownWriting = 3;
 // The LFO depth's choices, -100..+100 percent, one per encoder detent.
 const unsigned kDepths = 201;
 // An LFO depth control's word as -32767..32767, in whole percent.

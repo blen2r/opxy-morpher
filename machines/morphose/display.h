@@ -6,7 +6,7 @@ namespace morphose {
 // A shape between a circle (state A) and a square (state B), whose 64 points
 // the morph moves (node 0, path 0); the state A and B markers beside it, a
 // circle and a square (1, 2); the write dot (3); two red boxes around header
-// values: the morph's (4) and an off state's (5); nine black circles (6..14)
+// values: the morph's (4) and, unused since v2.0, an off state's (5); nine black circles (6..14)
 // that cover the artwork's "only one Morphose" message until two copies are
 // placed; and two (15, 16) that cover the "muted" label in the middle except
 // while the track is muted; then the SDK's two-row header (opxy/page_header.hpp):
